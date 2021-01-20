@@ -1,68 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/models/user.dart';
+import 'package:newheadline/screens/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:newheadline/services/auth.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
+//3
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(title: Text("My First App")),
-          body: 
-          Column(children: [
-              SizedBox(height: 35.0,),
-              Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Login", 
-                    style: TextStyle(fontSize: 24)
-                  ),
-              ),
-              Padding(
-                    padding: EdgeInsets.all(50),
-                    child: Column(
-                      children: [
-                      TextFormField( 
-                          keyboardType:  TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: "Email",
-                            labelStyle: TextStyle(
-                              fontSize:  14.0
-                            ),),
-                        ),
-                        TextFormField( 
-                          keyboardType:  TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              fontSize:  14.0
-                            ),),
-                        )
-                    ],)
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: FlatButton(
-                  onPressed: (){
-                    print("Clicked");
-                  },
-                  child: Text("Login")
-                )
-                )
-                 
-
-            
-         
- 
-              
-           ],),
-      )
-      );
-
+    return StreamProvider<AppUser>.value(
+        value: AuthService().user,
+        child: MaterialApp(
+          title: 'Firebase Auth Demo',
+          home: Wrapper(),
+        )
+        // home: _RegisterEmailSection(),x
+        );
   }
 }
-
- 
