@@ -6,6 +6,18 @@ class Category with ChangeNotifier {
   final String imageUrl;
   Category(
       {@required this.categoryId, @required this.categoryName, this.imageUrl});
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        categoryId: json["categoryId"],
+        categoryName: json["categoryName"],
+        // imageUrl: json["imageUrl"]
+      );
+
+  // Map<String, dynamic> toJson() => {
+  //       "categoryId": categoryId,
+  //       "categoryName": categoryName,
+  //       "imageUrl": imageUrl,
+  //     };
 }
 
 class CategoryArticle {

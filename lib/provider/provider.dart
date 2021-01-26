@@ -1,37 +1,51 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 
 class CategoryProvider with ChangeNotifier {
-  final List<Category> _items = [
-    Category(
-        categoryId: 1,
-        categoryName: 'category1',
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Category(
-        categoryId: 2,
-        categoryName: 'category2',
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Category(
-        categoryId: 3,
-        categoryName: 'category3',
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Category(
-        categoryId: 4,
-        categoryName: 'category4',
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Category(
-        categoryId: 5,
-        categoryName: 'category5',
-        imageUrl: "https://via.placeholder.com/500x300"),
-  ];
+  List<Category> _items = [];
+  Map<int, bool> _checkBoxes = {};
 
   List<Category> get items {
     return [..._items];
   }
 
+  Map<int, bool> get checkboxes {
+    return {..._checkBoxes};
+  }
+
   Category findById(int categoryId) {
     return _items.firstWhere((cat) => cat.categoryId == categoryId);
   }
+
+  Future<void> fetchCategories() async {
+    const url = 'http://10.0.2.2:8000/category';
+
+    final response = await http.get(url);
+
+    final data = json.decode(response.body) as List;
+
+    List<Category> items = [];
+    Map<int, bool> checkBoxes = {};
+
+    for (var d in data) {
+      // print(d['category_id']);
+      items.add(Category(
+          categoryId: d['category_id'],
+          categoryName: d['category_name'],
+          imageUrl: "https://via.placeholder.com/500x300"));
+      checkBoxes[d['category_id']] = false;
+    }
+
+    _items = items;
+    _checkBoxes = checkBoxes;
+
+    notifyListeners();
+  }
+
+  void getCheckBoxes() {}
 
   void reloadCategory() {
     notifyListeners();

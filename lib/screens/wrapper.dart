@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/user.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
-import 'package:newheadline/screens/pages/category_overview_screen.dart';
+import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {

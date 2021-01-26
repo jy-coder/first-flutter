@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/models/models.dart';
 import 'package:newheadline/screens/pages/category_article_screen.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
-  final int categoryId;
-  final String categoryName;
-  final String imageUrl;
-
-  CategoryItem(this.categoryId, this.categoryName, this.imageUrl);
-
   @override
   Widget build(BuildContext context) {
+    final category = Provider.of<Category>(context);
+
     return GridTile(
         child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed(CategoryArticleScreen.routeName,
-                  arguments: categoryId);
+                  arguments: category.categoryId);
             },
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (ctx) => CategoryArticleScreen(),
-            //   ),
-            // );
-            // },
             child: Image.network(
-              imageUrl,
+              category.imageUrl,
               fit: BoxFit.cover,
             )),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          title: Text(categoryName, textAlign: TextAlign.center),
+          title: Text(category.categoryName, textAlign: TextAlign.center),
         ));
   }
 }

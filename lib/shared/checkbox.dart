@@ -1,48 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/provider.dart';
+import 'package:provider/provider.dart';
 
-import 'package:flutter/scheduler.dart' show timeDilation;
+class CheckBox extends StatefulWidget {
+  @override
+  _CheckBoxState createState() => _CheckBoxState();
+}
 
-void main() => runApp(MyApp());
-
-/// This is the main application widget.
-class MyApp extends StatelessWidget {
-  static const String _title = 'Flutter Code Sample';
+class _CheckBoxState extends State<CheckBox> {
+  var _isInit = true;
+  var _isLoading = false;
+  Map<int, bool> checkboxes = {};
+  List<Category> categories = [];
+  final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: Center(
-          child: MyStatefulWidget(),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
   }
-}
-
-/// This is the stateful widget that the main application instantiates.
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
 
-/// This is the private State class that goes with MyStatefulWidget.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+      var provider = Provider.of<CategoryProvider>(context, listen: false);
+
+      provider.fetchCategories().then((_) {
+        setState(() {
+          checkboxes = provider.checkboxes;
+          categories = provider.items;
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  void _saveForm() {
+    _formKey.currentState.save();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      title: const Text('Animate Slowly'),
-      value: timeDilation != 1.0,
-      onChanged: (bool value) {
-        setState(() {
-          timeDilation = value ? 10.0 : 1.0;
-        });
-      },
-      secondary: const Icon(Icons.hourglass_empty),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Column(
+                    children: categories.map((Category c) {
+                  return CheckboxListTile(
+                    title: Text(c.categoryName),
+                    value: checkboxes[c.categoryId],
+                    onChanged: (bool value) {
+                      print(checkboxes);
+                      setState(() {
+                        checkboxes[c.categoryId] = !checkboxes[c.categoryId];
+                      });
+                    },
+                  );
+                }).toList()),
+                RaisedButton(
+                  color: Colors.pink[400],
+                  child: Text(
+                    'Check',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async => {
+                    _saveForm()
+                    // print(checkBoxes)
+                    // print(categories)
+                    // print(values);
+                  },
+                ),
+              ],
+            )),
+      ),
     );
   }
 }

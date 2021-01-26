@@ -3,8 +3,6 @@ import 'package:newheadline/services/auth.dart';
 import 'package:http/http.dart' as http;
 
 class Res {
-  Auth _auth = Auth();
-
   void makeRequest(String url) {
     // String token = _auth.getToken().toString();
     // http.get(url,

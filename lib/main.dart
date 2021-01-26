@@ -4,7 +4,9 @@ import 'package:newheadline/provider/provider.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/category_article_screen.dart';
-import 'package:newheadline/screens/pages/category_overview_screen.dart';
+import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:newheadline/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/services/auth.dart';
@@ -74,7 +76,9 @@ class MyApp extends StatelessWidget {
             routes: {
               CategoryArticleScreen.routeName: (ctx) => CategoryArticleScreen(),
               CategoryScreen.routeName: (ctx) => CategoryScreen(),
-              ArticleScreen.routeName: (ctx) => ArticleScreen()
+              ArticleScreen.routeName: (ctx) => ArticleScreen(),
+              HomeScreen.routeName: (ctx) => HomeScreen(),
+              SettingScreen.routeName: (ctx) => SettingScreen()
             }
             // home: _RegisterEmailSection(),x
             );
