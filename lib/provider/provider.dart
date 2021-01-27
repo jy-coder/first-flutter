@@ -24,7 +24,7 @@ class CategoryProvider with ChangeNotifier {
 
   Future<void> fetchCategories([String token]) async {
     const url = ALL_CATEGORIES;
-    final data = await get(url, token) as List;
+    final data = await APIService().get(url) as List;
 
     List<Category> items = [];
     Map<int, bool> checkBoxes = {};

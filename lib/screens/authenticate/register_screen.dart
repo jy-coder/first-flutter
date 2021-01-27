@@ -89,7 +89,7 @@ class _RegisterState extends State<Register> {
                             if (result != null) {
                               _auth.getToken().then((String token) {
                                 print("saving to database");
-                                post(REGISTER_USER, token);
+                                APIService().post(REGISTER_USER);
                                 Navigator.of(context)
                                     .pushReplacementNamed(HomeScreen.routeName);
                               });
