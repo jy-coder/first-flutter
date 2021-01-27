@@ -80,8 +80,11 @@ class _LoginState extends State<LoginScreen> {
                             setState(() => loading = true);
                             dynamic result = await _auth
                                 .signInWithEmailAndPassword(email, password);
-                            await Navigator.of(context)
-                                .pushReplacementNamed(HomeScreen.routeName);
+
+                            if (result != null) {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(HomeScreen.routeName);
+                            }
                             if (result == null) {
                               setState(() => error = 'Invalid credentials');
                             }

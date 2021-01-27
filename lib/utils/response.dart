@@ -6,11 +6,7 @@ import 'package:http/http.dart';
 Future<dynamic> post(String url,
     [String token, Map<dynamic, dynamic> body]) async {
   Response response = await http.post(url,
-      headers: <String, String>{
-        "Content-Type": "application/json",
-        "x-id-token": token
-      },
-      body: body);
+      headers: <String, String>{"x-id-token": token}, body: body);
 
   return {};
 }

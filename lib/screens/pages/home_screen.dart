@@ -8,8 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Auth aProvider = Provider.of<Auth>(context);
-    print(aProvider.currentUser);
+    // Auth aProvider = Provider.of<Auth>(context);
+    // print(aProvider.currentUser);
     return Scaffold(
         appBar: AppBar(title: Text('Daily Read')),
         drawer: AppDrawer(),

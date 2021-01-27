@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (_, auth, __) {
-        print(auth.currentUser);
         return MaterialApp(
             title: 'NewsHeadline',
             theme: new ThemeData(
@@ -56,6 +55,11 @@ class MyApp extends StatelessWidget {
                     TextTheme(headline6: TextStyle(color: Colors.black)),
                 primaryIconTheme: IconThemeData(
                   color: Colors.black,
+                ),
+                buttonTheme: ButtonThemeData(
+                  buttonColor: Colors.black87, //  <-- dark color
+                  textTheme: ButtonTextTheme
+                      .primary, //  <-- this auto selects the right color
                 )),
             home: auth.uid != null ? HomeScreen() : CategoryScreen(),
             routes: {

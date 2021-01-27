@@ -22,7 +22,7 @@ class Auth with ChangeNotifier {
       User user = result.user;
       return user != null ? user : null;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }
@@ -51,11 +51,11 @@ class Auth with ChangeNotifier {
           email: email, password: password);
       User user = result.user;
 
-      notifyListeners();
+      // notifyListeners();
 
       return user != null ? user : null;
     } catch (error) {
-      print(error.toString());
+      // print(error.toString());
       return null;
     }
   }
@@ -81,8 +81,15 @@ class Auth with ChangeNotifier {
   }
 
   Future<String> getToken() async {
-    return await _auth.currentUser.getIdToken();
+    User user = _auth.currentUser;
+    String token = await user.getIdToken();
+    return token;
   }
+
+  // String get token(){
+  //   String token = token = await _auth.currentUser().getIdToken();
+
+  // }
 
   // String get token {
   //   String t = "";

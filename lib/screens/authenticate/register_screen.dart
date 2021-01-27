@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/utils/auth.dart';
@@ -28,6 +29,7 @@ class _RegisterState extends State<Register> {
   String password = '';
   String fullName = '';
   String error = '';
+  dynamic result = '';
 
   @override
   Widget build(BuildContext context) {
@@ -80,20 +82,26 @@ class _RegisterState extends State<Register> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password);
-                            if (result != null)
-                              await Navigator.of(context)
-                                  .pushReplacementNamed(HomeScreen.routeName);
+                            result = await _auth.registerWithEmailAndPassword(
+                                email, password);
+                            setState(() => loading = false);
 
-                            if (result == null) {
+                            if (result != null) {
+                              _auth.getToken().then((String token) {
+                                print("saving to database");
+                                post(REGISTER_USER, token);
+                                Navigator.of(context)
+                                    .pushReplacementNamed(HomeScreen.routeName);
+                              });
+                            } else if (result == null) {
                               setState(
                                   () => error = 'Please supply a valid email');
-                            } else {
-                              // dynamic result = await post(REGISTER_USER, "". {
-                              //   "email": email
-                              // });
                             }
+
+                            // dynamic result = await post(REGISTER_USER, "". {
+                            //   "email": email
+                            // });
+
                           }
                         }),
                     SizedBox(height: 12.0),
