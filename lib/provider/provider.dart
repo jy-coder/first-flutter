@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/utils/response.dart';
+import 'package:newheadline/utils/url.dart';
 
 class CategoryProvider with ChangeNotifier {
   List<Category> _items = [];
@@ -20,12 +22,9 @@ class CategoryProvider with ChangeNotifier {
     return _items.firstWhere((cat) => cat.categoryId == categoryId);
   }
 
-  Future<void> fetchCategories() async {
-    const url = 'http://10.0.2.2:8000/category';
-
-    final response = await http.get(url);
-
-    final data = json.decode(response.body) as List;
+  Future<void> fetchCategories([String token]) async {
+    const url = ALL_CATEGORIES;
+    final data = await get(url, token) as List;
 
     List<Category> items = [];
     Map<int, bool> checkBoxes = {};
@@ -44,8 +43,6 @@ class CategoryProvider with ChangeNotifier {
 
     notifyListeners();
   }
-
-  void getCheckBoxes() {}
 
   void reloadCategory() {
     notifyListeners();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/services/register.dart';
-import 'package:newheadline/services/sign_in.dart';
+import 'package:newheadline/screens/authenticate/register_screen.dart';
+import 'package:newheadline/screens/authenticate/login_screen.dart';
 // import 'package:newheadline/services/sign_in.dart';
 
 class Authenticate extends StatefulWidget {
+  static final routeName = '/authenticate';
   @override
   _AuthenticateState createState() => _AuthenticateState();
 }
@@ -18,7 +19,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     if (showSignIn) {
-      return SignIn(toggleView: toggleView);
+      return LoginScreen(toggleView: toggleView);
     } else {
       return Register(toggleView: toggleView);
     }

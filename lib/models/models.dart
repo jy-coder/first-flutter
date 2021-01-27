@@ -12,12 +12,6 @@ class Category with ChangeNotifier {
         categoryName: json["categoryName"],
         // imageUrl: json["imageUrl"]
       );
-
-  // Map<String, dynamic> toJson() => {
-  //       "categoryId": categoryId,
-  //       "categoryName": categoryName,
-  //       "imageUrl": imageUrl,
-  //     };
 }
 
 class CategoryArticle {

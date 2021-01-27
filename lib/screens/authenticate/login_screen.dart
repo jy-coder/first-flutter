@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/services/category_api.dart';
-import 'package:newheadline/services/auth.dart';
+import 'package:newheadline/main.dart';
+import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/shared/constants.dart';
 import 'package:newheadline/shared/loading.dart';
-import 'package:http/http.dart' as http;
 
-class Register extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
+  static const routeName = "/login";
   final Function toggleView;
-  Register({this.toggleView});
+  LoginScreen({this.toggleView});
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _LoginState createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<LoginScreen> {
   final Auth _auth = Auth();
-  final APIService _api = APIService();
   final _formKey = GlobalKey<FormState>();
+
   bool loading = false;
 
   // text field state
@@ -29,15 +30,13 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
               elevation: 0.0,
               title: Text('Sign in'),
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.person),
-                  label: Text('Sign In'),
+                  label: Text('Register'),
                   onPressed: () => widget.toggleView(),
                 ),
               ],
@@ -71,23 +70,21 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
-                        color: Colors.pink[400],
+                        color: Colors.black87,
                         child: Text(
-                          'Register',
+                          'Sign In',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
-                            // dynamic result = await _auth
-                            //     .registerWithEmailAndPassword(email, password);
-
-                            await _api.fetchCategoryArticle();
-
-                            // if (result == null) {
-                            //   setState(
-                            //       () => error = 'Please supply a valid email');
-                            // }
+                            dynamic result = await _auth
+                                .signInWithEmailAndPassword(email, password);
+                            await Navigator.of(context)
+                                .pushReplacementNamed(HomeScreen.routeName);
+                            if (result == null) {
+                              setState(() => error = 'Invalid credentials');
+                            }
                           }
                         }),
                     SizedBox(height: 12.0),

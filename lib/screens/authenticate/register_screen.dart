@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/main.dart';
-import 'package:newheadline/services/auth.dart';
+import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/shared/constants.dart';
 import 'package:newheadline/shared/loading.dart';
+import 'package:http/http.dart' as http;
+import 'package:newheadline/utils/response.dart';
+import 'package:newheadline/utils/url.dart';
 
-class SignIn extends StatefulWidget {
+import '../../main.dart';
+
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-  final Auth _auth = Auth();
+class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
+
+  Auth _auth = Auth();
 
   // text field state
   String email = '';
   String password = '';
+  String fullName = '';
   String error = '';
 
   @override
@@ -27,15 +34,13 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: Text('Sign in to Brew Crew'),
+              title: Text('Sign in'),
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.person),
-                  label: Text('Register'),
+                  label: Text('Sign In'),
                   onPressed: () => widget.toggleView(),
                 ),
               ],
@@ -69,20 +74,25 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
-                        color: Colors.pink[400],
                         child: Text(
-                          'Sign In',
-                          style: TextStyle(color: Colors.white),
+                          'Register',
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
                             dynamic result = await _auth
-                                .signInWithEmailAndPassword(email, password);
-                            await Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (_) => MyApp()));
+                                .registerWithEmailAndPassword(email, password);
+                            if (result != null)
+                              await Navigator.of(context)
+                                  .pushReplacementNamed(HomeScreen.routeName);
+
                             if (result == null) {
-                              setState(() => error = 'Invalid credentials');
+                              setState(
+                                  () => error = 'Please supply a valid email');
+                            } else {
+                              // dynamic result = await post(REGISTER_USER, "". {
+                              //   "email": email
+                              // });
                             }
                           }
                         }),

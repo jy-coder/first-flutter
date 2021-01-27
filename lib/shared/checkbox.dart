@@ -27,7 +27,8 @@ class _CheckBoxState extends State<CheckBox> {
         _isLoading = true;
       });
 
-      var provider = Provider.of<CategoryProvider>(context, listen: false);
+      CategoryProvider provider =
+          Provider.of<CategoryProvider>(context, listen: false);
 
       provider.fetchCategories().then((_) {
         setState(() {
@@ -67,7 +68,6 @@ class _CheckBoxState extends State<CheckBox> {
                   );
                 }).toList()),
                 RaisedButton(
-                  color: Colors.pink[400],
                   child: Text(
                     'Check',
                     style: TextStyle(color: Colors.white),

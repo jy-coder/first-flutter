@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/provider.dart';
 import 'package:newheadline/shared/app_drawer.dart';
+import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/widgets/category_item.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +19,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   void initState() {
-    // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
-    // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context).fetchAndSetProducts();
-    // });
     super.initState();
   }
 
@@ -31,7 +28,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<CategoryProvider>(context).fetchCategories().then((_) {
+
+      CategoryProvider cProvider = Provider.of<CategoryProvider>(context);
+
+      cProvider.fetchCategories().then((_) {
         setState(() {
           _isLoading = false;
         });

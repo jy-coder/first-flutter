@@ -4,26 +4,16 @@ import 'package:newheadline/models/user.dart';
 
 class Auth with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool _loggedIn = false;
 
-  bool get loggedIn => _loggedIn;
-  // create user obj based on firebase user
-  // AppUser _userFromFirebaseUser(User user) {
-  //   return user != null ? AppUser(uid: user.uid) : null;
-  // }
+  User _userFromFirebaseUser(User user) {
+    return user != null ? user : null;
+  }
 
-  // Future<String> getToken() async {
-  //   User user = _auth.currentUser;
-  //   String token = await user.getIdToken();
-  //   return token;
-  // }
-
-  // Stream<AppUser> get user {
-  //   return _auth
-  //       .authStateChanges()
-  //       // .map((User user) => _userFromFirebaseUser(user));
-  //       .map(_userFromFirebaseUser);
-  // }
+  Stream<User> get user {
+    return _auth
+        .authStateChanges()
+        .map((User user) => _userFromFirebaseUser(user));
+  }
 
   // sign in anon
   Future signInAnon() async {
@@ -43,11 +33,11 @@ class Auth with ChangeNotifier {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
-      _loggedIn = true;
-      notifyListeners();
+
+      // notifyListeners();
       // var token = await user.getIdToken();
       // print(token);
-      return user;
+      return user != null ? user : null;
     } catch (error) {
       print(error.toString());
       return null;
@@ -60,6 +50,9 @@ class Auth with ChangeNotifier {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+
+      notifyListeners();
+
       return user != null ? user : null;
     } catch (error) {
       print(error.toString());
@@ -71,15 +64,32 @@ class Auth with ChangeNotifier {
   Future signOut() async {
     try {
       await _auth.signOut();
-      _loggedIn = false;
-      notifyListeners();
+
+      // notifyListeners();
     } catch (error) {
       print(error.toString());
       return null;
     }
   }
 
-  Future<User> getCurrentUser() async {
+  String get uid {
+    return _auth.currentUser != null ? _auth.currentUser.uid : null;
+  }
+
+  User get currentUser {
     return _auth.currentUser;
   }
+
+  Future<String> getToken() async {
+    return await _auth.currentUser.getIdToken();
+  }
+
+  // String get token {
+  //   String t = "";
+  //   getToken().then((String result) {
+  //     print("hello");
+  //     t = result;
+  //   });
+  //   return t;
+  // }
 }

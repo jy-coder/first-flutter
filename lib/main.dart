@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/user.dart';
 import 'package:newheadline/provider/provider.dart';
@@ -7,9 +8,9 @@ import 'package:newheadline/screens/pages/category_article_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
-import 'package:newheadline/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:newheadline/services/auth.dart';
+import 'package:newheadline/utils/auth.dart';
+import 'package:newheadline/screens/authenticate/login_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -17,10 +18,9 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<CategoryProvider>(
-          create: (_) => CategoryProvider()),
-      ChangeNotifierProvider<CategoryArticleProvider>(
-          create: (_) => CategoryArticleProvider()),
+      ChangeNotifierProvider.value(value: Auth()),
+      ChangeNotifierProvider.value(value: CategoryProvider()),
+      ChangeNotifierProvider.value(value: CategoryArticleProvider()),
     ],
     child: MaterialApp(home: MyApp()),
   ));
@@ -43,42 +43,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer2<CategoryProvider, CategoryArticleProvider>(
-      builder: (_, categoryProvider, categoryArticleProvider, __) {
+    return Consumer<Auth>(
+      builder: (_, auth, __) {
+        print(auth.currentUser);
         return MaterialApp(
-            title: 'Firebase Auth Demo',
-            theme: ThemeData(
-                // primarySwatch: Colors.brown,
-                accentColor: Colors.amber,
-                fontFamily: 'Quicksand',
-                textTheme: ThemeData.light().textTheme.copyWith(
-                      headline6: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+            title: 'NewsHeadline',
+            theme: new ThemeData(
                 appBarTheme: AppBarTheme(
-                  color: Colors.brown[400],
-                  textTheme: ThemeData.light().textTheme.copyWith(
-                        headline6: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  color: Colors.white,
                 ),
-                buttonTheme: ButtonThemeData(
-                  buttonColor: Colors.white,
-                  textTheme: ButtonTextTheme.primary,
+                primaryTextTheme:
+                    TextTheme(headline6: TextStyle(color: Colors.black)),
+                primaryIconTheme: IconThemeData(
+                  color: Colors.black,
                 )),
-            home: Wrapper(),
+            home: auth.uid != null ? HomeScreen() : CategoryScreen(),
             routes: {
               CategoryArticleScreen.routeName: (ctx) => CategoryArticleScreen(),
               CategoryScreen.routeName: (ctx) => CategoryScreen(),
               ArticleScreen.routeName: (ctx) => ArticleScreen(),
               HomeScreen.routeName: (ctx) => HomeScreen(),
-              SettingScreen.routeName: (ctx) => SettingScreen()
+              SettingScreen.routeName: (ctx) => SettingScreen(),
+              Authenticate.routeName: (ctx) => Authenticate()
             }
             // home: _RegisterEmailSection(),x
             );
@@ -86,15 +72,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// return Consumer<Auth>(
-//   builder: (_, auth, __) {
-//     if (auth.loggedIn) return Wrapper();
-//     else return Authenticate();
-//   },
-// );
-//   }
-// }
 
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
