@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/user.dart';
 import 'package:newheadline/provider/provider.dart';
+import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/category_article_screen.dart';
@@ -21,25 +22,12 @@ void main() async {
       ChangeNotifierProvider.value(value: Auth()),
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: CategoryArticleProvider()),
+      ChangeNotifierProvider.value(value: SubscriptionProvider())
     ],
     child: MaterialApp(home: MyApp()),
   ));
 }
 
-// ChangeNotifierProvider(
-//     create: (ctx) => CategoryProvider(),
-//     child: MaterialApp(home: MyApp()),
-//   ),
-// );
-
-// runApp(
-//   ChangeNotifierProvider<Auth>(
-//     create: (_) => Auth(),
-//     child: MaterialApp(home: MyApp()),
-//   ),
-// );
-
-//3
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/provider.dart';
+import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/shared/alert_box.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/shared/checkbox.dart';
@@ -21,7 +22,7 @@ class _SettingScreenState extends State<SettingScreen> {
   var _isInit = true;
   bool _isLoading = false;
   Map<String, bool> checkboxes = {};
-  List<Category> categories = [];
+  List<Subscription> categories = [];
   // final _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,10 +32,10 @@ class _SettingScreenState extends State<SettingScreen> {
         _isLoading = true;
       });
 
-      CategoryProvider provider =
-          Provider.of<CategoryProvider>(context, listen: true);
+      SubscriptionProvider provider =
+          Provider.of<SubscriptionProvider>(context, listen: true);
 
-      provider.fetchCategories().then((_) {
+      provider.fetchSubscriptions().then((_) {
         setState(() {
           checkboxes = provider.checkboxes;
           categories = provider.items;
@@ -56,8 +57,8 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> refreshSubscription(BuildContext context) async {
-    await Provider.of<CategoryProvider>(context, listen: false)
-        .fetchCategories();
+    await Provider.of<SubscriptionProvider>(context, listen: false)
+        .fetchSubscriptions();
     _isInit = true;
   }
 

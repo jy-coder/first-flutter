@@ -13,7 +13,7 @@ class CheckBox extends StatefulWidget {
   final Function updateSubscription;
   final Function refreshSubscription;
   final Map<String, bool> checkboxes;
-  final List<Category> categories;
+  final List<Subscription> categories;
   CheckBox(
       {this.edit,
       this.refreshSubscription,
@@ -34,7 +34,7 @@ class _CheckBoxState extends State<CheckBox> {
           child: ListView(
             children: [
               Column(
-                  children: widget.categories.map((Category c) {
+                  children: widget.categories.map((Subscription c) {
                 String cId = c.id.toString();
                 return Card(
                   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),

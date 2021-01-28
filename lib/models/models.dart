@@ -28,3 +28,14 @@ class CategoryArticle {
       @required this.source,
       this.imageUrl});
 }
+
+class Subscription {
+  final int id;
+  final String categoryName;
+  final bool checked;
+  Subscription({
+    @required this.id,
+    @required this.categoryName,
+    this.checked,
+  });
+}
