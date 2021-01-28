@@ -3,15 +3,15 @@ import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/category_article_screen.dart';
 
 class CategoryArticleItem extends StatelessWidget {
-  final int articleId;
+  final int id;
   final String title;
   final String link;
   final String summary;
   final String source;
   final String imageUrl;
 
-  CategoryArticleItem(this.articleId, this.title, this.link, this.summary,
-      this.source, this.imageUrl);
+  CategoryArticleItem(
+      this.id, this.title, this.link, this.summary, this.source, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CategoryArticleItem extends StatelessWidget {
         child: GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .pushNamed(ArticleScreen.routeName, arguments: articleId);
+                  .pushNamed(ArticleScreen.routeName, arguments: id);
             },
             child: Image.network(
               imageUrl,

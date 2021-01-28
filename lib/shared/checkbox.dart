@@ -15,7 +15,7 @@ class CheckBox extends StatefulWidget {
 class _CheckBoxState extends State<CheckBox> {
   var _isInit = true;
   var _isLoading = false;
-  Map<int, bool> checkboxes = {};
+  Map<String, bool> checkboxes = {};
   List<Category> categories = [];
   final _formKey = GlobalKey<FormState>();
 
@@ -32,9 +32,10 @@ class _CheckBoxState extends State<CheckBox> {
       });
 
       CategoryProvider provider =
-          Provider.of<CategoryProvider>(context, listen: false);
+          Provider.of<CategoryProvider>(context, listen: true);
 
       provider.fetchCategories().then((_) {
+        print("reest");
         setState(() {
           checkboxes = provider.checkboxes;
           categories = provider.items;
@@ -46,38 +47,72 @@ class _CheckBoxState extends State<CheckBox> {
     super.didChangeDependencies();
   }
 
+  void _updateSubscription(context) async {
+    int responseCode = await APIService().post(SUBSCRIPTION, checkboxes);
+    print(responseCode);
+    if (responseCode == 500) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                  content: Text("Something went wrong"),
+                  actions: <Widget>[
+                    FlatButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        })
+                  ]));
+    }
+  }
+
+  Future<void> _refreshSubscription(BuildContext context) async {
+    print("refrshing");
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .fetchCategories();
+    _isInit = true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Column(
-                    children: categories.map((Category c) {
-                  return CheckboxListTile(
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+      child: RefreshIndicator(
+          onRefresh: () => _refreshSubscription(context),
+          child: ListView(
+            children: [
+              Column(
+                  children: categories.map((Category c) {
+                String cId = c.id.toString();
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: CheckboxListTile(
                     title: Text(c.categoryName),
-                    value: checkboxes[c.categoryId],
+                    value: checkboxes[cId],
                     onChanged: (bool value) {
-                      print(checkboxes);
+                      // print(checkboxes);
                       setState(() {
-                        checkboxes[c.categoryId] = !checkboxes[c.categoryId];
+                        checkboxes[cId] = !checkboxes[cId];
                       });
                     },
-                  );
-                }).toList()),
-                RaisedButton(
-                  child: Text(
-                    'Save Preference',
-                    style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () async =>
-                      {await APIService().post(SET_CATEGORY, checkboxes)},
-                ),
-              ],
-            )),
-      ),
+                );
+              }).toList()),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: RaisedButton(
+                      child: Text(
+                        'Save Preference',
+                        // style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async => {_updateSubscription(context)},
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

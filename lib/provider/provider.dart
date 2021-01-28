@@ -8,18 +8,18 @@ import 'package:newheadline/utils/url.dart';
 
 class CategoryProvider with ChangeNotifier {
   List<Category> _items = [];
-  Map<int, bool> _checkBoxes = {};
+  Map<String, bool> _checkBoxes = {};
 
   List<Category> get items {
     return [..._items];
   }
 
-  Map<int, bool> get checkboxes {
+  Map<String, bool> get checkboxes {
     return {..._checkBoxes};
   }
 
-  Category findById(int categoryId) {
-    return _items.firstWhere((cat) => cat.categoryId == categoryId);
+  Category findById(int id) {
+    return _items.firstWhere((cat) => cat.id == id);
   }
 
   Future<void> fetchCategories([String token]) async {
@@ -27,15 +27,15 @@ class CategoryProvider with ChangeNotifier {
     final data = await APIService().get(url) as List;
 
     List<Category> items = [];
-    Map<int, bool> checkBoxes = {};
+    Map<String, bool> checkBoxes = {};
 
     for (var d in data) {
       // print(d['category_id']);
       items.add(Category(
-          categoryId: d['category_id'],
+          id: d['id'],
           categoryName: d['category_name'],
           imageUrl: "https://via.placeholder.com/500x300"));
-      checkBoxes[d['category_id']] = false;
+      checkBoxes[d['id'].toString()] = false;
     }
 
     _items = items;
@@ -52,7 +52,7 @@ class CategoryProvider with ChangeNotifier {
 class CategoryArticleProvider with ChangeNotifier {
   final List<CategoryArticle> _items = [
     CategoryArticle(
-        articleId: 1,
+        id: 1,
         title: 'title1',
         link:
             "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
@@ -61,7 +61,7 @@ class CategoryArticleProvider with ChangeNotifier {
         source: "SOURCE",
         imageUrl: "https://via.placeholder.com/500x300"),
     CategoryArticle(
-        articleId: 2,
+        id: 2,
         title: 'title2',
         link:
             "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
@@ -70,7 +70,7 @@ class CategoryArticleProvider with ChangeNotifier {
         source: "SOURCE",
         imageUrl: "https://via.placeholder.com/500x300"),
     CategoryArticle(
-        articleId: 3,
+        id: 3,
         title: 'title3',
         link:
             "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
@@ -79,7 +79,7 @@ class CategoryArticleProvider with ChangeNotifier {
         source: "SOURCE",
         imageUrl: "https://via.placeholder.com/500x300"),
     CategoryArticle(
-        articleId: 4,
+        id: 4,
         title: 'title4',
         link:
             "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
@@ -88,7 +88,7 @@ class CategoryArticleProvider with ChangeNotifier {
         source: "SOURCE",
         imageUrl: "https://via.placeholder.com/500x300"),
     CategoryArticle(
-        articleId: 5,
+        id: 5,
         title: 'title5',
         link:
             "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
@@ -102,8 +102,8 @@ class CategoryArticleProvider with ChangeNotifier {
     return [..._items];
   }
 
-  CategoryArticle findById(int articleId) {
-    return _items.firstWhere((a) => a.articleId == articleId);
+  CategoryArticle findById(int id) {
+    return _items.firstWhere((a) => a.id == id);
   }
 
   void reloadCategoryArticle() {

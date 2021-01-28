@@ -9,9 +9,9 @@ class CategoryArticleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryId = ModalRoute.of(context).settings.arguments as int;
-    final loadedCategory = Provider.of<CategoryProvider>(context, listen: false)
-        .findById(categoryId);
+    final id = ModalRoute.of(context).settings.arguments as int;
+    final loadedCategory =
+        Provider.of<CategoryProvider>(context, listen: false).findById(id);
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedCategory.categoryName),
@@ -30,7 +30,7 @@ class CategoryArticleGrid extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       itemCount: categoryArticles.length,
       itemBuilder: (ctx, i) => CategoryArticleItem(
-        categoryArticles[i].articleId,
+        categoryArticles[i].id,
         categoryArticles[i].title,
         categoryArticles[i].link,
         categoryArticles[i].summary,

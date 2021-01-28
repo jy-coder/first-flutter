@@ -12,7 +12,7 @@ class CategoryItem extends StatelessWidget {
         child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed(CategoryArticleScreen.routeName,
-                  arguments: category.categoryId);
+                  arguments: category.id);
             },
             child: Image.network(
               category.imageUrl,
