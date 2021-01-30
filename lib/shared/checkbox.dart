@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/provider/provider.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/shared/alert_box.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/utils/response.dart';
-import 'package:newheadline/utils/url.dart';
+import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
 
 class CheckBox extends StatefulWidget {

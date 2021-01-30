@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/provider/provider.dart';
+import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/widgets/categoryarticle_item.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class CategoryArticleScreen extends StatelessWidget {
 class CategoryArticleGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final categoryArticlesData = Provider.of<CategoryArticleProvider>(context);
+    final categoryArticlesData = Provider.of<ArticleProvider>(context);
     final categoryArticles = categoryArticlesData.items;
     return GridView.builder(
       padding: const EdgeInsets.all(10),

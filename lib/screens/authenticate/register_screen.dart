@@ -6,7 +6,7 @@ import 'package:newheadline/shared/constants.dart';
 import 'package:newheadline/shared/loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:newheadline/utils/response.dart';
-import 'package:newheadline/utils/url.dart';
+import 'package:newheadline/utils/urls.dart';
 
 import '../../main.dart';
 
@@ -89,7 +89,7 @@ class _RegisterState extends State<Register> {
                             if (result != null) {
                               _auth.getToken().then((String token) {
                                 print("saving to database");
-                                APIService().post(REGISTER_USER);
+                                APIService().post(REGISTER_URL);
                                 Navigator.of(context)
                                     .pushReplacementNamed(HomeScreen.routeName);
                               });

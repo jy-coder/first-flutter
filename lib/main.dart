@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/user.dart';
-import 'package:newheadline/provider/provider.dart';
+import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
@@ -21,7 +22,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider.value(value: Auth()),
       ChangeNotifierProvider.value(value: CategoryProvider()),
-      ChangeNotifierProvider.value(value: CategoryArticleProvider()),
+      ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider())
     ],
     child: MaterialApp(home: MyApp()),

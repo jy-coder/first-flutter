@@ -13,14 +13,14 @@ class Category with ChangeNotifier {
       );
 }
 
-class CategoryArticle {
+class Article {
   final int id;
   final String title;
   final String link;
   final String summary;
   final String source;
   final String imageUrl;
-  CategoryArticle(
+  Article(
       {@required this.id,
       @required this.title,
       @required this.link,

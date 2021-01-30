@@ -1,13 +1,11 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/provider/provider.dart';
 import 'package:newheadline/provider/subscription.dart';
-import 'package:newheadline/shared/alert_box.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/shared/checkbox.dart';
 import 'package:newheadline/utils/response.dart';
-import 'package:newheadline/utils/url.dart';
+import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -63,7 +61,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> updateSubscription(context) async {
-    int responseCode = await APIService().post(SUBSCRIPTION, checkboxes);
+    int responseCode = await APIService().post(SUBSCRIPTION_URL, checkboxes);
 
     Flushbar(
       message: responseCode == 500
@@ -112,32 +110,10 @@ class _SettingScreenState extends State<SettingScreen> {
                           checkboxes: checkboxes,
                           categories: categories),
                     )
-                  : CircularProgressIndicator(),
+                  : Center(child: CircularProgressIndicator()),
             ],
           ),
         ),
         drawer: AppDrawer());
   }
 }
-
-// class Authenticate extends StatefulWidget {
-//   static final routeName = '/authenticate';
-//   @override
-//   _AuthenticateState createState() => _AuthenticateState();
-// }
-
-// class _AuthenticateState extends State<Authenticate> {
-//   bool showSignIn = true;
-//   void toggleView() {
-//     setState(() => showSignIn = !showSignIn);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (showSignIn) {
-//       return LoginScreen(toggleView: toggleView);
-//     } else {
-//       return Register(toggleView: toggleView);
-//     }
-//   }
-// }

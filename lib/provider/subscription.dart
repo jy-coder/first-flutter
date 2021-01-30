@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/utils/response.dart';
-import 'package:newheadline/utils/url.dart';
+import 'package:newheadline/utils/urls.dart';
 
 class SubscriptionProvider with ChangeNotifier {
   List<Subscription> _items = [];
@@ -20,7 +20,7 @@ class SubscriptionProvider with ChangeNotifier {
   }
 
   Future<void> fetchSubscriptions([String token]) async {
-    const url = SUBSCRIPTION;
+    const url = SUBSCRIPTION_URL;
     final subscriptions = await APIService().get(url) as List;
 
     List<Subscription> items = [];
@@ -32,7 +32,7 @@ class SubscriptionProvider with ChangeNotifier {
         categoryName: s['category_name'],
       ));
 
-      if (s["checked"] == "True")
+      if (s["checked"])
         checkBoxes[s['id'].toString()] = true;
       else
         checkBoxes[s['id'].toString()] = false;
@@ -41,10 +41,6 @@ class SubscriptionProvider with ChangeNotifier {
     _items = items;
     _checkBoxes = checkBoxes;
 
-    notifyListeners();
-  }
-
-  void reloadSubscriptions() {
     notifyListeners();
   }
 }
