@@ -1,31 +1,48 @@
 import 'package:flutter/foundation.dart';
 
 class Category with ChangeNotifier {
-  final int categoryId;
+  final int id;
   final String categoryName;
   final String imageUrl;
-  Category(
-      {@required this.categoryId, @required this.categoryName, this.imageUrl});
+  Category({@required this.id, @required this.categoryName, this.imageUrl});
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-        categoryId: json["categoryId"],
+        id: json["id"],
         categoryName: json["categoryName"],
         // imageUrl: json["imageUrl"]
       );
 }
 
-class CategoryArticle {
-  final int articleId;
+class Article {
+  final int id;
   final String title;
+  final String category;
   final String link;
   final String summary;
   final String source;
   final String imageUrl;
-  CategoryArticle(
-      {@required this.articleId,
+  final String pubDate;
+  final String date;
+
+  Article(
+      {@required this.id,
       @required this.title,
+      @required this.category,
       @required this.link,
       @required this.summary,
       @required this.source,
-      this.imageUrl});
+      this.imageUrl,
+      this.pubDate,
+      this.date});
+}
+
+class Subscription {
+  final int id;
+  final String categoryName;
+  final bool checked;
+  Subscription({
+    @required this.id,
+    @required this.categoryName,
+    this.checked,
+  });
 }

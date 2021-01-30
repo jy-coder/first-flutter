@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/screens/pages/category_article_screen.dart';
+import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -11,8 +11,8 @@ class CategoryItem extends StatelessWidget {
     return GridTile(
         child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(CategoryArticleScreen.routeName,
-                  arguments: category.categoryId);
+              // Navigator.of(context).pushNamed(CategoryArticleScreen.routeName,
+              //     arguments: category.id);
             },
             child: Image.network(
               category.imageUrl,
