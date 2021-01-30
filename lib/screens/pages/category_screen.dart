@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
+import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
-import 'package:newheadline/shared/tabs.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/widgets/category_item.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +20,10 @@ class _CategoryScreenState extends State<CategoryScreen>
   var _isInit = true;
   var _isLoading = false;
   List<Category> categories = [];
+  List<Article> articles = [];
+  // List<Article> categorizedArticle = [];
   TabController _tabController;
   List<String> categoryNames = [];
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -44,6 +46,12 @@ class _CategoryScreenState extends State<CategoryScreen>
       });
 
       CategoryProvider cProvider = Provider.of<CategoryProvider>(context);
+      ArticleProvider aProvider = Provider.of<ArticleProvider>(context);
+      aProvider.fetchArticles().then((_) {
+        setState(() {
+          articles = aProvider.items;
+        });
+      });
 
       cProvider.fetchCategories().then((_) {
         setState(() {
@@ -53,8 +61,15 @@ class _CategoryScreenState extends State<CategoryScreen>
         });
       });
     }
+
     _isInit = false;
     super.didChangeDependencies();
+  }
+
+  void filterCategory(String categoryName) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.filterByCategory(categoryName);
   }
 
   @override
@@ -62,33 +77,37 @@ class _CategoryScreenState extends State<CategoryScreen>
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            bottom: TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                labelColor: Colors.black,
-                onTap: (int index) {
-                  setState(() {
-                    print(categoryNames);
-                    _selectedIndex = index;
-                  });
-                },
-                tabs: categories
-                    .map((Category c) => Tab(
-                        text:
-                            ('${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}')))
-                    .toList()),
-            title: Text('All news'),
-          ),
-          body: TabBarView(
+        drawer: AppDrawer(),
+        appBar: AppBar(
+          centerTitle: true,
+          bottom: TabBar(
               controller: _tabController,
-              children: categories
+              isScrollable: true,
+              labelColor: Colors.black,
+              onTap: (int index) {
+                filterCategory(categoryNames[index]);
+                // print(categoryNames[index]);
+                // return Consumer<ArticleProvider>(
+                //   builder: (context, article, _) {
+                //     print(categoryNames[index]);
+                //     article.filterByCategory(categoryNames[index]);
+                //     return;
+                //   },
+                // );
+              },
+              tabs: categories
                   .map((Category c) => Tab(
                       text:
                           ('${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}')))
                   .toList()),
-          drawer: AppDrawer()),
+          title: Text('All news'),
+        ),
+        body: TabBarView(
+            controller: _tabController,
+            children: categories
+                .map((Category c) => Tab(child: ArticleScreen()))
+                .toList()),
+      ),
     );
   }
 }

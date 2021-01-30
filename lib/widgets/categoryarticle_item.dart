@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
-import 'package:newheadline/screens/pages/category_article_screen.dart';
 
 class CategoryArticleItem extends StatelessWidget {
   final int id;

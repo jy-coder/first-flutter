@@ -16,17 +16,24 @@ class Category with ChangeNotifier {
 class Article {
   final int id;
   final String title;
+  final String category;
   final String link;
   final String summary;
   final String source;
   final String imageUrl;
+  final String pubDate;
+  final String date;
+
   Article(
       {@required this.id,
       @required this.title,
+      @required this.category,
       @required this.link,
       @required this.summary,
       @required this.source,
-      this.imageUrl});
+      this.imageUrl,
+      this.pubDate,
+      this.date});
 }
 
 class Subscription {

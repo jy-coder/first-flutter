@@ -1,64 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/utils/response.dart';
+import 'package:newheadline/utils/urls.dart';
 
 class ArticleProvider with ChangeNotifier {
-  final List<Article> _items = [
-    Article(
-        id: 1,
-        title: 'title1',
-        link:
-            "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
-        summary:
-            "Nulla sint nostrud aliqua sint ut laborum sunt aliquip reprehenderit Lorem anim et dolore proident. Culpa velit id non elit et voluptate. Ex non cillum voluptate exercitation est mollit est culpa aliqua. Quis qui fugiat velit aute quis non fugiat exercitation. Ad est aliquip commodo exercitation reprehenderit.",
-        source: "SOURCE",
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Article(
-        id: 2,
-        title: 'title2',
-        link:
-            "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
-        summary:
-            "Ea velit est laborum ipsum esse officia amet. Laborum quis mollit mollit occaecat pariatur nostrud tempor deserunt anim ad ut qui velit. Eu nostrud eiusmod mollit sunt officia. Magna mollit in magna non dolor sunt aute commodo eiusmod officia qui ut ad in. Amet ad in id sint. Consequat ipsum enim minim non pariatur ullamco nulla officia anim minim velit do eu.",
-        source: "SOURCE",
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Article(
-        id: 3,
-        title: 'title3',
-        link:
-            "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
-        summary:
-            "Non id ad deserunt voluptate laboris fugiat magna aliquip ea proident commodo dolor pariatur aliqua. Lorem laborum laboris esse do adipisicing fugiat magna ad et fugiat ex proident reprehenderit proident. Dolor deserunt sit fugiat aliqua culpa cupidatat deserunt. In exercitation commodo pariatur nulla labore ut occaecat reprehenderit esse Lorem non. Laborum sit mollit nulla cupidatat.",
-        source: "SOURCE",
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Article(
-        id: 4,
-        title: 'title4',
-        link:
-            "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
-        summary:
-            "Quis sunt nulla adipisicing pariatur ipsum cillum dolor non laborum ut. Anim reprehenderit laborum pariatur aute laborum. Reprehenderit officia duis officia qui do. Ad ea reprehenderit id incididunt eu cupidatat irure elit incididunt. Aute elit laborum incididunt do ad aliqua nulla cupidatat velit et commodo velit anim. Esse do adipisicing laborum elit mollit proident elit ea irure irure. Consequat deserunt laboris nostrud enim in Lorem occaecat.",
-        source: "SOURCE",
-        imageUrl: "https://via.placeholder.com/500x300"),
-    Article(
-        id: 5,
-        title: 'title5',
-        link:
-            "http://www.straitstimes.com/world/united-states/china-did-not-fulfil-trade-promises-to-the-us-says-report",
-        summary:
-            "Tempor ipsum do consectetur minim nostrud voluptate tempor sunt aute dolor dolor ut. Consequat do do laboris sint cupidatat Lorem anim duis occaecat excepteur ipsum. Minim commodo esse id esse aute aliquip nisi aliquip cupidatat. Sit fugiat sint culpa dolor est veniam. Sunt eu laboris ut ullamco ipsum. Labore dolor nisi anim nostrud occaecat velit.",
-        source: "SOURCE",
-        imageUrl: "https://via.placeholder.com/500x300"),
-  ];
+  List<Article> _items = [];
+  List<Article> _filteredItems = [];
 
   List<Article> get items {
     return [..._items];
+  }
+
+  List<Article> get filteredItems {
+    return [..._filteredItems];
   }
 
   Article findById(int id) {
     return _items.firstWhere((a) => a.id == id);
   }
 
-  void reloadCategoryArticle() {
+  Future<void> fetchArticles() async {
+    const url = ARTICLE_URL;
+    final data = await APIService().get(url) as List;
+
+    List<Article> items = [];
+
+    for (var d in data) {
+      items.add(Article(
+          id: d['id'],
+          category: d['category'],
+          summary: d['summary'],
+          source: d['souce'],
+          link: d['link'],
+          title: d['title'],
+          imageUrl: "https://via.placeholder.com/500x300"));
+    }
+    _items = items;
+  }
+
+  void filterByCategory(String categoryName) {
+    print(categoryName);
+    _filteredItems =
+        _items.where((Article a) => a.category == categoryName).toList();
     notifyListeners();
   }
 }
