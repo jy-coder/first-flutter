@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pages/webview_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticlesScreen extends StatelessWidget {
   static final routeName = "/articles";
@@ -18,7 +20,8 @@ class ArticlesScreen extends StatelessWidget {
             article.filteredItems[i].id,
             article.filteredItems[i].title,
             article.filteredItems[i].imageUrl,
-            article.filteredItems[i].summary),
+            article.filteredItems[i].summary,
+            article.filteredItems[i].link),
       );
     });
   }
@@ -29,8 +32,9 @@ class OneArticleGrid extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String summary;
+  final String link;
 
-  OneArticleGrid(this.id, this.title, this.imageUrl, this.summary);
+  OneArticleGrid(this.id, this.title, this.imageUrl, this.summary, this.link);
 
   @override
   _OneArticleGridState createState() => _OneArticleGridState();
@@ -56,15 +60,31 @@ class _OneArticleGridState extends State<OneArticleGrid> {
       child: Card(
           child: Wrap(
         children: [
-          Image.network(
-            'https://via.placeholder.com/800x300',
-          ),
-          Column(
-            children: [
-              ListTile(
-                title: Text(widget.title),
-              ),
-            ],
+          InkWell(
+            onTap: () {
+              return Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WebViewScreen(widget.link),
+                  )
+                  // initialUrl: widget.link,
+                  );
+              // print(widget.link);
+            },
+            child: Column(
+              children: [
+                Image.network(
+                  'https://via.placeholder.com/800x300',
+                ),
+                Column(
+                  children: [
+                    ListTile(
+                      title: Text(widget.title),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
           Row(
             children: [
