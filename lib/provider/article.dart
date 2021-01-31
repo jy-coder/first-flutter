@@ -26,20 +26,24 @@ class ArticleProvider with ChangeNotifier {
     List<Article> items = [];
 
     for (var d in data) {
-      items.add(Article(
+      items.add(
+        Article(
           id: d['id'],
           category: d['category'],
           summary: d['summary'],
-          source: d['souce'],
+          source: d['source'],
           link: d['link'],
           title: d['title'],
-          imageUrl: "https://via.placeholder.com/500x300"));
+          imageUrl: "https://via.placeholder.com/500x300",
+          description: d['description'],
+          pubDate: d['publication_date'],
+        ),
+      );
     }
     _items = items;
   }
 
   void filterByCategory(String categoryName) {
-    print(categoryName);
     _filteredItems =
         _items.where((Article a) => a.category == categoryName).toList();
     notifyListeners();

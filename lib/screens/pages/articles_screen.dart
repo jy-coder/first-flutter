@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
-import 'package:newheadline/screens/pages/webview_screen.dart';
+import 'package:newheadline/utils/models.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticlesScreen extends StatelessWidget {
   static final routeName = "/articles";
@@ -17,11 +16,16 @@ class ArticlesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         itemCount: article.filteredItems.length,
         itemBuilder: (ctx, i) => OneArticleGrid(
-            article.filteredItems[i].id,
-            article.filteredItems[i].title,
-            article.filteredItems[i].imageUrl,
-            article.filteredItems[i].summary,
-            article.filteredItems[i].link),
+          article.filteredItems[i].id,
+          article.filteredItems[i].title,
+          article.filteredItems[i].imageUrl,
+          article.filteredItems[i].summary,
+          article.filteredItems[i].link,
+          article.filteredItems[i].description,
+          article.filteredItems[i].pubDate,
+          article.filteredItems[i].source,
+          article.filteredItems[i].category,
+        ),
       );
     });
   }
@@ -33,8 +37,13 @@ class OneArticleGrid extends StatefulWidget {
   final String imageUrl;
   final String summary;
   final String link;
+  final String description;
+  final String pubDate;
+  final String source;
+  final String category;
 
-  OneArticleGrid(this.id, this.title, this.imageUrl, this.summary, this.link);
+  OneArticleGrid(this.id, this.title, this.imageUrl, this.summary, this.link,
+      this.description, this.pubDate, this.source, this.category);
 
   @override
   _OneArticleGridState createState() => _OneArticleGridState();
@@ -62,13 +71,19 @@ class _OneArticleGridState extends State<OneArticleGrid> {
         children: [
           InkWell(
             onTap: () {
-              return Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WebViewScreen(widget.link),
-                  )
-                  // initialUrl: widget.link,
-                  );
+              Navigator.pushNamed(
+                context,
+                ArticleScreen.routeName,
+                arguments: ScreenArguments(
+                  widget.id,
+                  widget.title,
+                  widget.description,
+                  widget.imageUrl,
+                  widget.pubDate,
+                  widget.source,
+                  widget.category,
+                ),
+              );
               // print(widget.link);
             },
             child: Column(
