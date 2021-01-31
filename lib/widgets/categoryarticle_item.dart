@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pages/articles_screen.dart';
 
 class CategoryArticleItem extends StatelessWidget {
   final int id;
@@ -18,7 +18,7 @@ class CategoryArticleItem extends StatelessWidget {
         child: GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .pushNamed(ArticleScreen.routeName, arguments: id);
+                  .pushNamed(ArticlesScreen.routeName, arguments: id);
             },
             child: Image.network(
               imageUrl,
