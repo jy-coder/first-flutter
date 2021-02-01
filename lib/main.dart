@@ -4,6 +4,7 @@ import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
@@ -48,8 +49,9 @@ class MyApp extends StatelessWidget {
                 )),
             home: auth.uid != null ? HomeScreen() : CategoryScreen(),
             routes: {
-              CategoryScreen.routeName: (ctx) => CategoryScreen(),
               ArticleScreen.routeName: (ctx) => ArticleScreen(),
+              CategoryScreen.routeName: (ctx) => CategoryScreen(),
+              ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
               HomeScreen.routeName: (ctx) => HomeScreen(),
               SettingScreen.routeName: (ctx) => SettingScreen(),
               Authenticate.routeName: (ctx) => Authenticate()

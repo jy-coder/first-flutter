@@ -21,6 +21,7 @@ class Article {
   final String summary;
   final String source;
   final String imageUrl;
+  final String description;
   final String pubDate;
   final String date;
 
@@ -31,6 +32,7 @@ class Article {
       @required this.link,
       @required this.summary,
       @required this.source,
+      @required this.description,
       this.imageUrl,
       this.pubDate,
       this.date});

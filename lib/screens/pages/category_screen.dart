@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/widgets/category_item.dart';
@@ -34,7 +34,7 @@ class _CategoryScreenState extends State<CategoryScreen>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    if (_tabController != null) _tabController.dispose();
     super.dispose();
   }
 
@@ -105,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen>
         body: TabBarView(
             controller: _tabController,
             children: categories
-                .map((Category c) => Tab(child: ArticleScreen()))
+                .map((Category c) => Tab(child: ArticlesScreen()))
                 .toList()),
       ),
     );
