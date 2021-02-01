@@ -10,6 +10,7 @@ class ArticleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
     DateTime dateTime = dateFormat.parse(args.pubDate);
     String timeAgo = timeago.format(dateTime);
@@ -18,13 +19,15 @@ class ArticleScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(""),
       ),
-      body: Card(
+      body: SingleChildScrollView(
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Wrap(
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.network(
-                'https://via.placeholder.com/800x500',
+              Container(
+                child: Image.network(
+                  'https://via.placeholder.com/800x500',
+                ),
               ),
               Container(
                 alignment: Alignment.center,
@@ -40,34 +43,51 @@ class ArticleScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Column(
-                      children: [
-                        Icon(Icons.lock_clock),
-                        Text(
-                          timeAgo,
-                          style: CustomTextStyle.small(context),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                    Container(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.timelapse),
+                                Text(
+                                  timeAgo,
+                                  style: CustomTextStyle.small(context),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.source),
+                                Text(
+                                  args.source,
+                                  style: CustomTextStyle.small(context),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        args.description,
+                        style: CustomTextStyle.normal(context),
+                      ),
                     )
                   ],
                 ),
               )
             ],
           ),
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          // Text(
-          //   args.title,
-          //   style: CustomTextStyle.title1(context),
-          // ),
-          //   ],
-          // ),
         ),
       ),
     );
-
-    // child: Text("hello"),
   }
 }
