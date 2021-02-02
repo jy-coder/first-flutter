@@ -31,11 +31,16 @@ class ArticleProvider with ChangeNotifier {
       );
     }
     _items = items;
+    _filteredItems = items;
   }
 
   void filterByCategory(String categoryName) {
-    _filteredItems =
-        _items.where((Article a) => a.category == categoryName).toList();
+    print(categoryName);
+    if (categoryName != "all")
+      _filteredItems =
+          _items.where((Article a) => a.category == categoryName).toList();
+    else
+      _filteredItems = _items;
     notifyListeners();
   }
 }

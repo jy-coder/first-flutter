@@ -29,7 +29,7 @@ class ArticleScreen extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: 'https://via.placeholder.com/800x500',
                   placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
               Container(
