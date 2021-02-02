@@ -27,17 +27,7 @@ class ArticleProvider with ChangeNotifier {
 
     for (var d in data) {
       items.add(
-        Article(
-          id: d['id'],
-          category: d['category'],
-          summary: d['summary'],
-          source: d['source'],
-          link: d['link'],
-          title: d['title'],
-          imageUrl: "https://via.placeholder.com/500x300",
-          description: d['description'],
-          pubDate: d['publication_date'],
-        ),
+        Article.fromJson(d),
       );
     }
     _items = items;

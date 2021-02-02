@@ -35,10 +35,9 @@ class CategoryProvider with ChangeNotifier {
 
     for (var d in data) {
       // print(d['category_id']);
-      items.add(Category(
-          id: d['id'],
-          categoryName: d['category_name'],
-          imageUrl: "https://via.placeholder.com/500x300"));
+      items.add(
+        Category.fromJson(d),
+      );
       checkBoxes[d['id'].toString()] = false;
       categoryNames.add(d['category_name']);
     }

@@ -27,10 +27,9 @@ class SubscriptionProvider with ChangeNotifier {
     Map<String, bool> checkBoxes = {};
 
     for (var s in subscriptions) {
-      items.add(Subscription(
-        id: s['id'],
-        categoryName: s['category_name'],
-      ));
+      items.add(
+        Subscription.fromJson(s),
+      );
 
       if (s["checked"])
         checkBoxes[s['id'].toString()] = true;

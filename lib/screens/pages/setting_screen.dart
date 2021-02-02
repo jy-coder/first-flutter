@@ -82,7 +82,9 @@ class _SettingScreenState extends State<SettingScreen> {
         appBar: AppBar(title: Text("Settings"), actions: <Widget>[
           !edit
               ? IconButton(
-                  icon: Icon(Icons.edit), onPressed: () => toggleButton())
+                  icon: Icon(Icons.edit),
+                  onPressed: () => toggleButton(),
+                )
               : Row(children: [
                   IconButton(
                       icon: Icon(Icons.save),
@@ -104,11 +106,12 @@ class _SettingScreenState extends State<SettingScreen> {
               !_isLoading
                   ? Expanded(
                       child: CheckBox(
-                          edit: edit,
-                          refreshSubscription: refreshSubscription,
-                          updateSubscription: updateSubscription,
-                          checkboxes: checkboxes,
-                          categories: categories),
+                        edit: edit,
+                        refreshSubscription: refreshSubscription,
+                        updateSubscription: updateSubscription,
+                        checkboxes: checkboxes,
+                        categories: categories,
+                      ),
                     )
                   : Center(child: CircularProgressIndicator()),
             ],
