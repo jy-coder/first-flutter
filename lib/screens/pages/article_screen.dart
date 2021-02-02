@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/shared/title.dart';
 import 'package:newheadline/utils/models.dart';
@@ -25,8 +26,10 @@ class ArticleScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                child: Image.network(
-                  'https://via.placeholder.com/800x500',
+                child: CachedNetworkImage(
+                  imageUrl: 'https://via.placeholder.com/800x500',
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
               ),
               Container(
