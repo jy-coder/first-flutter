@@ -4,8 +4,6 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
-import 'package:newheadline/utils/auth.dart';
-import 'package:newheadline/widgets/category_item.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -21,7 +19,6 @@ class _CategoryScreenState extends State<CategoryScreen>
   var _isLoading = false;
   List<Category> categories = [];
   List<Article> articles = [];
-  // List<Article> categorizedArticle = [];
   TabController _tabController;
   List<String> categoryNames = [];
 
@@ -80,32 +77,40 @@ class _CategoryScreenState extends State<CategoryScreen>
         drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
-          bottom: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              labelColor: Colors.black,
-              onTap: (int index) {
-                filterCategory(categoryNames[index]);
-              },
-              tabs: categories
-                  .map(
-                    (Category c) => Tab(
-                      text:
-                          ('${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}'),
-                    ),
-                  )
-                  .toList()),
+          bottom: !_isLoading
+              ? TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  labelColor: Colors.black,
+                  onTap: (int index) {
+                    filterCategory(categoryNames[index]);
+                  },
+                  tabs: categories
+                      .map(
+                        (Category c) => Tab(
+                          text:
+                              ('${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}'),
+                        ),
+                      )
+                      .toList(),
+                )
+              : null,
           title: Text('All news'),
         ),
-        body: TabBarView(
-            controller: _tabController,
-            children: categories
-                .map(
-                  (Category c) => Tab(
-                    child: ArticlesScreen(),
-                  ),
-                )
-                .toList()),
+        body: !_isLoading
+            ? TabBarView(
+                controller: _tabController,
+                children: categories
+                    .map(
+                      (Category c) => Tab(
+                        child: ArticlesScreen(),
+                      ),
+                    )
+                    .toList(),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
