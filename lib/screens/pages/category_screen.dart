@@ -23,6 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen>
   List<String> categoryNames = [];
 
   @override
+  @override
   void initState() {
     super.initState();
     if (categories.length != 0)
@@ -42,8 +43,11 @@ class _CategoryScreenState extends State<CategoryScreen>
         _isLoading = true;
       });
 
-      CategoryProvider cProvider = Provider.of<CategoryProvider>(context);
-      ArticleProvider aProvider = Provider.of<ArticleProvider>(context);
+      CategoryProvider cProvider =
+          Provider.of<CategoryProvider>(context, listen: false);
+      ArticleProvider aProvider =
+          Provider.of<ArticleProvider>(context, listen: false);
+
       aProvider.fetchArticles().then((_) {
         setState(() {
           articles = aProvider.items;
@@ -83,7 +87,9 @@ class _CategoryScreenState extends State<CategoryScreen>
                   isScrollable: true,
                   labelColor: Colors.black,
                   onTap: (int index) {
-                    filterCategory(categoryNames[index]);
+                    filterCategory(
+                      categoryNames[index],
+                    );
                   },
                   tabs: categories
                       .map(

@@ -27,14 +27,13 @@ class CategoryProvider with ChangeNotifier {
 
   Future<void> fetchCategories([String token]) async {
     const url = CATEGORIES_URL;
-    final data = await APIService().get(url) as List;
+    final List<Map<String, dynamic>> data = await APIService().get(url);
 
     List<Category> items = [];
     Map<String, bool> checkBoxes = {};
     List<String> categoryNames = [];
 
-    for (var d in data) {
-      // print(d['category_id']);
+    for (Map<String, dynamic> d in data) {
       items.add(
         Category.fromJson(d),
       );
@@ -45,11 +44,5 @@ class CategoryProvider with ChangeNotifier {
     _items = items;
     _checkBoxes = checkBoxes;
     _categoryNames = categoryNames;
-
-    notifyListeners();
-  }
-
-  void reloadCategory() {
-    notifyListeners();
   }
 }
