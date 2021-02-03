@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/utils/auth.dart';
 
 class APIService {
@@ -28,13 +27,12 @@ class APIService {
     return response.statusCode;
   }
 
-  Future<dynamic> get(String url) async {
+  Future<List<Map<String, dynamic>>> get(String url) async {
     String token = await getToken();
 
     Response response = await http.get(url,
         headers: {"Content-Type": "application/json", "X-Id-Token": token});
 
-    // print(response);
-    return json.decode(response.body);
+    return List<Map<String, dynamic>>.from(json.decode(response.body));
   }
 }

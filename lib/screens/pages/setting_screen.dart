@@ -79,26 +79,30 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Settings"), actions: <Widget>[
-          !edit
-              ? IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => toggleButton(),
-                )
-              : Row(children: [
-                  IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () async {
-                        await updateSubscription(context);
-                      }),
-                  TextButton(
-                      child: Text("Cancel"),
-                      onPressed: () async {
-                        toggleButton();
-                        await refreshSubscription(context);
-                      })
-                ])
-        ]),
+        appBar: AppBar(
+            title: Text(
+              "Settings",
+            ),
+            actions: <Widget>[
+              !edit
+                  ? IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => toggleButton(),
+                    )
+                  : Row(children: [
+                      IconButton(
+                          icon: Icon(Icons.save),
+                          onPressed: () async {
+                            await updateSubscription(context);
+                          }),
+                      TextButton(
+                          child: Text("Cancel"),
+                          onPressed: () async {
+                            toggleButton();
+                            await refreshSubscription(context);
+                          })
+                    ])
+            ]),
         body: Container(
           padding: EdgeInsets.only(top: 5),
           child: Column(

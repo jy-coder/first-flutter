@@ -8,16 +8,16 @@ class Category with ChangeNotifier {
   final String imageUrl;
   Category({@required this.id, @required this.categoryName, this.imageUrl});
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Category.fromJson(Map<dynamic, dynamic> json) => Category(
       id: json["id"] as int,
       categoryName: json["category_name"] as String,
       imageUrl: "https://via.placeholder.com/500x300");
 
-  List<Category> parseCategory(String responseBody) {
-    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+  // List<Category> parseCategory(String responseBody) {
+  //   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-    return parsed.map<Category>((json) => Category.fromJson(json)).toList();
-  }
+  //   return parsed.map<Category>((json) => Category.fromJson(json)).toList();
+  // }
 }
 
 class Article {
@@ -44,7 +44,7 @@ class Article {
       this.pubDate,
       this.date});
 
-  factory Article.fromJson(Map<String, dynamic> json) => Article(
+  factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
       id: json["id"] as int,
       category: json["category"] as String,
       summary: json["summary"] as String,
@@ -67,7 +67,7 @@ class Subscription {
     this.checked,
   });
 
-  factory Subscription.fromJson(Map<String, dynamic> json) => Subscription(
+  factory Subscription.fromJson(Map<dynamic, dynamic> json) => Subscription(
         id: json["id"] as int,
         categoryName: json["category_name"] as String,
       );
