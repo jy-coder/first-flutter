@@ -23,6 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen>
   List<String> categoryNames = [];
 
   @override
+  @override
   void initState() {
     super.initState();
     if (categories.length != 0)

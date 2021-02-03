@@ -11,22 +11,28 @@ class ArticlesScreen extends StatefulWidget {
   _ArticlesScreenState createState() => _ArticlesScreenState();
 }
 
-class _ArticlesScreenState extends State<ArticlesScreen> {
+class _ArticlesScreenState extends State<ArticlesScreen>
+    with AutomaticKeepAliveClientMixin {
   bool _isLoading = true;
   bool _hasMore = true;
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
+    // print("init called");
     super.initState();
     _isLoading = true;
     _hasMore = true;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadMore();
+      // print("mounted value:$mounted");
     });
   }
 
   @override
   void dispose() {
+    // print("disposed");
     super.dispose();
   }
 
@@ -51,6 +57,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     List<Article> filteredArticles = aProvider.filteredItems;

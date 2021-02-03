@@ -45,8 +45,4 @@ class CategoryProvider with ChangeNotifier {
     _checkBoxes = checkBoxes;
     _categoryNames = categoryNames;
   }
-
-  void reloadCategory() {
-    notifyListeners();
-  }
 }

@@ -21,7 +21,7 @@ class SubscriptionProvider with ChangeNotifier {
 
   Future<void> fetchSubscriptions([String token]) async {
     const url = SUBSCRIPTION_URL;
-    final subscriptions = await APIService().get(url) as List;
+    final subscriptions = await APIService().get(url);
 
     List<Subscription> items = [];
     Map<String, bool> checkBoxes = {};
@@ -39,7 +39,5 @@ class SubscriptionProvider with ChangeNotifier {
 
     _items = items;
     _checkBoxes = checkBoxes;
-
-    notifyListeners();
   }
 }
