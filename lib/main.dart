@@ -7,6 +7,7 @@ import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/pages/page_view.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/utils/auth.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
                 )),
             home: auth.uid != null ? HomeScreen() : CategoryScreen(),
             routes: {
+              PageViewScreen.routeName: (ctx) => PageViewScreen(),
               ArticleScreen.routeName: (ctx) => ArticleScreen(),
               CategoryScreen.routeName: (ctx) => CategoryScreen(),
               ArticlesScreen.routeName: (ctx) => ArticlesScreen(),

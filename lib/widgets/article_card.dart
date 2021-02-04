@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pages/page_view.dart';
 import 'package:newheadline/utils/models.dart';
+import 'package:provider/provider.dart';
 
 class ArticleCard extends StatefulWidget {
   final int id;
@@ -25,6 +28,12 @@ class ArticleCard extends StatefulWidget {
 class _ArticleCardState extends State<ArticleCard> {
   bool showFullSummary = false;
 
+  void _getArticles(int id) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.getPageViewArticle(id);
+  }
+
   String truncateWithEllipsis(int cutoff, String myString) {
     return (myString.length <= cutoff)
         ? myString
@@ -44,20 +53,12 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           InkWell(
             onTap: () {
+              _getArticles(widget.id);
               Navigator.pushNamed(
                 context,
-                ArticleScreen.routeName,
-                arguments: ScreenArguments(
-                  widget.id,
-                  widget.title,
-                  widget.description,
-                  widget.imageUrl,
-                  widget.pubDate,
-                  widget.source,
-                  widget.category,
-                ),
+                PageViewScreen.routeName,
+                arguments: widget.id,
               );
-              // print(widget.link);
             },
             child: Column(
               children: [
