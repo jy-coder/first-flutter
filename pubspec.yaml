@@ -39,6 +39,7 @@ dependencies:
   # webview_flutter: ^1.0.7
   timeago: ^2.0.29
   cached_network_image: ^2.5.0
+  smooth_page_indicator: ^0.2.0
 
 dev_dependencies:
   flutter_test:

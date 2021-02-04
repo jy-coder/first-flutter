@@ -6,7 +6,8 @@ import 'package:newheadline/utils/urls.dart';
 class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
   List<Article> _filteredItems = [];
-  String _categoryName = "all";
+  int _initialPage = 0;
+  String _categoryName = "all"; //default fliter
   int _page = 1;
 
   List<Article> get items {
@@ -17,8 +18,16 @@ class ArticleProvider with ChangeNotifier {
     return [..._filteredItems];
   }
 
+  int get initialPage {
+    return _initialPage;
+  }
+
   Article findById(int id) {
     return _items.firstWhere((a) => a.id == id);
+  }
+
+  int getPos(int id, List<Article> list) {
+    return list.indexWhere((a) => a.id == id);
   }
 
   String get getFilteredCategory {
@@ -61,14 +70,17 @@ class ArticleProvider with ChangeNotifier {
     return data;
   }
 
-  Future<void> filterByCategory(String categoryName) async {
-    // print(_page);
+  void filterByCategory(String categoryName) {
     _categoryName = categoryName;
     _page = 0;
     if (categoryName != "all")
       _filteredItems =
           _items.where((Article a) => a.category == categoryName).toList();
+  }
 
-    // notifyListeners();
+  void getPageViewArticle(int id) {
+    int ind = getPos(id, _filteredItems);
+
+    _initialPage = ind + 1;
   }
 }
