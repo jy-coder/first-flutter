@@ -27,79 +27,74 @@ class ArticlePage extends StatelessWidget {
     DateTime dateTime = dateFormat.parse(pubDate);
     String timeAgo = timeago.format(dateTime);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Wrap(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: CachedNetworkImage(
-                  imageUrl: 'https://via.placeholder.com/800x500',
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+    return SingleChildScrollView(
+      child: Container(
+        child: Wrap(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: CachedNetworkImage(
+                imageUrl: 'https://via.placeholder.com/800x500',
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(top: 5),
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  children: [
-                    Text(
-                      title,
-                      style: CustomTextStyle.title1(context),
-                      textAlign: TextAlign.center,
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: [
+                  Text(
+                    title,
+                    style: CustomTextStyle.title1(context),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.timelapse),
+                              Text(
+                                timeAgo,
+                                style: CustomTextStyle.small(context),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.source),
+                              Text(
+                                source,
+                                style: CustomTextStyle.small(context),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      description,
+                      style: CustomTextStyle.normal(context),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.timelapse),
-                                Text(
-                                  timeAgo,
-                                  style: CustomTextStyle.small(context),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.source),
-                                Text(
-                                  source,
-                                  style: CustomTextStyle.small(context),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        description,
-                        style: CustomTextStyle.normal(context),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
