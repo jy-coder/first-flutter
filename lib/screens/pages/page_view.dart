@@ -40,37 +40,39 @@ class _PageViewScreenState extends State<PageViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: SmoothPageIndicator(
-            controller: _controller,
-            count: articles.length,
-            effect: ScrollingDotsEffect(
-              dotWidth: 10.0,
-              dotHeight: 10.0,
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 10, bottom: 20),
+            child: SmoothPageIndicator(
+              controller: _controller,
+              count: articles.length,
+              effect: ScrollingDotsEffect(
+                dotWidth: 5.0,
+                dotHeight: 5.0,
+              ),
             ),
           ),
-        ),
-      ),
-      body: PageView(
-        controller: _controller,
-        children: <Widget>[
-          SmoothPageIndicator(
-            controller: _controller,
-            count: articles.length,
-            effect: ScrollingDotsEffect(),
+          Expanded(
+            flex: 1,
+            child: PageView(
+              controller: _controller,
+              children: <Widget>[
+                ...articles
+                    .map((Article a) => ArticlePage(
+                          id: a.id,
+                          title: a.title,
+                          description: a.description,
+                          imageUrl: 'https://via.placeholder.com/800x500',
+                          pubDate: a.pubDate,
+                          source: a.source,
+                          category: a.category,
+                        ))
+                    .toList(),
+              ],
+            ),
           ),
-          ...articles
-              .map((Article a) => ArticlePage(
-                    id: a.id,
-                    title: a.title,
-                    description: a.description,
-                    imageUrl: 'https://via.placeholder.com/800x500',
-                    pubDate: DateTime.now().toString(),
-                    source: a.source,
-                    category: a.category,
-                  ))
-              .toList()
         ],
       ),
     );
