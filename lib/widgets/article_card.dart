@@ -62,10 +62,14 @@ class _ArticleCardState extends State<ArticleCard> {
             },
             child: Column(
               children: [
-                CachedNetworkImage(
-                  imageUrl: 'https://via.placeholder.com/800x500',
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: CachedNetworkImageProvider(widget.imageUrl,
+                        cacheKey: widget.id.toString()),
+                    fit: BoxFit.cover,
+                  )),
                 ),
                 Column(
                   children: [

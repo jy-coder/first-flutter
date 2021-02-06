@@ -33,11 +33,15 @@ class ArticlePage extends StatelessWidget {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: CachedNetworkImage(
-                imageUrl: 'https://via.placeholder.com/800x500',
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: CachedNetworkImageProvider(
+                  this.imageUrl,
+                  cacheKey: this.id.toString(),
+                ),
+                fit: BoxFit.cover,
+              )),
             ),
             Container(
               alignment: Alignment.center,

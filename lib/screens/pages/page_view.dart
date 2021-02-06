@@ -29,6 +29,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
     _controller = PageController(
       initialPage: _initialPage,
     );
+    super.didChangeDependencies();
   }
 
   @override
@@ -64,7 +65,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
                           id: a.id,
                           title: a.title,
                           description: a.description,
-                          imageUrl: 'https://via.placeholder.com/800x500',
+                          imageUrl: a.imageUrl,
                           pubDate: a.pubDate,
                           source: a.source,
                           category: a.category,

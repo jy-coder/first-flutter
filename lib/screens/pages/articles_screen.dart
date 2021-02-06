@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/utils/load_image.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
@@ -36,12 +37,23 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     super.dispose();
   }
 
-  void _loadMore() {
+  void _loadMore() async {
     if (!mounted) return;
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
-    aProvider.fetchArticlesByCategory().then((result) {
+    aProvider.fetchArticlesByCategory().then((result) async {
+      List<Future> futures = [];
+
+      aProvider.filteredItems.asMap().forEach((index, a) {
+        futures.add(Utils.cacheImage(
+          context,
+          a.imageUrl,
+          a.id.toString(),
+        ));
+      });
+      await Future.wait(futures);
+
       if (result.isEmpty) {
         setState(() {
           _isLoading = false;
