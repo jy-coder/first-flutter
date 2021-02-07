@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/shared/alert_box.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/shared/constants.dart';
-import 'package:newheadline/shared/loading.dart';
-import 'package:http/http.dart' as http;
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
-
-import '../../main.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -83,8 +78,8 @@ class _RegisterState extends State<Register> {
                           email, password);
                       setState(() => loading = false);
 
-                      if (result != null) {
-                        _auth.getToken().then((String token) {
+                      if (result != null && _auth.currentUser != null) {
+                        _auth.currentUser.getIdToken().then((String token) {
                           print("saving to database");
                           APIService().post(REGISTER_URL);
                           Navigator.of(context)

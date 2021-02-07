@@ -30,36 +30,35 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (_, auth, __) {
-        return MaterialApp(
-            title: 'NewsHeadline',
-            theme: new ThemeData(
-                appBarTheme: AppBarTheme(
-                  color: Colors.white,
-                ),
-                primaryTextTheme: TextTheme(
-                  headline6: TextStyle(color: Colors.black),
-                ),
-                primaryIconTheme: IconThemeData(
-                  color: Colors.black,
-                ),
-                buttonTheme: ButtonThemeData(
-                  buttonColor: Colors.black87, //  <-- dark color
-                  textTheme: ButtonTextTheme
-                      .primary, //  <-- this auto selects the right color
-                )),
-            home: auth.uid != null ? HomeScreen() : CategoryScreen(),
-            routes: {
-              PageViewScreen.routeName: (ctx) => PageViewScreen(),
-              ArticleScreen.routeName: (ctx) => ArticleScreen(),
-              CategoryScreen.routeName: (ctx) => CategoryScreen(),
-              ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
-              HomeScreen.routeName: (ctx) => HomeScreen(),
-              SettingScreen.routeName: (ctx) => SettingScreen(),
-              Authenticate.routeName: (ctx) => Authenticate()
-            });
-      },
+    return StreamProvider.value(
+      value: Auth().user,
+      child: MaterialApp(
+          title: 'NewsHeadline',
+          theme: new ThemeData(
+              appBarTheme: AppBarTheme(
+                color: Colors.white,
+              ),
+              primaryTextTheme: TextTheme(
+                headline6: TextStyle(color: Colors.black),
+              ),
+              primaryIconTheme: IconThemeData(
+                color: Colors.black,
+              ),
+              buttonTheme: ButtonThemeData(
+                buttonColor: Colors.black87, //  <-- dark color
+                textTheme: ButtonTextTheme
+                    .primary, //  <-- this auto selects the right color
+              )),
+          home: HomeScreen(),
+          routes: {
+            PageViewScreen.routeName: (ctx) => PageViewScreen(),
+            ArticleScreen.routeName: (ctx) => ArticleScreen(),
+            CategoryScreen.routeName: (ctx) => CategoryScreen(),
+            ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
+            HomeScreen.routeName: (ctx) => HomeScreen(),
+            SettingScreen.routeName: (ctx) => SettingScreen(),
+            Authenticate.routeName: (ctx) => Authenticate()
+          }),
     );
   }
 }

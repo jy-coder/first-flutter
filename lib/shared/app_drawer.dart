@@ -13,7 +13,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(child: Consumer<Auth>(builder: (context, auth, _) {
       // print(auth.uid);
       return Column(
-          children: auth.uid != null
+          children: auth.currentUser != null
               ? authDrawer(context, auth)
               : noAuthDrawer(context));
     }));
@@ -86,8 +86,7 @@ class AppDrawer extends StatelessWidget {
           title: Text("Logout"),
           onTap: () async {
             await auth.signOut();
-            Navigator.of(context)
-                .pushReplacementNamed(CategoryScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           })
     ]);
   }
