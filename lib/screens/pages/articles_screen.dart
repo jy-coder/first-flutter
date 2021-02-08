@@ -49,7 +49,7 @@ class _ArticlesScreenState extends State<ArticlesScreen>
         futures.add(Utils.cacheImage(
           context,
           a.imageUrl,
-          a.id.toString(),
+          a.articleId.toString(),
         ));
       });
       await Future.wait(futures);
@@ -93,7 +93,7 @@ class _ArticlesScreenState extends State<ArticlesScreen>
           }
 
           return ArticleCard(
-            filteredArticles[i].id,
+            filteredArticles[i].articleId,
             filteredArticles[i].title,
             filteredArticles[i].imageUrl,
             filteredArticles[i].summary,

@@ -79,7 +79,9 @@ class _RegisterState extends State<Register> {
                       setState(() => loading = false);
 
                       if (result != null && _auth.currentUser != null) {
-                        _auth.currentUser.getIdToken().then((String token) {
+                        await _auth.currentUser
+                            .getIdToken()
+                            .then((String token) {
                           print("saving to database");
                           APIService().post(REGISTER_URL);
                           Navigator.of(context)

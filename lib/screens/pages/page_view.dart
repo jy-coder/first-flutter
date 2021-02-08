@@ -62,7 +62,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
               children: <Widget>[
                 ...articles
                     .map((Article a) => ArticlePage(
-                          id: a.id,
+                          id: a.articleId,
                           title: a.title,
                           description: a.description,
                           imageUrl: a.imageUrl,

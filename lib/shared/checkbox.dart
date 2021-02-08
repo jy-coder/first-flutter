@@ -27,7 +27,7 @@ class _CheckBoxState extends State<CheckBox> {
             children: [
               Column(
                   children: widget.categories.map((Subscription c) {
-                String cId = c.id.toString();
+                String cId = c.categoryId.toString();
                 return Card(
                   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: CheckboxListTile(

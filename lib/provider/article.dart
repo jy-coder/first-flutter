@@ -23,11 +23,11 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Article findById(int id) {
-    return _items.firstWhere((a) => a.id == id);
+    return _items.firstWhere((a) => a.articleId == id);
   }
 
   int getPos(int id, List<Article> list) {
-    return list.indexWhere((a) => a.id == id);
+    return list.indexWhere((a) => a.articleId == id);
   }
 
   String get getFilteredCategory {

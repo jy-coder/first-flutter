@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class Category with ChangeNotifier {
-  final int id;
+  final int categoryId;
   final String categoryName;
   final String imageUrl;
-  Category({@required this.id, @required this.categoryName, this.imageUrl});
+  Category(
+      {@required this.categoryId, @required this.categoryName, this.imageUrl});
 
   factory Category.fromJson(Map<dynamic, dynamic> json) => Category(
-      id: json["id"] as int,
+      categoryId: json["category_id"] as int,
       categoryName: json["category_name"] as String,
       imageUrl: "https://via.placeholder.com/500x300");
 
@@ -21,7 +22,7 @@ class Category with ChangeNotifier {
 }
 
 class Article {
-  final int id;
+  final int articleId;
   final String title;
   final String category;
   final String link;
@@ -33,7 +34,7 @@ class Article {
   final String date;
 
   Article(
-      {@required this.id,
+      {@required this.articleId,
       @required this.title,
       @required this.category,
       @required this.link,
@@ -45,7 +46,7 @@ class Article {
       this.date});
 
   factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
-      id: json["id"] as int,
+      articleId: json["article_id"] as int,
       category: json["category"] as String,
       summary: json["summary"] as String,
       source: json["source"] as String,
@@ -57,18 +58,18 @@ class Article {
 }
 
 class Subscription {
-  final int id;
+  final int categoryId;
   final String categoryName;
   final bool checked;
 
   Subscription({
-    @required this.id,
+    @required this.categoryId,
     @required this.categoryName,
     this.checked,
   });
 
   factory Subscription.fromJson(Map<dynamic, dynamic> json) => Subscription(
-        id: json["id"] as int,
+        categoryId: json["category_id"] as int,
         categoryName: json["category_name"] as String,
       );
 }

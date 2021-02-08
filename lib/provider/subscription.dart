@@ -16,7 +16,7 @@ class SubscriptionProvider with ChangeNotifier {
   }
 
   Subscription findById(int id) {
-    return _items.firstWhere((cat) => cat.id == id);
+    return _items.firstWhere((cat) => cat.categoryId == id);
   }
 
   Future<void> fetchSubscriptions([String token]) async {
@@ -32,9 +32,9 @@ class SubscriptionProvider with ChangeNotifier {
       );
 
       if (s["checked"])
-        checkBoxes[s['id'].toString()] = true;
+        checkBoxes[s['category_id'].toString()] = true;
       else
-        checkBoxes[s['id'].toString()] = false;
+        checkBoxes[s['category_id'].toString()] = false;
     }
 
     _items = items;

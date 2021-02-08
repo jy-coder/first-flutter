@@ -22,7 +22,7 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Category findById(int id) {
-    return _items.firstWhere((cat) => cat.id == id);
+    return _items.firstWhere((cat) => cat.categoryId == id);
   }
 
   Future<void> fetchCategories([String token]) async {
@@ -37,7 +37,7 @@ class CategoryProvider with ChangeNotifier {
       items.add(
         Category.fromJson(d),
       );
-      checkBoxes[d['id'].toString()] = false;
+      checkBoxes[d['category_id'].toString()] = false;
       categoryNames.add(d['category_name']);
     }
 
