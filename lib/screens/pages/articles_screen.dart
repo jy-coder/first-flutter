@@ -43,16 +43,10 @@ class _ArticlesScreenState extends State<ArticlesScreen>
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
     aProvider.fetchArticlesByCategory().then((result) async {
-      List<Future> futures = [];
-
-      aProvider.filteredItems.asMap().forEach((index, a) {
-        futures.add(Utils.cacheImage(
-          context,
-          a.imageUrl,
-          a.articleId.toString(),
-        ));
-      });
-      await Future.wait(futures);
+      await Future.wait(aProvider.filteredItems
+          .map((a) =>
+              Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
+          .toList());
 
       if (result.isEmpty) {
         setState(() {

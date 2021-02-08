@@ -45,7 +45,8 @@ class ArticleProvider with ChangeNotifier {
   Future<List<Map<String, dynamic>>> fetchArticles([int page]) async {
     const url = ARTICLE_URL;
     if (page == null) page = 1;
-    List<dynamic> data = await APIService().get("$url/?page=$page");
+    List<Map<String, dynamic>> data =
+        await APIService().get("$url/?page=$page");
 
     List<Article> items = [];
 
@@ -82,5 +83,21 @@ class ArticleProvider with ChangeNotifier {
     int ind = getPos(id, _filteredItems);
 
     _initialPage = ind + 1;
+  }
+
+  Future<List<Map<String, dynamic>>> fetchReadingHistory([int page]) async {
+    const url = HISTORY_URL;
+    if (page == null) page = 1;
+
+    List<Map<String, dynamic>> data = await APIService().get(url);
+
+    List<Article> items = [];
+
+    addToSelectedList(data, items);
+
+    _items = items;
+    _filteredItems = items.toSet().toList(); //default
+
+    return data;
   }
 }
