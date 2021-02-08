@@ -46,7 +46,7 @@ class Article {
       this.date});
 
   factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
-      articleId: json["article_id"] as int,
+      articleId: json["id"] as int,
       category: json["category"] as String,
       summary: json["summary"] as String,
       source: json["source"] as String,

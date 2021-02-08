@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:newheadline/utils/auth.dart';
-import 'package:newheadline/screens/authenticate/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(child: Consumer<Auth>(builder: (context, auth, _) {
+    return Drawer(child:
+        Consumer2<Auth, ArticleProvider>(builder: (context, auth, ap, _) {
       // print(auth.uid);
       return Column(
           children: auth.currentUser != null
-              ? authDrawer(context, auth)
-              : noAuthDrawer(context));
+              ? authDrawer(context, auth, ap)
+              : noAuthDrawer(context, ap));
     }));
   }
 
-  List<Widget> noAuthDrawer(context) {
+  List<Widget> noAuthDrawer(context, ap) {
     return ([
       AppBar(title: Text("Welcome")),
       ListTile(
           leading: Icon(Icons.text_fields),
           title: Text("All Articles"),
           onTap: () {
+            ap.setTabs("all_articles");
             Navigator.of(context)
                 .pushReplacementNamed(CategoryScreen.routeName);
           }),
@@ -39,7 +42,7 @@ class AppDrawer extends StatelessWidget {
     ]);
   }
 
-  List<Widget> authDrawer(context, auth) {
+  List<Widget> authDrawer(context, auth, ap) {
     return ([
       AppBar(title: Text("User name!"), automaticallyImplyLeading: false),
       Divider(),
@@ -47,6 +50,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.house),
           title: Text("Home"),
           onTap: () {
+            ap.setTabs("daily_read");
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }),
       Divider(),
@@ -54,6 +58,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.text_fields),
           title: Text("All Articles"),
           onTap: () {
+            ap.setTabs("all_articles");
             Navigator.of(context)
                 .pushReplacementNamed(CategoryScreen.routeName);
           }),
@@ -62,8 +67,8 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.history),
           title: Text("Reading History"),
           onTap: () {
-            Navigator.of(context)
-                .pushReplacementNamed(CategoryScreen.routeName);
+            ap.setTabs("reading_history");
+            Navigator.of(context).pushReplacementNamed(HistoryScreen.routeName);
           }),
       Divider(),
       ListTile(

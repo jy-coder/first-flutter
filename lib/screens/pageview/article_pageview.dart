@@ -5,13 +5,13 @@ import 'package:newheadline/widgets/article_page.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PageViewScreen extends StatefulWidget {
+class ArticlePageViewScreen extends StatefulWidget {
   static final routeName = '/article-pageview';
   @override
-  _PageViewScreenState createState() => _PageViewScreenState();
+  _ArticlePageViewScreenState createState() => _ArticlePageViewScreenState();
 }
 
-class _PageViewScreenState extends State<PageViewScreen> {
+class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   List<Article> articles = [];
   PageController _controller;
   int _initialPage = 1;
@@ -24,7 +24,11 @@ class _PageViewScreenState extends State<PageViewScreen> {
   void didChangeDependencies() {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    articles = aProvider.filteredItems;
+
+    String currentTab = aProvider.tabs;
+    if (currentTab == "all_articles")
+      articles = aProvider.filteredItems;
+    else if (currentTab == "reading_history") articles = aProvider.historyItems;
     _initialPage = aProvider.initialPage;
     _controller = PageController(
       initialPage: _initialPage,

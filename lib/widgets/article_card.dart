@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import 'package:newheadline/screens/pages/page_view.dart';
+import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:provider/provider.dart';
 
 class ArticleCard extends StatefulWidget {
   final int id;
@@ -54,7 +55,7 @@ class _ArticleCardState extends State<ArticleCard> {
               await saveReadingHistory(widget.id);
               Navigator.pushNamed(
                 context,
-                PageViewScreen.routeName,
+                ArticlePageViewScreen.routeName,
                 arguments: widget.id,
               );
             },

@@ -6,12 +6,27 @@ import 'package:newheadline/utils/urls.dart';
 class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
   List<Article> _filteredItems = [];
+  List<Article> _historyItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
   int _page = 1;
+  int _historyPage = 1;
+  String _tabs = "";
 
   List<Article> get items {
     return [..._items];
+  }
+
+  String get tabs {
+    return _tabs;
+  }
+
+  void setTabs(String tabName) {
+    _tabs = tabName;
+  }
+
+  List<Article> get historyItems {
+    return [..._historyItems];
   }
 
   List<Article> get filteredItems {
@@ -85,18 +100,15 @@ class ArticleProvider with ChangeNotifier {
     _initialPage = ind + 1;
   }
 
-  Future<List<Map<String, dynamic>>> fetchReadingHistory([int page]) async {
+  Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
     const url = HISTORY_URL;
-    if (page == null) page = 1;
 
-    List<Map<String, dynamic>> data = await APIService().get(url);
+    List<Map<String, dynamic>> data =
+        await APIService().get("$url/?page=$_historyPage");
 
-    List<Article> items = [];
+    _historyPage++;
 
-    addToSelectedList(data, items);
-
-    _items = items;
-    _filteredItems = items.toSet().toList(); //default
+    addToSelectedList(data, _historyItems);
 
     return data;
   }

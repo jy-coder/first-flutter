@@ -42,6 +42,7 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
+
     aProvider.fetchArticlesByCategory().then((result) async {
       await Future.wait(aProvider.filteredItems
           .map((a) =>

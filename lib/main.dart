@@ -6,8 +6,9 @@ import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
-import 'package:newheadline/screens/pages/page_view.dart';
+import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/utils/auth.dart';
@@ -21,9 +22,9 @@ void main() async {
       ChangeNotifierProvider.value(value: Auth()),
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: ArticleProvider()),
-      ChangeNotifierProvider.value(value: SubscriptionProvider())
+      ChangeNotifierProvider.value(value: SubscriptionProvider()),
     ],
-    child: MaterialApp(home: MyApp()),
+    child: MyApp(),
   ));
 }
 
@@ -51,13 +52,14 @@ class MyApp extends StatelessWidget {
               )),
           home: HomeScreen(),
           routes: {
-            PageViewScreen.routeName: (ctx) => PageViewScreen(),
+            ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),
             ArticleScreen.routeName: (ctx) => ArticleScreen(),
             CategoryScreen.routeName: (ctx) => CategoryScreen(),
             ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
             SettingScreen.routeName: (ctx) => SettingScreen(),
-            Authenticate.routeName: (ctx) => Authenticate()
+            Authenticate.routeName: (ctx) => Authenticate(),
+            HistoryScreen.routeName: (ctx) => HistoryScreen()
           }),
     );
   }
