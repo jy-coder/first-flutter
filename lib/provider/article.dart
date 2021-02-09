@@ -100,16 +100,24 @@ class ArticleProvider with ChangeNotifier {
     _initialPage = ind + 1;
   }
 
-  Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
+  Future<List<Map<String, dynamic>>> fetchReadingHistory(
+      String dateRange) async {
+    print("fetch is execute, dateRange is $dateRange");
     const url = HISTORY_URL;
 
     List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$_historyPage");
+        await APIService().get("$url/?page=$_historyPage&dateRange=$dateRange");
 
     _historyPage++;
 
     addToSelectedList(data, _historyItems);
 
     return data;
+  }
+
+  void clearHistory() {
+    _historyPage = 1;
+    _historyItems = [];
+    notifyListeners();
   }
 }

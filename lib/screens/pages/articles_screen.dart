@@ -97,6 +97,9 @@ class _ArticlesScreenState extends State<ArticlesScreen>
             filteredArticles[i].pubDate,
             filteredArticles[i].source,
             filteredArticles[i].category,
+            filteredArticles[i].historyDate == ""
+                ? ""
+                : filteredArticles[i].historyDate,
           );
         });
   }

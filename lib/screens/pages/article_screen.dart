@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/shared/title.dart';
+import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/models.dart';
-import 'package:intl/intl.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleScreen extends StatelessWidget {
   static final routeName = '/article';
@@ -12,9 +11,7 @@ class ArticleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    DateTime dateTime = dateFormat.parse(args.pubDate);
-    String timeAgo = timeago.format(dateTime);
+    String pubDate = formatDate(args.pubDate);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,11 +23,15 @@ class ArticleScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                child: CachedNetworkImage(
-                  imageUrl: 'https://via.placeholder.com/800x500',
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: CachedNetworkImageProvider(
+                    args.imageUrl,
+                    cacheKey: args.id.toString(),
+                  ),
+                  fit: BoxFit.cover,
+                )),
               ),
               Container(
                 alignment: Alignment.center,
@@ -55,7 +56,7 @@ class ArticleScreen extends StatelessWidget {
                               children: [
                                 Icon(Icons.timelapse),
                                 Text(
-                                  timeAgo,
+                                  pubDate,
                                   style: CustomTextStyle.small(context),
                                   textAlign: TextAlign.center,
                                 ),

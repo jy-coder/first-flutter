@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
+import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +18,19 @@ class ArticleCard extends StatefulWidget {
   final String pubDate;
   final String source;
   final String category;
+  final String historyDate;
 
-  ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
-      this.description, this.pubDate, this.source, this.category);
+  ArticleCard(
+      this.id,
+      this.title,
+      this.imageUrl,
+      this.summary,
+      this.link,
+      this.description,
+      this.pubDate,
+      this.source,
+      this.category,
+      this.historyDate);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -109,6 +120,9 @@ class _ArticleCardState extends State<ArticleCard> {
                 ),
               ),
             ],
+          ),
+          Text(
+            widget.historyDate != "" ? formatDate(widget.historyDate) : "",
           )
         ],
       )),
