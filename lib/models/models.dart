@@ -32,6 +32,7 @@ class Article {
   final String description;
   final String pubDate;
   final String date;
+  final String historyDate;
 
   Article(
       {@required this.articleId,
@@ -43,18 +44,21 @@ class Article {
       @required this.description,
       this.imageUrl,
       this.pubDate,
-      this.date});
+      this.date,
+      this.historyDate});
 
   factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
-      articleId: json["id"] as int,
-      category: json["category"] as String,
-      summary: json["summary"] as String,
-      source: json["source"] as String,
-      link: json["link"] as String,
-      title: json["title"] as String,
-      imageUrl: "https://via.placeholder.com/500x300",
-      description: json["description"],
-      pubDate: json["publication_date"]);
+        articleId: json["id"] as int,
+        category: json["category"] as String,
+        summary: json["summary"] as String,
+        source: json["source"] as String,
+        link: json["link"] as String,
+        title: json["title"] as String,
+        imageUrl: "https://via.placeholder.com/500x300",
+        description: json["description"],
+        pubDate: json["publication_date"],
+        historyDate: json["history_date"],
+      );
 }
 
 class Subscription {
