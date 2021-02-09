@@ -17,9 +17,14 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   bool _isLoading = true;
   bool _hasMore = true;
-  List<String> filterOptions = [];
+  bool _init = false;
+  List<String> displayedDate = [
+    "from 7 days ago",
+    "from 14 days ago",
+  ];
   List<String> filterValues = [];
-  String selectedValue;
+  String selectedValue = "";
+  bool refresh = false;
 
   @override
   void initState() {
@@ -27,16 +32,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
     super.initState();
     _isLoading = true;
     _hasMore = true;
-
-    Map<String, String> dates = getRangeOfDate();
-    filterOptions = dates.values.toList();
-    filterValues = dates.keys.toList();
+    _init = true;
+    // print("init triggered");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadMore();
 
       // print("mounted value:$mounted");
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // print("dependency changed");
+    super.didChangeDependencies();
+    _isLoading = true;
+    _hasMore = true;
+    if (!_init) _loadMore();
+    _init = false;
   }
 
   @override
@@ -51,7 +64,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
 
-    aProvider.fetchReadingHistory().then((result) async {
+    aProvider.fetchReadingHistory(selectedValue).then((result) async {
       await Future.wait(aProvider.historyItems
           .map((a) =>
               Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
@@ -73,7 +86,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
     List<Article> historyItems = aProvider.historyItems;
     return Scaffold(
       appBar: AppBar(
@@ -88,35 +101,42 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     return StatefulBuilder(builder: (BuildContext context,
                         StateSetter setState /*You can rename this!*/) {
                       return Container(
+                        height: 400,
                         child: Column(
                           children: [
                             Expanded(
                                 flex: 2,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  // mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        setState(() {
+                                          selectedValue = "";
+                                          aProvider.clearHistory();
+                                        });
+                                      },
                                       child: Text("Clear"),
                                     ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text("Filter"),
-                                    ),
+                                    // TextButton(
+                                    //   onPressed: () {},
+                                    //   child: Text("Filter"),
+                                    // ),
                                   ],
                                 )),
                             Expanded(
                               flex: 8,
                               child: ListView.builder(
-                                  itemCount: filterOptions.length,
+                                  itemCount: displayedDate.length,
                                   itemBuilder: (context, index) {
                                     return RadioListTile(
-                                        title: Text(filterOptions[index]),
-                                        value: filterValues[index],
+                                        title: Text(displayedDate[index]),
+                                        value: displayedDate[index],
                                         groupValue: selectedValue,
                                         onChanged: (String val) {
                                           setState(() {
                                             selectedValue = val;
+                                            aProvider.clearHistory();
                                           });
                                         });
                                   }),
@@ -151,16 +171,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
             }
 
             return ArticleCard(
-              historyItems[i].articleId,
-              historyItems[i].title,
-              historyItems[i].imageUrl,
-              historyItems[i].summary,
-              historyItems[i].link,
-              historyItems[i].description,
-              historyItems[i].pubDate,
-              historyItems[i].source,
-              historyItems[i].category,
-            );
+                historyItems[i].articleId,
+                historyItems[i].title,
+                historyItems[i].imageUrl,
+                historyItems[i].summary,
+                historyItems[i].link,
+                historyItems[i].description,
+                historyItems[i].pubDate,
+                historyItems[i].source,
+                historyItems[i].category,
+                historyItems[i].historyDate);
           }),
     );
   }
