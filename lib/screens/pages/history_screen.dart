@@ -90,7 +90,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<Article> historyItems = aProvider.historyItems;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reading History'),
         actions: [
           IconButton(
             icon: Icon(Icons.filter_alt_sharp),
@@ -150,7 +149,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           )
         ],
       ),
-      drawer: AppDrawer(),
       body: ListView.builder(
           padding: const EdgeInsets.all(10.0),
           itemCount: _hasMore ? historyItems.length + 1 : historyItems.length,

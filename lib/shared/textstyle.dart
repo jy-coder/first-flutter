@@ -15,4 +15,9 @@ class CustomTextStyle {
     return Theme.of(context).textTheme.headline1.copyWith(
         fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w400);
   }
+
+  static TextStyle summary(BuildContext context) {
+    return Theme.of(context).textTheme.headline1.copyWith(
+        fontSize: 15.0, color: Colors.grey[800], fontWeight: FontWeight.w400);
+  }
 }

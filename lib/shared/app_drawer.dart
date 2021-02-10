@@ -4,6 +4,7 @@ import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:provider/provider.dart';
@@ -65,10 +66,11 @@ class AppDrawer extends StatelessWidget {
       Divider(),
       ListTile(
           leading: Icon(Icons.history),
-          title: Text("Reading History"),
+          title: Text("Reading List"),
           onTap: () {
             ap.setTabs("reading_history");
-            Navigator.of(context).pushReplacementNamed(HistoryScreen.routeName);
+            Navigator.of(context)
+                .pushReplacementNamed(ReadListScreen.routeName);
           }),
       Divider(),
       ListTile(
