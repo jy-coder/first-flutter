@@ -10,7 +10,11 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Daily Read')),
+        appBar: AppBar(
+          title: Container(
+            child: Text('Daily Read'),
+          ),
+        ),
         drawer: AppDrawer(),
         body: Text("Empty for now"));
   }

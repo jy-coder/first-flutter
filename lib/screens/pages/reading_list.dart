@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
+import 'package:newheadline/widgets/history_filter.dart';
 
 class ReadListScreen extends StatefulWidget {
   static final routeName = "/readingHistory";
@@ -11,7 +12,6 @@ class ReadListScreen extends StatefulWidget {
 class _ReadListScreenState extends State<ReadListScreen>
     with SingleTickerProviderStateMixin {
   List<String> readingList = ["Saved", "History"];
-  var _isInit = true;
   var _isLoading = false;
   TabController _tabController;
 
@@ -50,7 +50,18 @@ class _ReadListScreenState extends State<ReadListScreen>
                       .toList(),
                 )
               : null,
-          title: Text('Reading List'),
+          title: Container(
+              child: Row(
+            children: [
+              Container(
+                child: Text('Reading List'),
+              ),
+              Spacer(),
+              Container(
+                child: Filter(),
+              ),
+            ],
+          )),
         ),
         body: !_isLoading
             ? TabBarView(

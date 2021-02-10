@@ -18,10 +18,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   bool _isLoading = true;
   bool _hasMore = true;
   bool _init = false;
-  List<String> displayedDate = [
-    "from 7 days ago",
-    "from 14 days ago",
-  ];
   List<String> filterValues = [];
   String selectedValue = "";
   bool refresh = false;
@@ -64,7 +60,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
 
-    aProvider.fetchReadingHistory(selectedValue).then((result) async {
+    aProvider.fetchReadingHistory().then((result) async {
       await Future.wait(aProvider.historyItems
           .map((a) =>
               Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
@@ -89,66 +85,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Provider.of<ArticleProvider>(context, listen: true);
     List<Article> historyItems = aProvider.historyItems;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.filter_alt_sharp),
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (builder) {
-                    return StatefulBuilder(builder: (BuildContext context,
-                        StateSetter setState /*You can rename this!*/) {
-                      return Container(
-                        height: 400,
-                        child: Column(
-                          children: [
-                            Expanded(
-                                flex: 2,
-                                child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          selectedValue = "";
-                                          aProvider.clearHistory();
-                                        });
-                                      },
-                                      child: Text("Clear"),
-                                    ),
-                                    // TextButton(
-                                    //   onPressed: () {},
-                                    //   child: Text("Filter"),
-                                    // ),
-                                  ],
-                                )),
-                            Expanded(
-                              flex: 8,
-                              child: ListView.builder(
-                                  itemCount: displayedDate.length,
-                                  itemBuilder: (context, index) {
-                                    return RadioListTile(
-                                        title: Text(displayedDate[index]),
-                                        value: displayedDate[index],
-                                        groupValue: selectedValue,
-                                        onChanged: (String val) {
-                                          setState(() {
-                                            selectedValue = val;
-                                            aProvider.clearHistory();
-                                          });
-                                        });
-                                  }),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-                  });
-            },
-          )
-        ],
-      ),
       body: ListView.builder(
           padding: const EdgeInsets.all(10.0),
           itemCount: _hasMore ? historyItems.length + 1 : historyItems.length,

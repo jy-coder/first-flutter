@@ -12,6 +12,7 @@ class ArticleProvider with ChangeNotifier {
   int _page = 1;
   int _historyPage = 1;
   String _tabs = "";
+  String _filteredDate = "";
 
   List<Article> get items {
     return [..._items];
@@ -22,7 +23,12 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setTabs(String tabName) {
+    _filteredDate = "";
     _tabs = tabName;
+  }
+
+  void setFilteredDate(String dateRange) {
+    _filteredDate = dateRange;
   }
 
   List<Article> get historyItems {
@@ -100,13 +106,11 @@ class ArticleProvider with ChangeNotifier {
     _initialPage = ind + 1;
   }
 
-  Future<List<Map<String, dynamic>>> fetchReadingHistory(
-      String dateRange) async {
-    print("fetch is execute, dateRange is $dateRange");
+  Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
     const url = HISTORY_URL;
 
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$_historyPage&dateRange=$dateRange");
+    List<Map<String, dynamic>> data = await APIService()
+        .get("$url/?page=$_historyPage&dateRange=$_filteredDate");
 
     _historyPage++;
 

@@ -83,6 +83,16 @@ class _ArticleCardState extends State<ArticleCard> {
                 ),
                 Column(
                   children: [
+                    widget.historyDate != ""
+                        ? ListTile(
+                            visualDensity:
+                                VisualDensity(horizontal: 0, vertical: -4),
+                            dense: true,
+                            subtitle: Text(
+                              formatDate(widget.historyDate),
+                            ),
+                          )
+                        : Container(),
                     ListTile(
                       title: Text(widget.title),
                     ),
@@ -121,9 +131,6 @@ class _ArticleCardState extends State<ArticleCard> {
               ),
             ],
           ),
-          Text(
-            widget.historyDate != "" ? formatDate(widget.historyDate) : "",
-          )
         ],
       )),
     );
