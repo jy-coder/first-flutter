@@ -44,14 +44,6 @@ class _CategoryScreenState extends State<CategoryScreen>
 
       CategoryProvider cProvider =
           Provider.of<CategoryProvider>(context, listen: false);
-      ArticleProvider aProvider =
-          Provider.of<ArticleProvider>(context, listen: false);
-
-      aProvider.fetchArticles().then((_) {
-        setState(() {
-          articles = aProvider.items;
-        });
-      });
 
       cProvider.fetchCategories().then((_) {
         setState(() {

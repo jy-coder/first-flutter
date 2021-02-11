@@ -68,7 +68,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.history),
           title: Text("Reading List"),
           onTap: () {
-            ap.setTabs("reading_history");
+            ap.setTabs("Saved");
             Navigator.of(context)
                 .pushReplacementNamed(ReadListScreen.routeName);
           }),

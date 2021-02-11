@@ -23,8 +23,14 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setTabs(String tabName) {
+    _items = [];
+    _filteredItems = [];
+    _historyItems = [];
     _filteredDate = "";
     _tabs = tabName;
+    _page = 1;
+    _historyPage = 1;
+    notifyListeners();
   }
 
   void setFilteredDate(String dateRange) {
@@ -63,29 +69,14 @@ class ArticleProvider with ChangeNotifier {
     }
   }
 
-  Future<List<Map<String, dynamic>>> fetchArticles([int page]) async {
-    const url = ARTICLE_URL;
-    if (page == null) page = 1;
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$page");
-
-    List<Article> items = [];
-
-    addToSelectedList(data, items);
-
-    _items = items;
-    _filteredItems = items.toSet().toList(); //default
-
-    return data;
-  }
-
   //for lazy loading
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
     const url = ARTICLE_URL;
     // await Future.delayed(Duration(seconds: 1));
-    _page++;
+
     List<Map<String, dynamic>> data =
         await APIService().get("$url/?page=$_page&category=$_categoryName");
+    _page++;
 
     addToSelectedList(data, _filteredItems);
 
@@ -94,10 +85,12 @@ class ArticleProvider with ChangeNotifier {
 
   void filterByCategory(String categoryName) {
     _categoryName = categoryName;
-    _page = 0;
+    _page = 1;
     if (categoryName != "all")
-      _filteredItems =
-          _items.where((Article a) => a.category == categoryName).toList();
+      _filteredItems = _items
+          .where((Article a) => a.category == categoryName)
+          .toSet()
+          .toList();
   }
 
   void getPageViewArticle(int id) {
@@ -122,6 +115,16 @@ class ArticleProvider with ChangeNotifier {
   void clearHistory() {
     _historyPage = 1;
     _historyItems = [];
+    notifyListeners();
+  }
+
+  void filterBookmark(int articleId) {
+    print("removing $articleId");
+    _items.removeWhere((item) => item.articleId == articleId);
+    _filteredItems.removeWhere((item) => item.articleId == articleId);
+    for (Article d in _items) {
+      print(d.articleId.toString());
+    }
     notifyListeners();
   }
 }

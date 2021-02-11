@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/widgets/date_filter.dart';
+import 'package:provider/provider.dart';
 
 class ReadListScreen extends StatefulWidget {
   static final routeName = "/readingHistory";
@@ -29,6 +31,10 @@ class _ReadListScreenState extends State<ReadListScreen>
 
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: true);
+    String tabName = aProvider.tabs;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -40,7 +46,9 @@ class _ReadListScreenState extends State<ReadListScreen>
                   controller: _tabController,
                   isScrollable: true,
                   labelColor: Colors.black,
-                  onTap: (int index) {},
+                  onTap: (int index) {
+                    aProvider.setTabs(readingList[index]);
+                  },
                   tabs: readingList
                       .map(
                         (tabname) => Tab(
@@ -58,7 +66,7 @@ class _ReadListScreenState extends State<ReadListScreen>
               ),
               Spacer(),
               Container(
-                child: Filter(),
+                child: tabName == "History" ? Filter() : Text(""),
               ),
             ],
           )),

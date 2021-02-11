@@ -53,6 +53,9 @@ class _ArticleCardState extends State<ArticleCard> {
 
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    String tabName = aProvider.tabs;
     // final _screenSize = MediaQuery.of(context).size;
     TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 15.0);
     TextStyle linkStyle = TextStyle(color: Colors.blue);
@@ -64,7 +67,8 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           InkWell(
             onTap: () async {
-              await saveReadingHistory(widget.id);
+              if (aProvider.tabs != "History")
+                await saveReadingHistory(widget.id);
               Navigator.pushNamed(
                 context,
                 ArticlePageViewScreen.routeName,
@@ -84,7 +88,7 @@ class _ArticleCardState extends State<ArticleCard> {
                 ),
                 Column(
                   children: [
-                    widget.historyDate != ""
+                    tabName == "History" && widget.historyDate != ""
                         ? ListTile(
                             visualDensity:
                                 VisualDensity(horizontal: 0, vertical: -4),
@@ -100,7 +104,9 @@ class _ArticleCardState extends State<ArticleCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(flex: 8, child: Text(widget.title)),
-                          Expanded(child: MenuBtn(widget.id))
+                          aProvider.tabs != "History"
+                              ? Expanded(child: MenuBtn(widget.id))
+                              : Container()
                         ],
                       )),
                     ),
