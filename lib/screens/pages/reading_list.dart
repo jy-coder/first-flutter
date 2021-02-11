@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
-import 'package:newheadline/widgets/history_filter.dart';
+import 'package:newheadline/widgets/date_filter.dart';
 
 class ReadListScreen extends StatefulWidget {
   static final routeName = "/readingHistory";

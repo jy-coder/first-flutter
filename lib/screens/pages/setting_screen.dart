@@ -60,7 +60,7 @@ class _SettingScreenState extends State<SettingScreen> {
     _isInit = true;
   }
 
-  Future<void> updateSubscription(context) async {
+  Future<void> updateSubscription(BuildContext context) async {
     int responseCode = await APIService().post(SUBSCRIPTION_URL, checkboxes);
 
     Flushbar(
