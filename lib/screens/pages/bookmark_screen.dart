@@ -5,14 +5,14 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
-class HistoryScreen extends StatefulWidget {
-  static const routeName = "/history";
+class BookmarkScreen extends StatefulWidget {
+  static const routeName = "/bookmark";
 
   @override
-  _HistoryScreenState createState() => _HistoryScreenState();
+  _BookmarkScreenState createState() => _BookmarkScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class _BookmarkScreenState extends State<BookmarkScreen> {
   bool _isLoading = true;
   bool _hasMore = true;
   bool _init = false;
@@ -58,8 +58,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Provider.of<ArticleProvider>(context, listen: false);
     _isLoading = true;
 
-    aProvider.fetchReadingHistory().then((result) async {
-      await Future.wait(aProvider.historyItems
+    aProvider.fetchBookmark().then((result) async {
+      await Future.wait(aProvider.bookmarkItems
           .map((a) =>
               Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
           .toList());
@@ -81,15 +81,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    List<Article> historyItems = aProvider.historyItems;
+    List<Article> bookmarkItems = aProvider.bookmarkItems;
     return Scaffold(
       body: ListView.builder(
           padding: const EdgeInsets.all(10.0),
-          itemCount: _hasMore ? historyItems.length + 1 : historyItems.length,
+          itemCount: _hasMore ? bookmarkItems.length + 1 : bookmarkItems.length,
           itemBuilder: (ctx, i) {
-            // print(historyItems[i].historyDate);
+            // print(bookmarkItems[i].historyDate);
             // Don't trigger if one async loading is already under way
-            if (i >= historyItems.length) {
+            if (i >= bookmarkItems.length) {
               // Don't trigger if one async loading is already under way
               if (!_isLoading) {
                 _loadMore();
@@ -103,16 +103,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
             }
 
             return ArticleCard(
-                historyItems[i].articleId,
-                historyItems[i].title,
-                historyItems[i].imageUrl,
-                historyItems[i].summary,
-                historyItems[i].link,
-                historyItems[i].description,
-                historyItems[i].pubDate,
-                historyItems[i].source,
-                historyItems[i].category,
-                historyItems[i].historyDate);
+                bookmarkItems[i].articleId,
+                bookmarkItems[i].title,
+                bookmarkItems[i].imageUrl,
+                bookmarkItems[i].summary,
+                bookmarkItems[i].link,
+                bookmarkItems[i].description,
+                bookmarkItems[i].pubDate,
+                bookmarkItems[i].source,
+                bookmarkItems[i].category,
+                bookmarkItems[i].historyDate);
           }),
     );
   }

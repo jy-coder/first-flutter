@@ -7,22 +7,42 @@ class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
   List<Article> _filteredItems = [];
   List<Article> _historyItems = [];
+  List<Article> _bookmarkItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
   int _page = 1;
   int _historyPage = 1;
-  String _tabs = "";
+  int _bookmarkPage = 1;
+  String _tab = "";
+  String _subtab = "";
+  String _filteredDate = "";
 
   List<Article> get items {
     return [..._items];
   }
 
-  String get tabs {
-    return _tabs;
+  String get tab {
+    return _tab;
   }
 
-  void setTabs(String tabName) {
-    _tabs = tabName;
+  String get subTab {
+    return _subtab;
+  }
+
+  void setTab(String tabName) {
+    _filteredDate = "";
+    _tab = tabName;
+    _page = 1;
+    _historyPage = 1;
+  }
+
+  void setSubTab(String subtabName) {
+    _subtab = subtabName;
+    notifyListeners();
+  }
+
+  void setFilteredDate(String dateRange) {
+    _filteredDate = dateRange;
   }
 
   List<Article> get historyItems {
@@ -31,6 +51,10 @@ class ArticleProvider with ChangeNotifier {
 
   List<Article> get filteredItems {
     return [..._filteredItems];
+  }
+
+  List<Article> get bookmarkItems {
+    return [..._bookmarkItems];
   }
 
   int get initialPage {
@@ -57,29 +81,13 @@ class ArticleProvider with ChangeNotifier {
     }
   }
 
-  Future<List<Map<String, dynamic>>> fetchArticles([int page]) async {
-    const url = ARTICLE_URL;
-    if (page == null) page = 1;
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$page");
-
-    List<Article> items = [];
-
-    addToSelectedList(data, items);
-
-    _items = items;
-    _filteredItems = items.toSet().toList(); //default
-
-    return data;
-  }
-
   //for lazy loading
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
-    const url = ARTICLE_URL;
     // await Future.delayed(Duration(seconds: 1));
+
+    List<Map<String, dynamic>> data = await APIService()
+        .get("$ARTICLE_URL/?page=$_page&category=$_categoryName");
     _page++;
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$_page&category=$_categoryName");
 
     addToSelectedList(data, _filteredItems);
 
@@ -88,10 +96,12 @@ class ArticleProvider with ChangeNotifier {
 
   void filterByCategory(String categoryName) {
     _categoryName = categoryName;
-    _page = 0;
+    _page = 1;
     if (categoryName != "all")
-      _filteredItems =
-          _items.where((Article a) => a.category == categoryName).toList();
+      _filteredItems = _items
+          .where((Article a) => a.category == categoryName)
+          .toSet()
+          .toList();
   }
 
   void getPageViewArticle(int id) {
@@ -100,13 +110,9 @@ class ArticleProvider with ChangeNotifier {
     _initialPage = ind + 1;
   }
 
-  Future<List<Map<String, dynamic>>> fetchReadingHistory(
-      String dateRange) async {
-    print("fetch is execute, dateRange is $dateRange");
-    const url = HISTORY_URL;
-
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$_historyPage&dateRange=$dateRange");
+  Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
+    List<Map<String, dynamic>> data = await APIService()
+        .get("$HISTORY_URL/?page=$_historyPage&dateRange=$_filteredDate");
 
     _historyPage++;
 
@@ -115,9 +121,33 @@ class ArticleProvider with ChangeNotifier {
     return data;
   }
 
+  Future<List<Map<String, dynamic>>> fetchBookmark() async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$BOOKMARK_URL/?page=$_bookmarkPage");
+    _bookmarkPage++;
+    addToSelectedList(data, _bookmarkItems);
+
+    return data;
+  }
+
   void clearHistory() {
     _historyPage = 1;
     _historyItems = [];
+    notifyListeners();
+  }
+
+  void removeItemFromList(List<Article> list, int articleId) {
+    list.removeWhere((item) => item.articleId == articleId);
+  }
+
+  void filterBookmark(int articleId) {
+    if (_tab == "all_articles") {
+      removeItemFromList(_items, articleId);
+      removeItemFromList(_filteredItems, articleId);
+    } else if (_tab == "reading_list") {
+      removeItemFromList(_bookmarkItems, articleId);
+    }
+
     notifyListeners();
   }
 }

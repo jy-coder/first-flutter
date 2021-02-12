@@ -6,6 +6,7 @@ import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:newheadline/widgets/menu_button.dart';
 import 'package:provider/provider.dart';
 
 class ArticleCard extends StatefulWidget {
@@ -52,18 +53,20 @@ class _ArticleCardState extends State<ArticleCard> {
 
   @override
   Widget build(BuildContext context) {
-    // final _screenSize = MediaQuery.of(context).size;
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+
     TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 15.0);
     TextStyle linkStyle = TextStyle(color: Colors.blue);
 
     return Container(
-      // height: _screenSize.height * 0.4,
       child: Card(
           child: Wrap(
         children: [
           InkWell(
             onTap: () async {
-              await saveReadingHistory(widget.id);
+              if (aProvider.subTab != "History")
+                await saveReadingHistory(widget.id);
               Navigator.pushNamed(
                 context,
                 ArticlePageViewScreen.routeName,
@@ -83,8 +86,27 @@ class _ArticleCardState extends State<ArticleCard> {
                 ),
                 Column(
                   children: [
+                    aProvider.subTab == "History" && widget.historyDate != ""
+                        ? ListTile(
+                            visualDensity:
+                                VisualDensity(horizontal: 0, vertical: -4),
+                            dense: true,
+                            subtitle: Text(
+                              formatDate(widget.historyDate),
+                            ),
+                          )
+                        : Container(),
                     ListTile(
-                      title: Text(widget.title),
+                      title: Container(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(flex: 8, child: Text(widget.title)),
+                          aProvider.tab != "History"
+                              ? Expanded(child: MenuBtn(widget.id))
+                              : Container()
+                        ],
+                      )),
                     ),
                   ],
                 )
@@ -96,34 +118,37 @@ class _ArticleCardState extends State<ArticleCard> {
               Flexible(
                 child: Container(
                   margin: EdgeInsets.all(10),
-                  child: RichText(
-                    text: TextSpan(
-                      style: defaultStyle,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: !showFullSummary
-                              ? truncateWithEllipsis(200, widget.summary)
-                              : truncateWithEllipsis(1000, widget.summary),
+                  child: Column(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: defaultStyle,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: !showFullSummary
+                                  ? truncateWithEllipsis(200, widget.summary)
+                                  : truncateWithEllipsis(1000, widget.summary),
+                            ),
+                            TextSpan(
+                                text: !showFullSummary
+                                    ? 'Show More'
+                                    : 'Show Less',
+                                style: linkStyle,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    setState(() {
+                                      showFullSummary = !showFullSummary;
+                                    });
+                                  }),
+                          ],
                         ),
-                        TextSpan(
-                            text: !showFullSummary ? 'Show More' : 'Show Less',
-                            style: linkStyle,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                setState(() {
-                                  showFullSummary = !showFullSummary;
-                                });
-                              }),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
-          Text(
-            widget.historyDate != "" ? formatDate(widget.historyDate) : "",
-          )
         ],
       )),
     );

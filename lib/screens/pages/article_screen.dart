@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:newheadline/shared/title.dart';
+import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/models.dart';
 
