@@ -15,14 +15,19 @@ class MenuBtn extends StatefulWidget {
   _MenuBtnState createState() => _MenuBtnState();
 }
 
-Future<void> saveBookmark(
+Future<void> bookmarkAction(
     int articleId, String action, BuildContext context) async {
   String url = "";
+  int responseCode = 0;
 
-  if (action == "Bookmark") url = "$BOOKMARK_URL/?article=$articleId";
-  // else if (action == "Not interested") ;
+  if (action.toLowerCase().contains("Bookmark".toLowerCase())) {
+    url = "$BOOKMARK_URL/?article=$articleId";
 
-  int responseCode = await APIService().post(url);
+    if (action == "Bookmark")
+      responseCode = await APIService().post(url);
+    else if (action == "Remove Bookmark")
+      responseCode = await APIService().delete(url);
+  }
 
   if (responseCode == 200) {
     ArticleProvider aProvider =
@@ -52,8 +57,7 @@ class _MenuBtnState extends State<MenuBtn> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    String tabName = aProvider.tabs;
-    if (tabName == "Saved") {
+    if (aProvider.tab == "reading_list" && aProvider.subTab == "Saved") {
       _options = [..._bookMarkOptions];
     } else {
       _options = [..._articleOptions];
@@ -75,7 +79,7 @@ class _MenuBtnState extends State<MenuBtn> {
                               textColor: Colors.grey[700],
                               onPressed: () async {
                                 Navigator.of(context).pop();
-                                await saveBookmark(
+                                await bookmarkAction(
                                   widget.articleId,
                                   _options[index],
                                   context,

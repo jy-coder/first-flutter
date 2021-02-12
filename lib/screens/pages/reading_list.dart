@@ -33,7 +33,6 @@ class _ReadListScreenState extends State<ReadListScreen>
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    String tabName = aProvider.tabs;
 
     return DefaultTabController(
       length: 2,
@@ -47,7 +46,7 @@ class _ReadListScreenState extends State<ReadListScreen>
                   isScrollable: true,
                   labelColor: Colors.black,
                   onTap: (int index) {
-                    aProvider.setTabs(readingList[index]);
+                    aProvider.setSubTab(readingList[index]);
                   },
                   tabs: readingList
                       .map(
@@ -66,7 +65,7 @@ class _ReadListScreenState extends State<ReadListScreen>
               ),
               Spacer(),
               Container(
-                child: tabName == "History" ? Filter() : Text(""),
+                child: aProvider.subTab == "History" ? Filter() : Text(""),
               ),
             ],
           )),

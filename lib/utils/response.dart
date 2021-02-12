@@ -35,4 +35,13 @@ class APIService {
 
     return List<Map<String, dynamic>>.from(json.decode(response.body));
   }
+
+  Future<int> delete(String url) async {
+    String token = await getToken();
+
+    Response response = await http.delete(url,
+        headers: {"Content-Type": "application/json", "X-Id-Token": token});
+
+    return response.statusCode;
+  }
 }

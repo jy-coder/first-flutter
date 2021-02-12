@@ -11,25 +11,34 @@ class ArticleProvider with ChangeNotifier {
   String _categoryName = "all"; //default fliter
   int _page = 1;
   int _historyPage = 1;
-  String _tabs = "";
+  String _tab = "";
+  String _subtab = "";
   String _filteredDate = "";
 
   List<Article> get items {
     return [..._items];
   }
 
-  String get tabs {
-    return _tabs;
+  String get tab {
+    return _tab;
   }
 
-  void setTabs(String tabName) {
+  String get subTab {
+    return _subtab;
+  }
+
+  void setTab(String tabName) {
     _items = [];
     _filteredItems = [];
     _historyItems = [];
     _filteredDate = "";
-    _tabs = tabName;
+    _tab = tabName;
     _page = 1;
     _historyPage = 1;
+  }
+
+  void setSubTab(String subtabName) {
+    _subtab = subtabName;
     notifyListeners();
   }
 
@@ -119,12 +128,9 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void filterBookmark(int articleId) {
-    print("removing $articleId");
     _items.removeWhere((item) => item.articleId == articleId);
     _filteredItems.removeWhere((item) => item.articleId == articleId);
-    for (Article d in _items) {
-      print(d.articleId.toString());
-    }
+
     notifyListeners();
   }
 }

@@ -55,19 +55,17 @@ class _ArticleCardState extends State<ArticleCard> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    String tabName = aProvider.tabs;
-    // final _screenSize = MediaQuery.of(context).size;
+
     TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 15.0);
     TextStyle linkStyle = TextStyle(color: Colors.blue);
 
     return Container(
-      // height: _screenSize.height * 0.4,
       child: Card(
           child: Wrap(
         children: [
           InkWell(
             onTap: () async {
-              if (aProvider.tabs != "History")
+              if (aProvider.subTab != "History")
                 await saveReadingHistory(widget.id);
               Navigator.pushNamed(
                 context,
@@ -88,7 +86,7 @@ class _ArticleCardState extends State<ArticleCard> {
                 ),
                 Column(
                   children: [
-                    tabName == "History" && widget.historyDate != ""
+                    aProvider.subTab == "History" && widget.historyDate != ""
                         ? ListTile(
                             visualDensity:
                                 VisualDensity(horizontal: 0, vertical: -4),
@@ -104,7 +102,7 @@ class _ArticleCardState extends State<ArticleCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(flex: 8, child: Text(widget.title)),
-                          aProvider.tabs != "History"
+                          aProvider.tab != "History"
                               ? Expanded(child: MenuBtn(widget.id))
                               : Container()
                         ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
-import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
@@ -29,7 +28,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.text_fields),
           title: Text("All Articles"),
           onTap: () {
-            ap.setTabs("all_articles");
+            ap.setTab("all_articles");
             Navigator.of(context)
                 .pushReplacementNamed(CategoryScreen.routeName);
           }),
@@ -51,7 +50,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.house),
           title: Text("Home"),
           onTap: () {
-            ap.setTabs("daily_read");
+            ap.setTab("daily_read");
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }),
       Divider(),
@@ -59,7 +58,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.text_fields),
           title: Text("All Articles"),
           onTap: () {
-            ap.setTabs("all_articles");
+            ap.setTab("all_articles");
             Navigator.of(context)
                 .pushReplacementNamed(CategoryScreen.routeName);
           }),
@@ -68,7 +67,8 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.history),
           title: Text("Reading List"),
           onTap: () {
-            ap.setTabs("Saved");
+            ap.setTab("reading_list");
+            ap.setSubTab("Saved");
             Navigator.of(context)
                 .pushReplacementNamed(ReadListScreen.routeName);
           }),

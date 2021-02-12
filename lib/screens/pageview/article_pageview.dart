@@ -25,10 +25,9 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    String currentTab = aProvider.tabs;
-    if (currentTab == "all_articles")
+    if (aProvider.tab == "all_articles")
       articles = aProvider.filteredItems;
-    else if (currentTab == "History") articles = aProvider.historyItems;
+    else if (aProvider.subTab == "History") articles = aProvider.historyItems;
     _initialPage = aProvider.initialPage;
     _controller = PageController(
       initialPage: _initialPage,
