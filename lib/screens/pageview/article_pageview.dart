@@ -27,7 +27,10 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
 
     if (aProvider.tab == "all_articles")
       articles = aProvider.filteredItems;
-    else if (aProvider.subTab == "History") articles = aProvider.historyItems;
+    else if (aProvider.subTab == "History")
+      articles = aProvider.historyItems;
+    else if (aProvider.subTab == "Saved") articles = aProvider.bookmarkItems;
+
     _initialPage = aProvider.initialPage;
     _controller = PageController(
       initialPage: _initialPage,

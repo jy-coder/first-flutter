@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/widgets/date_filter.dart';
@@ -73,13 +74,16 @@ class _ReadListScreenState extends State<ReadListScreen>
         body: !_isLoading
             ? TabBarView(
                 controller: _tabController,
-                children: readingList
-                    .map(
-                      (String rl) => Tab(
-                        child: HistoryScreen(),
-                      ),
-                    )
-                    .toList(),
+                children: readingList.map((String rl) {
+                  Widget screen;
+                  if (rl == "History")
+                    screen = HistoryScreen();
+                  else if (rl == "Saved") screen = BookmarkScreen();
+
+                  return Tab(
+                    child: screen,
+                  );
+                }).toList(),
               )
             : Center(
                 child: CircularProgressIndicator(),

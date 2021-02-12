@@ -17,29 +17,37 @@ class MenuBtn extends StatefulWidget {
 
 Future<void> bookmarkAction(
     int articleId, String action, BuildContext context) async {
+  print(action);
   String url = "";
   int responseCode = 0;
+  String successMsg = "";
+  String errorMsg = "";
+  ArticleProvider aProvider =
+      Provider.of<ArticleProvider>(context, listen: false);
 
   if (action.toLowerCase().contains("Bookmark".toLowerCase())) {
     url = "$BOOKMARK_URL/?article=$articleId";
 
-    if (action == "Bookmark")
+    if (action == "Bookmark") {
       responseCode = await APIService().post(url);
-    else if (action == "Remove Bookmark")
+      errorMsg = "Already bookmarked";
+      successMsg = "Successfully bookmark";
+    } else if (action == "Remove bookmark") {
+      errorMsg = "Something went wrong";
+      successMsg = "Successfully remove bookmark";
       responseCode = await APIService().delete(url);
+    }
   }
 
   if (responseCode == 200) {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
     aProvider.filterBookmark(articleId);
   }
 
   Flushbar(
     message: responseCode == 500
-        ? "Already bookmarked"
+        ? errorMsg
         : responseCode == 200
-            ? "Successfully bookmark"
+            ? successMsg
             : null,
     duration: Duration(seconds: 1),
     isDismissible: false,

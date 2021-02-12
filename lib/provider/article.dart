@@ -7,10 +7,12 @@ class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
   List<Article> _filteredItems = [];
   List<Article> _historyItems = [];
+  List<Article> _bookmarkItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
   int _page = 1;
   int _historyPage = 1;
+  int _bookmarkPage = 1;
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
@@ -28,9 +30,6 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setTab(String tabName) {
-    _items = [];
-    _filteredItems = [];
-    _historyItems = [];
     _filteredDate = "";
     _tab = tabName;
     _page = 1;
@@ -52,6 +51,10 @@ class ArticleProvider with ChangeNotifier {
 
   List<Article> get filteredItems {
     return [..._filteredItems];
+  }
+
+  List<Article> get bookmarkItems {
+    return [..._bookmarkItems];
   }
 
   int get initialPage {
@@ -80,11 +83,10 @@ class ArticleProvider with ChangeNotifier {
 
   //for lazy loading
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
-    const url = ARTICLE_URL;
     // await Future.delayed(Duration(seconds: 1));
 
-    List<Map<String, dynamic>> data =
-        await APIService().get("$url/?page=$_page&category=$_categoryName");
+    List<Map<String, dynamic>> data = await APIService()
+        .get("$ARTICLE_URL/?page=$_page&category=$_categoryName");
     _page++;
 
     addToSelectedList(data, _filteredItems);
@@ -109,14 +111,21 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
-    const url = HISTORY_URL;
-
     List<Map<String, dynamic>> data = await APIService()
-        .get("$url/?page=$_historyPage&dateRange=$_filteredDate");
+        .get("$HISTORY_URL/?page=$_historyPage&dateRange=$_filteredDate");
 
     _historyPage++;
 
     addToSelectedList(data, _historyItems);
+
+    return data;
+  }
+
+  Future<List<Map<String, dynamic>>> fetchBookmark() async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$BOOKMARK_URL/?page=$_bookmarkPage");
+    _bookmarkPage++;
+    addToSelectedList(data, _bookmarkItems);
 
     return data;
   }
@@ -127,9 +136,17 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItemFromList(List<Article> list, int articleId) {
+    list.removeWhere((item) => item.articleId == articleId);
+  }
+
   void filterBookmark(int articleId) {
-    _items.removeWhere((item) => item.articleId == articleId);
-    _filteredItems.removeWhere((item) => item.articleId == articleId);
+    if (_tab == "all_articles") {
+      removeItemFromList(_items, articleId);
+      removeItemFromList(_filteredItems, articleId);
+    } else if (_tab == "reading_list") {
+      removeItemFromList(_bookmarkItems, articleId);
+    }
 
     notifyListeners();
   }
