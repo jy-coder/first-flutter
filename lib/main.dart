@@ -10,6 +10,7 @@ import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
+import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
             HistoryScreen.routeName: (ctx) => HistoryScreen(),
             ReadListScreen.routeName: (ctx) => ReadListScreen(),
             BookmarkScreen.routeName: (ctx) => BookmarkScreen(),
+            SearchScreen.routeName: (ctx) => SearchScreen(),
           }),
     );
   }

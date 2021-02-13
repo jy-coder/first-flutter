@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 
 class DailyReadScreen extends StatefulWidget {
@@ -12,7 +13,20 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Container(
-            child: Text('Daily Read'),
+            child: Row(
+              children: [
+                Text('Daily Read'),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      SearchScreen.routeName,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         drawer: AppDrawer(),

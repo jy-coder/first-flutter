@@ -77,3 +77,16 @@ class Subscription {
         categoryName: json["category_name"] as String,
       );
 }
+
+class SearchSuggestion {
+  final int articleId;
+  final String title;
+
+  SearchSuggestion({@required this.articleId, @required this.title});
+
+  factory SearchSuggestion.fromJson(Map<dynamic, dynamic> json) =>
+      SearchSuggestion(
+        articleId: json["article_id"] as int,
+        title: json["title"] as String,
+      );
+}

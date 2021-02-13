@@ -11,3 +11,5 @@ const ARTICLE_URL = "${HOST}article";
 const HISTORY_URL = "${HOST}history";
 
 const BOOKMARK_URL = "${HOST}bookmark";
+
+const SEARCH_SUGGESTION_URL = "${HOST}search_suggestion";
