@@ -31,12 +31,12 @@ class _SettingScreenState extends State<SettingScreen> {
       });
 
       SubscriptionProvider provider =
-          Provider.of<SubscriptionProvider>(context, listen: true);
+          Provider.of<SubscriptionProvider>(context, listen: false);
 
-      provider.fetchSubscriptions().then((_) {
+      provider.fetchSubscriptionSetting().then((_) {
         setState(() {
           checkboxes = provider.checkboxes;
-          categories = provider.items;
+          categories = provider.settings;
           _isLoading = false;
         });
       });
@@ -56,12 +56,14 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Future<void> refreshSubscription(BuildContext context) async {
     await Provider.of<SubscriptionProvider>(context, listen: false)
-        .fetchSubscriptions();
+        .fetchSubscriptionSetting();
     _isInit = true;
   }
 
-  Future<void> updateSubscription(BuildContext context) async {
-    int responseCode = await APIService().post(SUBSCRIPTION_URL, checkboxes);
+  Future<void> updateSetting(BuildContext context) async {
+    SubscriptionProvider sProvider =
+        Provider.of<SubscriptionProvider>(context, listen: false);
+    int responseCode = await sProvider.updateSubscription(checkboxes);
 
     Flushbar(
       message: responseCode == 500
@@ -73,54 +75,57 @@ class _SettingScreenState extends State<SettingScreen> {
       isDismissible: false,
     )..show(context);
 
-    if (responseCode == 200) toggleButton();
+    if (responseCode == 200) {
+      toggleButton();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final String args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-        appBar: AppBar(
-            title: Text(
-              "Settings",
-            ),
-            actions: <Widget>[
-              !edit
-                  ? IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () => toggleButton(),
-                    )
-                  : Row(children: [
-                      IconButton(
-                          icon: Icon(Icons.save),
-                          onPressed: () async {
-                            await updateSubscription(context);
-                          }),
-                      TextButton(
-                          child: Text("Cancel"),
-                          onPressed: () async {
-                            toggleButton();
-                            await refreshSubscription(context);
-                          })
-                    ])
-            ]),
-        body: Container(
-          padding: EdgeInsets.only(top: 5),
-          child: Column(
-            children: [
-              !_isLoading
-                  ? Expanded(
-                      child: CheckBox(
-                        edit: edit,
-                        refreshSubscription: refreshSubscription,
-                        updateSubscription: updateSubscription,
-                        checkboxes: checkboxes,
-                        categories: categories,
-                      ),
-                    )
-                  : Center(child: CircularProgressIndicator()),
-            ],
+      appBar: AppBar(
+          title: Text(
+            "Settings",
           ),
+          actions: <Widget>[
+            !edit
+                ? IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => toggleButton(),
+                  )
+                : Row(children: [
+                    IconButton(
+                        icon: Icon(Icons.save),
+                        onPressed: () async {
+                          await updateSetting(context);
+                        }),
+                    TextButton(
+                        child: Text("Cancel"),
+                        onPressed: () async {
+                          toggleButton();
+                          await refreshSubscription(context);
+                        })
+                  ])
+          ]),
+      body: Container(
+        padding: EdgeInsets.only(top: 5),
+        child: Column(
+          children: [
+            !_isLoading
+                ? Expanded(
+                    child: CheckBox(
+                      edit: edit,
+                      refreshSubscription: refreshSubscription,
+                      checkboxes: checkboxes,
+                      categories: categories,
+                    ),
+                  )
+                : Center(child: CircularProgressIndicator()),
+          ],
         ),
-        drawer: AppDrawer());
+      ),
+      drawer: args == "settings" ? AppDrawer() : null,
+    );
   }
 }

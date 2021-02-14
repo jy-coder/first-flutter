@@ -77,7 +77,8 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.settings),
           title: Text("Settings"),
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(SettingScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(SettingScreen.routeName,
+                arguments: "settings");
           }),
       Divider(),
       ListTile(
