@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
+import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
@@ -14,6 +15,7 @@ import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/screens/pages/setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,7 @@ void main() async {
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider()),
+      ChangeNotifierProvider.value(value: SearchProvider())
     ],
     child: MyApp(),
   ));
@@ -66,6 +69,7 @@ class MyApp extends StatelessWidget {
             ReadListScreen.routeName: (ctx) => ReadListScreen(),
             BookmarkScreen.routeName: (ctx) => BookmarkScreen(),
             SearchScreen.routeName: (ctx) => SearchScreen(),
+            SearchPageViewScreen.routeName: (ctx) => SearchPageViewScreen(),
           }),
     );
   }

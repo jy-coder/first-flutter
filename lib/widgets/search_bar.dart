@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/shared/constants.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
   Function searchInput;
+
   SearchBar({this.searchInput});
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -13,16 +16,24 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    SearchProvider sProvider =
+        Provider.of<SearchProvider>(context, listen: true);
     return Container(
       child: Form(
         key: _formKey,
         child: TextFormField(
-            decoration: textInputDecoration.copyWith(
-              hintText: 'Search ...',
-            ),
-            onChanged: (val) {
-              widget.searchInput(val);
-            }),
+          textInputAction: TextInputAction.search,
+          decoration: searchInputDecoration.copyWith(
+            hintText: 'Enter Your Search',
+          ),
+          onChanged: (val) {
+            // widget.searchInput(val);
+          },
+          onFieldSubmitted: (val) async {
+            await sProvider.fetchSearchResults(val);
+            // widget.searchSubmit(val);
+          },
+        ),
       ),
     );
   }

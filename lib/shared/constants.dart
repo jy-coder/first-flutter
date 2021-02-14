@@ -11,3 +11,12 @@ const textInputDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.black26, width: 2.0),
   ),
 );
+
+const searchInputDecoration = InputDecoration(
+  fillColor: Colors.white,
+  filled: true,
+  contentPadding: EdgeInsets.all(12.0),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(color: Colors.black26, width: 2.0),
+  ),
+);
