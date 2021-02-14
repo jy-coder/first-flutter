@@ -17,9 +17,7 @@ class _CheckBoxState extends State<CheckBox> {
   Widget build(BuildContext context) {
     return Container(
       child: RefreshIndicator(
-          onRefresh: () {
-            return;
-          },
+          onRefresh: () => widget.refreshSubscription(context),
           child: ListView(
             children: [
               Column(

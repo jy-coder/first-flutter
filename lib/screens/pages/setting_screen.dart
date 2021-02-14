@@ -4,8 +4,7 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/shared/checkbox.dart';
-import 'package:newheadline/utils/response.dart';
-import 'package:newheadline/utils/urls.dart';
+
 import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -25,6 +24,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void didChangeDependencies() {
+    if (!mounted) return;
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -54,10 +54,9 @@ class _SettingScreenState extends State<SettingScreen> {
     setState(() => edit = !edit);
   }
 
-  Future<void> refreshSubscription(BuildContext context) async {
-    await Provider.of<SubscriptionProvider>(context, listen: false)
-        .fetchSubscriptionSetting();
+  void refreshSubscription(BuildContext context) async {
     _isInit = true;
+    didChangeDependencies();
   }
 
   Future<void> updateSetting(BuildContext context) async {
@@ -102,9 +101,9 @@ class _SettingScreenState extends State<SettingScreen> {
                         }),
                     TextButton(
                         child: Text("Cancel"),
-                        onPressed: () async {
+                        onPressed: () {
+                          refreshSubscription(context);
                           toggleButton();
-                          await refreshSubscription(context);
                         })
                   ])
           ]),
