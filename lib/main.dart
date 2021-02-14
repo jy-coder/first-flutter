@@ -4,7 +4,6 @@ import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
           home: HomeScreen(),
           routes: {
             ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),
-            ArticleScreen.routeName: (ctx) => ArticleScreen(),
             CategoryScreen.routeName: (ctx) => CategoryScreen(),
             ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
