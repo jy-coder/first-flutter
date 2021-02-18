@@ -67,6 +67,7 @@ class _ArticleCardState extends State<ArticleCard> {
             onTap: () async {
               if (aProvider.subTab != "History")
                 await saveReadingHistory(widget.id);
+              aProvider.setPageViewArticle(widget.id);
               Navigator.pushNamed(
                 context,
                 ArticlePageViewScreen.routeName,

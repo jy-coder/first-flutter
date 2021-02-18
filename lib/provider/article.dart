@@ -104,10 +104,10 @@ class ArticleProvider with ChangeNotifier {
           .toList();
   }
 
-  void getPageViewArticle(int id) {
+  void setPageViewArticle(int id) {
     int ind = getPos(id, _filteredItems);
 
-    _initialPage = ind + 1;
+    _initialPage = ind;
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {

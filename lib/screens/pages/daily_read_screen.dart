@@ -3,9 +3,8 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
-import 'package:newheadline/screens/pages/setting_screen.dart';
-import 'package:newheadline/screens/pages/subscription_screen.dart';
-import 'package:newheadline/shared/app_drawer.dart';
+import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
+import 'package:newheadline/screens/pageview/subscription_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +57,6 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
               title: Container(
                 child: Row(
                   children: [
-                    Text('Daily Read'),
                     IconButton(
                       icon: Icon(Icons.search),
                       onPressed: () {
@@ -73,7 +71,7 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
                 ),
               ),
             ),
-            drawer: AppDrawer(),
+            // drawer: AppDrawer(),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +93,7 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          SettingScreen.routeName,
+                          SubscriptionScreen.routeName,
                         );
                       },
                     ),
@@ -104,6 +102,6 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
               ),
             ),
           )
-        : SubscriptionScreen(categories: categories);
+        : DailyPageViewScreen(categories: categories);
   }
 }

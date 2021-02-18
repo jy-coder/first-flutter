@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/shared/app_drawer.dart';
 
-class SubscriptionScreen extends StatefulWidget {
-  static const routeName = '/Subscription';
+class DailyPageViewScreen extends StatefulWidget {
+  static const routeName = '/DailyPageView';
 
   final List<Subscription> categories;
 
-  SubscriptionScreen({this.categories});
+  DailyPageViewScreen({this.categories});
 
   @override
-  _SubscriptionScreenState createState() => _SubscriptionScreenState();
+  _DailyPageViewScreenState createState() => _DailyPageViewScreenState();
 }
 
-class _SubscriptionScreenState extends State<SubscriptionScreen>
+class _DailyPageViewScreenState extends State<DailyPageViewScreen>
     with SingleTickerProviderStateMixin {
   var _isLoading = false;
   List<Article> articles = [];
@@ -39,7 +39,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen>
     return DefaultTabController(
       length: widget.categories.length,
       child: Scaffold(
-        drawer: AppDrawer(),
+        // drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
           bottom: !_isLoading

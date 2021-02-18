@@ -2,19 +2,18 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/subscription.dart';
-import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/shared/checkbox.dart';
 
 import 'package:provider/provider.dart';
 
-class SettingScreen extends StatefulWidget {
+class SubscriptionScreen extends StatefulWidget {
   static const routeName = "/settings";
 
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  _SubscriptionScreenState createState() => _SubscriptionScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SubscriptionScreenState extends State<SubscriptionScreen> {
   bool edit = false;
   var _isInit = true;
   bool _isLoading = false;
@@ -81,7 +80,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -124,7 +122,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ],
         ),
       ),
-      drawer: args == "settings" ? AppDrawer() : null,
+      // drawer: args == "settings" ? AppDrawer() : null,
     );
   }
 }
