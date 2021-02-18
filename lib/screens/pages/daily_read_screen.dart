@@ -4,7 +4,7 @@ import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
-import 'package:newheadline/screens/pageview/subscription_pageview.dart';
+import 'package:newheadline/screens/pageview/daily_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 

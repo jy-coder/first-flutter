@@ -30,6 +30,7 @@ class _SearchBarState extends State<SearchBar> {
             // widget.searchInput(val);
           },
           onFieldSubmitted: (val) async {
+            sProvider.emptyItems();
             await sProvider.fetchSearchResults(val);
             // widget.searchSubmit(val);
           },

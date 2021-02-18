@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:newheadline/utils/auth.dart';
+import 'package:newheadline/provider/auth.dart';
 
 class APIService {
   Future<String> getToken() async {

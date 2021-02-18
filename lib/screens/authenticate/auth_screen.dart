@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/daily_read_screen.dart';
+import 'package:newheadline/screens/pages/profile_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
-import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
+import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -26,8 +28,12 @@ class _AuthScreenState extends State<AuthScreen> {
       'title': 'reading_list',
     },
     {
-      'page': SubscriptionScreen(),
+      'page': ProfileScreen(),
       'title': 'Setting',
+    },
+    {
+      'page': SearchScreen(),
+      'title': 'Search',
     }
   ];
 
@@ -35,9 +41,13 @@ class _AuthScreenState extends State<AuthScreen> {
   void _selectPage(int index) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    SearchProvider sProvider =
+        Provider.of<SearchProvider>(context, listen: false);
 
     if (_pages[index]['title'] == "Reading List") {
       aProvider.setSubTab("Saved");
+    } else if (_pages[index]['title'] == "Search") {
+      sProvider.emptyItems();
     }
     aProvider.setTab(_pages[index]['title']);
 
@@ -72,6 +82,10 @@ class _AuthScreenState extends State<AuthScreen> {
             icon: Icon(Icons.settings),
             label: "Profile",
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          )
         ],
       ),
     );

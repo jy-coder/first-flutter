@@ -63,8 +63,7 @@ class Auth with ChangeNotifier {
   Future signOut() async {
     try {
       await _auth.signOut();
-
-      // notifyListeners();
+      notifyListeners();
     } catch (error) {
       print(error.toString());
       return null;

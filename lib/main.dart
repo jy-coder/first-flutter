@@ -8,14 +8,14 @@ import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
-import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/screens/pageview/search_pageview.dart';
-import 'package:newheadline/utils/auth.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

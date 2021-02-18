@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/shared/alert_box.dart';
-import 'package:newheadline/utils/auth.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/shared/constants.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';

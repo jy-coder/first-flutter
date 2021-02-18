@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:provider/provider.dart';
 
 class NoAuthScreen extends StatefulWidget {
@@ -19,6 +21,10 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
       'page': Authenticate(),
       'title': 'Login',
     },
+    {
+      'page': SearchScreen(),
+      'title': 'Search',
+    }
   ];
 
   int _selectedPageIndex = 0;
@@ -26,7 +32,13 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
   void _selectPage(int index) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    SearchProvider sProvider =
+        Provider.of<SearchProvider>(context, listen: false);
     aProvider.setTab(_pages[index]['title']);
+
+    if (_pages[index]['title'] == "Search") {
+      sProvider.emptyItems();
+    }
 
     setState(() {
       _selectedPageIndex = index;
@@ -50,6 +62,10 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
             icon: Icon(Icons.star),
             label: 'Login',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          )
         ],
       ),
     );

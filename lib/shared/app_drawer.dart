@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
-import 'package:newheadline/screens/pages/home_screen.dart';
+import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
-import 'package:newheadline/utils/auth.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {

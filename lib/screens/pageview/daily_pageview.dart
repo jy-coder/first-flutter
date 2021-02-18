@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/shared/app_drawer.dart';
 
 class DailyPageViewScreen extends StatefulWidget {
   static const routeName = '/DailyPageView';
