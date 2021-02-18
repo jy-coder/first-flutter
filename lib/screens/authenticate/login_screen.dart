@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/shared/alert_box.dart';
+import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:newheadline/shared/constants.dart';
 
@@ -27,6 +28,8 @@ class _LoginState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // drawer: AppDrawer(),
+
       appBar: AppBar(
         elevation: 0.0,
         title: Text('Sign in'),
@@ -75,7 +78,7 @@ class _LoginState extends State<LoginScreen> {
                 RaisedButton(
                     color: Colors.black87,
                     child: Text(
-                      'Sign In',
+                      'Login',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {

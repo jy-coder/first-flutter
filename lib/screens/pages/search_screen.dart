@@ -3,7 +3,6 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
-import 'package:newheadline/widgets/article_card.dart';
 import 'package:newheadline/widgets/search_bar.dart';
 import 'package:newheadline/widgets/search_result_card.dart';
 import 'package:provider/provider.dart';

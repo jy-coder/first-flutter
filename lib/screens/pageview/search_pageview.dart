@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/search.dart';
-import 'package:newheadline/widgets/article_page.dart';
+import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -66,7 +66,7 @@ class _SearchPageViewScreenState extends State<SearchPageViewScreen> {
               controller: _controller,
               children: <Widget>[
                 ...articles
-                    .map((Article a) => ArticlePage(
+                    .map((Article a) => ArticleScreen(
                           id: a.articleId,
                           title: a.title,
                           description: a.description,

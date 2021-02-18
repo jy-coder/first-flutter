@@ -4,7 +4,6 @@ import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
@@ -13,7 +12,7 @@ import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
-import 'package:newheadline/screens/pages/setting_screen.dart';
+import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/utils/auth.dart';
@@ -59,11 +58,10 @@ class MyApp extends StatelessWidget {
           home: HomeScreen(),
           routes: {
             ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),
-            ArticleScreen.routeName: (ctx) => ArticleScreen(),
             CategoryScreen.routeName: (ctx) => CategoryScreen(),
             ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
-            SettingScreen.routeName: (ctx) => SettingScreen(),
+            SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),
             Authenticate.routeName: (ctx) => Authenticate(),
             HistoryScreen.routeName: (ctx) => HistoryScreen(),
             ReadListScreen.routeName: (ctx) => ReadListScreen(),

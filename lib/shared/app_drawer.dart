@@ -4,7 +4,7 @@ import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/category_screen.dart';
 import 'package:newheadline/screens/pages/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
-import 'package:newheadline/screens/pages/setting_screen.dart';
+import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:newheadline/utils/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +77,9 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.settings),
           title: Text("Settings"),
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(SettingScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(
+                SubscriptionScreen.routeName,
+                arguments: "settings");
           }),
       Divider(),
       ListTile(

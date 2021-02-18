@@ -38,7 +38,7 @@ class _ReadListScreenState extends State<ReadListScreen>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: AppDrawer(),
+        // drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
           bottom: !_isLoading

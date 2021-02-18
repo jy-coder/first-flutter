@@ -69,7 +69,6 @@ class _CategoryScreenState extends State<CategoryScreen>
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
-        drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
           bottom: !_isLoading

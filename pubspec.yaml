@@ -36,7 +36,7 @@ dependencies:
   provider: ^4.3.3
   http: ^0.12.2
   flushbar: ^1.10.4
-  # webview_flutter: ^1.0.7
+  webview_flutter: ^1.0.7
   timeago: ^2.0.29
   cached_network_image: ^2.5.0
   smooth_page_indicator: ^0.2.0

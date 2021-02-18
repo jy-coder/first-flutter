@@ -5,10 +5,15 @@ import 'package:newheadline/utils/urls.dart';
 
 class SubscriptionProvider with ChangeNotifier {
   List<Subscription> _items = [];
+  List<Subscription> _subscriptionCategory = [];
   Map<String, bool> _checkBoxes = {};
 
-  List<Subscription> get items {
+  List<Subscription> get settings {
     return [..._items];
+  }
+
+  List<Subscription> get subscriptionCategory {
+    return [..._subscriptionCategory];
   }
 
   Map<String, bool> get checkboxes {
@@ -19,7 +24,16 @@ class SubscriptionProvider with ChangeNotifier {
     return _items.firstWhere((cat) => cat.categoryId == id);
   }
 
-  Future<void> fetchSubscriptions([String token]) async {
+  void addToSelectedList(
+      List<Map<String, dynamic>> data, List<Subscription> list) {
+    for (Map<String, dynamic> d in data) {
+      list.add(
+        Subscription.fromJson(d),
+      );
+    }
+  }
+
+  Future<void> fetchSubscriptionSetting([String token]) async {
     const url = SUBSCRIPTION_URL;
     final subscriptions = await APIService().get(url);
 
@@ -39,5 +53,19 @@ class SubscriptionProvider with ChangeNotifier {
 
     _items = items;
     _checkBoxes = checkBoxes;
+  }
+
+  Future<int> updateSubscription(Map<String, bool> checkboxes) async {
+    int responseCode = await APIService().post(SUBSCRIPTION_URL, checkboxes);
+
+    if (responseCode == 200) notifyListeners();
+
+    return responseCode;
+  }
+
+  Future<void> fetchSubscriptionCategory() async {
+    _subscriptionCategory.clear();
+    final data = await APIService().get(USER_SUBSCRIPTION_URL);
+    addToSelectedList(data, _subscriptionCategory);
   }
 }
