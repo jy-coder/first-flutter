@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 
-class DailyPageViewScreen extends StatefulWidget {
+class DailyReadTab extends StatefulWidget {
   static const routeName = '/DailyPageView';
 
   final List<Subscription> categories;
 
-  DailyPageViewScreen({this.categories});
+  DailyReadTab({this.categories});
 
   @override
-  _DailyPageViewScreenState createState() => _DailyPageViewScreenState();
+  _DailyReadTabState createState() => _DailyReadTabState();
 }
 
-class _DailyPageViewScreenState extends State<DailyPageViewScreen>
+class _DailyReadTabState extends State<DailyReadTab>
     with SingleTickerProviderStateMixin {
   var _isLoading = false;
   List<Article> articles = [];

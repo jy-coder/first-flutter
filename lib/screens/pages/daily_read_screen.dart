@@ -4,7 +4,7 @@ import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
-import 'package:newheadline/screens/pageview/daily_pageview.dart';
+import 'package:newheadline/screens/tabs_controller/daily_read.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 
@@ -46,31 +46,11 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SearchProvider sProvider =
-        Provider.of<SearchProvider>(context, listen: false);
-
     Provider.of<SubscriptionProvider>(context, listen: true);
 
     return !_isLoading && categories.isEmpty
         ? Scaffold(
-            appBar: AppBar(
-              title: Container(
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        sProvider.emptyItems();
-                        Navigator.pushNamed(
-                          context,
-                          SearchScreen.routeName,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            appBar: AppBar(),
             // drawer: AppDrawer(),
             body: Center(
               child: Column(
@@ -102,6 +82,6 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
               ),
             ),
           )
-        : DailyPageViewScreen(categories: categories);
+        : DailyReadTab(categories: categories);
   }
 }

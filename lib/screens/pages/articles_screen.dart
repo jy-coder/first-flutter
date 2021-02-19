@@ -20,7 +20,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
 
   @override
   void initState() {
-    // print("init called");
     super.initState();
     _isLoading = true;
     _hasMore = true;

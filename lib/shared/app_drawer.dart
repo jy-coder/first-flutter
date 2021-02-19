@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
-import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
@@ -29,8 +29,7 @@ class AppDrawer extends StatelessWidget {
           title: Text("All Articles"),
           onTap: () {
             ap.setTab("all_articles");
-            Navigator.of(context)
-                .pushReplacementNamed(CategoryScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(ArticlesTab.routeName);
           }),
       Divider(),
       ListTile(
@@ -59,8 +58,7 @@ class AppDrawer extends StatelessWidget {
           title: Text("All Articles"),
           onTap: () {
             ap.setTab("all_articles");
-            Navigator.of(context)
-                .pushReplacementNamed(CategoryScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(ArticlesTab.routeName);
           }),
       Divider(),
       ListTile(
@@ -86,8 +84,7 @@ class AppDrawer extends StatelessWidget {
           leading: Icon(Icons.branding_watermark_rounded),
           title: Text("Advertisments"),
           onTap: () {
-            Navigator.of(context)
-                .pushReplacementNamed(CategoryScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(ArticlesTab.routeName);
           }),
       Divider(),
       ListTile(

@@ -29,10 +29,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () async {
                   if (profileList[index] == "Logout") {
                     await auth.signOut();
-                  }
-                  Navigator.of(context).pushReplacementNamed(
-                    navigator[index],
-                  );
+                    Navigator.of(context).pushReplacementNamed(
+                      navigator[index],
+                    );
+                  } else if (profileList[index] == "Setting")
+                    Navigator.of(context).pushNamed(
+                      navigator[index],
+                    );
                 },
                 child: ListTile(
                   title: Text(profileList[index]),

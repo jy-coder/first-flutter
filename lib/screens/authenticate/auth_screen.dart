@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/search.dart';
-import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/pages/daily_read_screen.dart';
 import 'package:newheadline/screens/pages/profile_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
@@ -20,7 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
       'title': 'daily_read',
     },
     {
-      'page': CategoryScreen(),
+      'page': ArticlesTab(),
       'title': 'all_articles',
     },
     {

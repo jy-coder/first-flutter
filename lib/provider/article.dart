@@ -30,6 +30,10 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setTab(String tabName) {
+    _items.clear();
+    _filteredItems.clear();
+    _historyItems.clear();
+    _bookmarkItems.clear();
     _filteredDate = "";
     _tab = tabName;
     _page = 1;
@@ -86,7 +90,7 @@ class ArticleProvider with ChangeNotifier {
     // await Future.delayed(Duration(seconds: 1));
 
     List<Map<String, dynamic>> data = await APIService()
-        .get("$ARTICLE_URL/?page=$_page&category=$_categoryName");
+        .get("$ARTICLE_URL/?type=$_tab&page=$_page&category=$_categoryName");
     _page++;
 
     addToSelectedList(data, _filteredItems);

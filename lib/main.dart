@@ -6,7 +6,7 @@ import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
-import 'package:newheadline/screens/pages/category_screen.dart';
+import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/pages/reading_list.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           home: HomeScreen(),
           routes: {
             ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),
-            CategoryScreen.routeName: (ctx) => CategoryScreen(),
+            ArticlesTab.routeName: (ctx) => ArticlesTab(),
             ArticlesScreen.routeName: (ctx) => ArticlesScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
             SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),

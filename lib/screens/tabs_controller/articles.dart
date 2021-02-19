@@ -3,17 +3,16 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
-import 'package:newheadline/shared/app_drawer.dart';
 import 'package:provider/provider.dart';
 
-class CategoryScreen extends StatefulWidget {
+class ArticlesTab extends StatefulWidget {
   static const routeName = '/category';
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _ArticlesTabState createState() => _ArticlesTabState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen>
+class _ArticlesTabState extends State<ArticlesTab>
     with SingleTickerProviderStateMixin {
   var _isInit = true;
   var _isLoading = false;
