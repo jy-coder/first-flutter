@@ -30,7 +30,7 @@ class SearchProvider with ChangeNotifier {
   void getPageViewArticle(int id) {
     int ind = getPos(id, _items);
 
-    _initialPage = ind + 1;
+    _initialPage = ind;
   }
 
   void emptyItems() {

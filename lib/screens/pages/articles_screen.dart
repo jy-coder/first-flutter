@@ -66,6 +66,7 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     super.build(context);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
+
     List<Article> filteredArticles = aProvider.filteredItems;
     return ListView.builder(
         padding: const EdgeInsets.all(10.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
 import 'package:newheadline/widgets/date_filter.dart';

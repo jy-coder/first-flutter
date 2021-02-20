@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/pages/daily_read_screen.dart';
@@ -58,6 +59,9 @@ class _AuthScreenState extends State<AuthScreen> {
       aProvider.setFilteredDate("");
     } else if (_pages[index]['title'] == "Search") {
       sProvider.emptyItems();
+    } else if (_pages[index]['title'] == "daily_read" ||
+        _pages[index]['title'] == "all_articles") {
+      aProvider.filterByCategory("all");
     }
 
     setState(() {
