@@ -65,11 +65,7 @@ class _DailyReadTabState extends State<DailyReadTab>
                 children: widget.categories
                     .map(
                       (Subscription c) => Tab(
-                        child: Container(
-                          child: Text(
-                            c.categoryName.toString(),
-                          ),
-                        ),
+                        child: Container(),
                       ),
                     )
                     .toList(),

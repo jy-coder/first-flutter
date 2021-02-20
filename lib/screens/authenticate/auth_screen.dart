@@ -14,6 +14,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  int _selectedPageIndex = 0;
   final List<Map<String, Object>> _pages = [
     {
       'page': DailyReadScreen(),
@@ -36,20 +37,28 @@ class _AuthScreenState extends State<AuthScreen> {
       'title': 'Search',
     }
   ];
+  @override
+  void initState() {
+    super.initState();
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setTab("daily_read");
+  }
 
-  int _selectedPageIndex = 0;
   void _selectPage(int index) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     SearchProvider sProvider =
         Provider.of<SearchProvider>(context, listen: false);
 
-    if (_pages[index]['title'] == "Reading List") {
+    aProvider.setTab(_pages[index]['title']);
+
+    if (_pages[index]['title'] == "reading_list") {
       aProvider.setSubTab("Saved");
+      aProvider.setFilteredDate("");
     } else if (_pages[index]['title'] == "Search") {
       sProvider.emptyItems();
     }
-    aProvider.setTab(_pages[index]['title']);
 
     setState(() {
       _selectedPageIndex = index;
@@ -64,7 +73,6 @@ class _AuthScreenState extends State<AuthScreen> {
         type: BottomNavigationBarType.fixed,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
-        // type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.house),

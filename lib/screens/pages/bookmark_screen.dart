@@ -15,40 +15,27 @@ class BookmarkScreen extends StatefulWidget {
 class _BookmarkScreenState extends State<BookmarkScreen> {
   bool _isLoading = true;
   bool _hasMore = true;
-  bool _init = false;
   List<String> filterValues = [];
   String selectedValue = "";
   bool refresh = false;
 
   @override
   void initState() {
-    // print("init called");
     super.initState();
     _isLoading = true;
     _hasMore = true;
-    _init = true;
-    // print("init triggered");
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadMore();
-
-      // print("mounted value:$mounted");
-    });
+    _loadMore();
   }
 
   @override
   void didChangeDependencies() {
-    // print("dependency changed");
     super.didChangeDependencies();
     _isLoading = true;
     _hasMore = true;
-    if (!_init) _loadMore();
-    _init = false;
   }
 
   @override
   void dispose() {
-    // print("disposed");
     super.dispose();
   }
 
@@ -59,7 +46,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     _isLoading = true;
 
     aProvider.fetchBookmark().then((result) async {
-      await Future.wait(aProvider.bookmarkItems
+      await Future.wait(aProvider.items
           .map((a) =>
               Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
           .toList());
@@ -81,7 +68,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    List<Article> bookmarkItems = aProvider.bookmarkItems;
+    List<Article> bookmarkItems = aProvider.items;
     return Scaffold(
       body: ListView.builder(
           padding: const EdgeInsets.all(10.0),

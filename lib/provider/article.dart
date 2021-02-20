@@ -6,13 +6,9 @@ import 'package:newheadline/utils/urls.dart';
 class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
   List<Article> _filteredItems = [];
-  List<Article> _historyItems = [];
-  List<Article> _bookmarkItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
   int _page = 1;
-  int _historyPage = 1;
-  int _bookmarkPage = 1;
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
@@ -32,33 +28,24 @@ class ArticleProvider with ChangeNotifier {
   void setTab(String tabName) {
     _items.clear();
     _filteredItems.clear();
-    _historyItems.clear();
-    _bookmarkItems.clear();
-    _filteredDate = "";
     _tab = tabName;
     _page = 1;
-    _historyPage = 1;
   }
 
   void setSubTab(String subtabName) {
+    _items.clear();
     _subtab = subtabName;
+    _page = 1;
     notifyListeners();
   }
 
   void setFilteredDate(String dateRange) {
+    _page = 1;
     _filteredDate = dateRange;
-  }
-
-  List<Article> get historyItems {
-    return [..._historyItems];
   }
 
   List<Article> get filteredItems {
     return [..._filteredItems];
-  }
-
-  List<Article> get bookmarkItems {
-    return [..._bookmarkItems];
   }
 
   int get initialPage {
@@ -85,12 +72,11 @@ class ArticleProvider with ChangeNotifier {
     }
   }
 
-  //for lazy loading
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
     // await Future.delayed(Duration(seconds: 1));
 
     List<Map<String, dynamic>> data = await APIService()
-        .get("$ARTICLE_URL/?type=$_tab&page=$_page&category=$_categoryName");
+        .get("$ARTICLE_URL/?page=$_page&category=$_categoryName");
     _page++;
 
     addToSelectedList(data, _filteredItems);
@@ -116,27 +102,28 @@ class ArticleProvider with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
     List<Map<String, dynamic>> data = await APIService()
-        .get("$HISTORY_URL/?page=$_historyPage&dateRange=$_filteredDate");
+        .get("$HISTORY_URL/?page=$_page&dateRange=$_filteredDate");
 
-    _historyPage++;
+    _page++;
 
-    addToSelectedList(data, _historyItems);
+    addToSelectedList(data, _items);
 
     return data;
   }
 
   Future<List<Map<String, dynamic>>> fetchBookmark() async {
     List<Map<String, dynamic>> data =
-        await APIService().get("$BOOKMARK_URL/?page=$_bookmarkPage");
-    _bookmarkPage++;
-    addToSelectedList(data, _bookmarkItems);
+        await APIService().get("$BOOKMARK_URL/?page=$_page");
+
+    _page++;
+    addToSelectedList(data, _items);
 
     return data;
   }
 
   void clearHistory() {
-    _historyPage = 1;
-    _historyItems = [];
+    _page = 1;
+    _items = [];
     notifyListeners();
   }
 
@@ -149,7 +136,7 @@ class ArticleProvider with ChangeNotifier {
       removeItemFromList(_items, articleId);
       removeItemFromList(_filteredItems, articleId);
     } else if (_tab == "reading_list") {
-      removeItemFromList(_bookmarkItems, articleId);
+      removeItemFromList(_items, articleId);
     }
 
     notifyListeners();

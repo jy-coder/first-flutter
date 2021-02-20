@@ -25,12 +25,11 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    if (aProvider.tab == "all_articles" || aProvider.tab == "reading_list")
+    if (aProvider.tab == "all_articles")
       articles = aProvider.filteredItems;
-    else if (aProvider.subTab == "History")
-      articles = aProvider.historyItems;
-    else if (aProvider.subTab == "Saved") articles = aProvider.bookmarkItems;
-
+    else {
+      articles = aProvider.items;
+    }
     _initialPage = aProvider.initialPage;
     _controller = PageController(
       initialPage: _initialPage,
