@@ -62,10 +62,4 @@ class SubscriptionProvider with ChangeNotifier {
 
     return responseCode;
   }
-
-  Future<void> fetchSubscriptionCategory() async {
-    _subscriptionCategory.clear();
-    final data = await APIService().get(USER_SUBSCRIPTION_URL);
-    addToSelectedList(data, _subscriptionCategory);
-  }
 }

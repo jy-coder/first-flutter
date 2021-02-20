@@ -18,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Auth auth = Provider.of<Auth>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Profile Settings"),
       ),
       body: ListView.builder(

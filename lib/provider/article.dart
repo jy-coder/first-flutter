@@ -36,6 +36,7 @@ class ArticleProvider with ChangeNotifier {
     _filteredItems.clear();
     _tab = tabName;
     _page = 1;
+    print(_tab);
   }
 
   void setSubTab(String subtabName) {
@@ -80,7 +81,7 @@ class ArticleProvider with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
     List<Map<String, dynamic>> data = await APIService().get(
-        "$ARTICLE_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName");
+        "$ARTICLE_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
 
     _categoriesPage[_categoryName]++;
 
@@ -93,10 +94,8 @@ class ArticleProvider with ChangeNotifier {
     _categoryName = categoryName;
     _page = 1;
     if (categoryName != "all")
-      _filteredItems = _items
-          .where((Article a) => a.category == categoryName)
-          .toSet()
-          .toList();
+      _filteredItems =
+          _items.where((Article a) => a.category == categoryName).toList();
   }
 
   void setPageViewArticle(int id) {

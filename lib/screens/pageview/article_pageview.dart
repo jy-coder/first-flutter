@@ -25,7 +25,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    if (aProvider.tab == "all_articles")
+    if (aProvider.tab == "all_articles" || aProvider.tab == "daily_read")
       articles = aProvider.filteredItems;
     else {
       articles = aProvider.items;

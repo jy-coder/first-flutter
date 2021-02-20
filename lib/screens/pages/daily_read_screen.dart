@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/models/models.dart';
-import 'package:newheadline/provider/search.dart';
+import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
-import 'package:newheadline/screens/pages/search_screen.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:newheadline/screens/tabs_controller/daily_read.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -16,8 +15,9 @@ class DailyReadScreen extends StatefulWidget {
 class _DailyReadScreenState extends State<DailyReadScreen> {
   var _isInit = true;
   var _isLoading = false;
+  Map<String, int> _categoriesPage = {};
 
-  List<Subscription> categories = [];
+  List<String> categories = [];
 
   @override
   void initState() {
@@ -31,27 +31,36 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
         _isLoading = true;
       });
 
-      SubscriptionProvider cProvider =
-          Provider.of<SubscriptionProvider>(context, listen: true);
+      CategoryProvider cProvider =
+          Provider.of<CategoryProvider>(context, listen: true);
 
-      cProvider.fetchSubscriptionCategory().then((_) {
+      cProvider.fetchSubscriptionCategories().then((_) {
         setState(() {
           _isLoading = false;
-          categories = cProvider.subscriptionCategory;
+          categories = cProvider.categoryNames;
         });
+        _setPages(cProvider.categoryNames);
       });
     }
     super.didChangeDependencies();
   }
 
+  void _setPages(List<String> categoryNames) {
+    categoryNames.forEach((String name) => _categoriesPage[name] = 1);
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setCategoriesPage(_categoriesPage);
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<SubscriptionProvider>(context, listen: true);
+    CategoryProvider cProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
 
     return !_isLoading && categories.isEmpty
         ? Scaffold(
             appBar: AppBar(),
-            // drawer: AppDrawer(),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -82,6 +91,6 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
               ),
             ),
           )
-        : DailyReadTab(categories: categories);
+        : DailyReadTab(categories: cProvider.items);
   }
 }

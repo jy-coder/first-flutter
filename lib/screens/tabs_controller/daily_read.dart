@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/category.dart';
+import 'package:newheadline/screens/pages/articles_screen.dart';
+import 'package:provider/provider.dart';
 
 class DailyReadTab extends StatefulWidget {
   static const routeName = '/DailyPageView';
 
-  final List<Subscription> categories;
+  final List<Category> categories;
 
   DailyReadTab({this.categories});
 
@@ -35,10 +39,13 @@ class _DailyReadTabState extends State<DailyReadTab>
 
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    CategoryProvider cProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
     return DefaultTabController(
       length: widget.categories.length,
       child: Scaffold(
-        // drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
           bottom: !_isLoading
@@ -46,10 +53,14 @@ class _DailyReadTabState extends State<DailyReadTab>
                   controller: _tabController,
                   isScrollable: true,
                   labelColor: Colors.black,
-                  onTap: (int index) {},
+                  onTap: (int index) {
+                    aProvider.filterByCategory(
+                      cProvider.categoryNames[index],
+                    );
+                  },
                   tabs: widget.categories
                       .map(
-                        (Subscription c) => Tab(
+                        (Category c) => Tab(
                           text:
                               ('${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}'),
                         ),
@@ -64,8 +75,8 @@ class _DailyReadTabState extends State<DailyReadTab>
                 controller: _tabController,
                 children: widget.categories
                     .map(
-                      (Subscription c) => Tab(
-                        child: Container(),
+                      (Category c) => Tab(
+                        child: ArticlesScreen(),
                       ),
                     )
                     .toList(),

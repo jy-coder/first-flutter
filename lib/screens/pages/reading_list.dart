@@ -59,11 +59,15 @@ class _ReadListScreenState extends State<ReadListScreen>
               : null,
           title: Container(
               child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Text('Reading List'),
+                child: Text(
+                  'Reading List',
+                  textAlign: TextAlign.center,
+                ),
               ),
-              Spacer(),
+              // Spacer(),
               Container(
                 child: aProvider.subTab == "History" ? Filter() : Text(""),
               ),

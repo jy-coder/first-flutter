@@ -66,14 +66,10 @@ class _ArticlesTabState extends State<ArticlesTab>
     aProvider.setCategoriesPage(_categoriesPage);
   }
 
-  void filterCategory(String categoryName) {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
-    aProvider.filterByCategory(categoryName);
-  }
-
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
@@ -85,7 +81,7 @@ class _ArticlesTabState extends State<ArticlesTab>
                   isScrollable: true,
                   labelColor: Colors.black,
                   onTap: (int index) {
-                    filterCategory(
+                    aProvider.filterByCategory(
                       categoryNames[index],
                     );
                   },
