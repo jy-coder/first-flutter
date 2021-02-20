@@ -12,6 +12,7 @@ class ArticleProvider with ChangeNotifier {
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
+  Map<String, int> _categoriesPage = {};
 
   List<Article> get items {
     return [..._items];
@@ -25,7 +26,12 @@ class ArticleProvider with ChangeNotifier {
     return _subtab;
   }
 
+  void setCategoriesPage(Map<String, int> categoriesPage) {
+    _categoriesPage = categoriesPage;
+  }
+
   void setTab(String tabName) {
+    _categoriesPage.clear();
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
@@ -73,11 +79,10 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
-    // await Future.delayed(Duration(seconds: 1));
+    List<Map<String, dynamic>> data = await APIService().get(
+        "$ARTICLE_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName");
 
-    List<Map<String, dynamic>> data = await APIService()
-        .get("$ARTICLE_URL/?page=$_page&category=$_categoryName");
-    _page++;
+    _categoriesPage[_categoryName]++;
 
     addToSelectedList(data, _filteredItems);
 
