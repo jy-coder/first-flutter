@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -46,7 +47,13 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Container(
+            child: CustomizeThemeButton(),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Container(

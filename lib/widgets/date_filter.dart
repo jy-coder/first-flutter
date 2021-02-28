@@ -25,8 +25,8 @@ class _FilterState extends State<Filter> {
         showModalBottomSheet(
             context: context,
             builder: (builder) {
-              return StatefulBuilder(builder: (BuildContext context,
-                  StateSetter setState /*You can rename this!*/) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
                 return Container(
                   height: 400,
                   child: Column(
