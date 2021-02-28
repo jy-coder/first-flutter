@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
+import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/widgets/date_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +36,7 @@ class _ReadListScreenState extends State<ReadListScreen>
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -52,7 +54,13 @@ class _ReadListScreenState extends State<ReadListScreen>
                   tabs: readingList
                       .map(
                         (tabname) => Tab(
-                          text: (tabname),
+                          child: Text(
+                            tabname,
+                            style: CustomTextStyle.normalBold(
+                              context,
+                              tProvider.fontSize,
+                            ),
+                          ),
                         ),
                       )
                       .toList(),

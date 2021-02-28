@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pages/webview_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleScreen extends StatelessWidget {
@@ -30,6 +32,8 @@ class ArticleScreen extends StatelessWidget {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
     DateTime dateTime = dateFormat.parse(pubDate);
     String timeAgo = timeago.format(dateTime);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
 
     return SingleChildScrollView(
       child: Container(
@@ -55,7 +59,7 @@ class ArticleScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: CustomTextStyle.title1(context),
+                    style: CustomTextStyle.title1(context, tProvider.fontSize),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -71,7 +75,8 @@ class ArticleScreen extends StatelessWidget {
                               Icon(Icons.timelapse),
                               Text(
                                 timeAgo,
-                                style: CustomTextStyle.small(context),
+                                style: CustomTextStyle.small(
+                                    context, tProvider.fontSize),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -82,7 +87,8 @@ class ArticleScreen extends StatelessWidget {
                               Icon(Icons.source),
                               Text(
                                 source,
-                                style: CustomTextStyle.small(context),
+                                style: CustomTextStyle.small(
+                                    context, tProvider.fontSize),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -96,14 +102,16 @@ class ArticleScreen extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     child: Text(
                       description,
-                      style: CustomTextStyle.normal(context),
+                      style:
+                          CustomTextStyle.normal(context, tProvider.fontSize),
                     ),
                   ),
                   Container(
                     child: OutlineButton(
                       padding: EdgeInsets.all(20),
                       child: Text("Visit Website",
-                          style: CustomTextStyle.normal(context)),
+                          style: CustomTextStyle.normal(
+                              context, tProvider.fontSize)),
                       onPressed: () {
                         Navigator.push(
                             context,

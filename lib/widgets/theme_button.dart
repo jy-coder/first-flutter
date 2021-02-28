@@ -8,11 +8,12 @@ class CustomizeThemeButton extends StatefulWidget {
 }
 
 class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
-  double _currentSliderValue = 20;
+  double _currentSliderValue = 16;
 
   @override
   Widget build(BuildContext context) {
-    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
     return IconButton(
         icon: Icon(Icons.font_download),
         onPressed: () {
@@ -40,14 +41,15 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                                     ? Colors.blue
                                     : Colors.green,
                                 value: _currentSliderValue,
-                                min: 10,
+                                min: 13,
                                 max: 30,
-                                divisions: 1,
+                                divisions: 5,
                                 label: _currentSliderValue.round().toString(),
                                 onChanged: (double value) {
                                   setState(() {
                                     _currentSliderValue = value;
                                   });
+                                  tProvider.setFontSize(_currentSliderValue);
                                 },
                               ),
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:newheadline/screens/tabs_controller/daily_read.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -57,6 +58,8 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
     Provider.of<SubscriptionProvider>(context, listen: true);
     CategoryProvider cProvider =
         Provider.of<CategoryProvider>(context, listen: false);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
 
     return !_isLoading && categories.isEmpty
         ? Scaffold(
@@ -69,14 +72,16 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
                   Container(
                     padding: EdgeInsets.all(5),
                     child: Text("Personalize Your Feed",
-                        style: CustomTextStyle.smallbold(context)),
+                        style: CustomTextStyle.smallbold(
+                            context, tProvider.fontSize)),
                   ),
                   Container(
                     child: FlatButton.icon(
                       color: Colors.green[600],
                       label: Text(
                         "Customize",
-                        style: CustomTextStyle.whitesmall(context),
+                        style: CustomTextStyle.whitesmall(
+                            context, tProvider.fontSize),
                       ),
                       icon: Icon(Icons.add),
                       onPressed: () {

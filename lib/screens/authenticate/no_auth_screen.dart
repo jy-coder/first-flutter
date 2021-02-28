@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/search.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/pages/search_screen.dart';
@@ -47,14 +48,17 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.fixed,
-        // unselectedItemColor: Colors.black54,
-        // selectedItemColor: Colors.blue,
+        unselectedItemColor:
+            tProvider.theme == "light" ? Colors.black54 : Colors.grey,
+        selectedItemColor:
+            tProvider.theme == "light" ? Colors.blue : Colors.green,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.category),

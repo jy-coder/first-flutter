@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/response.dart';
@@ -53,6 +54,8 @@ class _SearchResultCardState extends State<SearchResultCard> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
     return Container(
       child: Container(
         child: Wrap(
@@ -80,7 +83,8 @@ class _SearchResultCardState extends State<SearchResultCard> {
                               children: [
                                 Text(
                                   widget.title,
-                                  style: CustomTextStyle.smallbold(context),
+                                  style: CustomTextStyle.smallbold(
+                                      context, tProvider.fontSize),
                                 ),
                                 Text(
                                   truncateWithEllipsis(75, widget.summary),
