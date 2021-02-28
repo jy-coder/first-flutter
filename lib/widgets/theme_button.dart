@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/theme.dart';
+import 'package:provider/provider.dart';
 
 class CustomizeThemeButton extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return IconButton(
         icon: Icon(Icons.font_download),
         onPressed: () {
@@ -32,10 +35,14 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                           children: [
                             Expanded(
                               child: Slider(
+                                inactiveColor: Colors.grey,
+                                activeColor: tProvider.theme == "light"
+                                    ? Colors.blue
+                                    : Colors.green,
                                 value: _currentSliderValue,
                                 min: 10,
                                 max: 30,
-                                divisions: 5,
+                                divisions: 1,
                                 label: _currentSliderValue.round().toString(),
                                 onChanged: (double value) {
                                   setState(() {
@@ -57,7 +64,9 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                             Expanded(
                               flex: 2,
                               child: MaterialButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  tProvider.setSelectedTheme("light");
+                                },
                                 color: Colors.white,
                                 padding: EdgeInsets.all(16),
                                 shape: CircleBorder(),
@@ -66,7 +75,9 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                             Expanded(
                               flex: 2,
                               child: MaterialButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  tProvider.setSelectedTheme("dark");
+                                },
                                 color: Colors.black,
                                 padding: EdgeInsets.all(16),
                                 shape: CircleBorder(),

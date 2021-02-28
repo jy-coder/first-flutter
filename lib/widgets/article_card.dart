@@ -56,7 +56,7 @@ class _ArticleCardState extends State<ArticleCard> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    TextStyle defaultStyle = TextStyle(fontSize: 15.0);
+    TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 15.0);
     TextStyle linkStyle = TextStyle(color: Colors.blue);
 
     return Container(

@@ -3,6 +3,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
@@ -28,7 +29,8 @@ void main() async {
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider()),
-      ChangeNotifierProvider.value(value: SearchProvider())
+      ChangeNotifierProvider.value(value: SearchProvider()),
+      ChangeNotifierProvider.value(value: ThemeProvider()),
     ],
     child: MyApp(),
   ));
@@ -37,12 +39,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return StreamProvider.value(
       value: Auth().user,
       child: MaterialApp(
           title: 'NewsHeadline',
-          theme: ThemeData(primarySwatch: white, brightness: Brightness.light),
-          themeMode: ThemeMode.dark,
+          theme: ThemeData(
+            primarySwatch: white,
+            brightness: Brightness.light,
+          ),
+          themeMode:
+              tProvider.theme == "dark" ? ThemeMode.dark : ThemeMode.light,
           darkTheme: ThemeData(
             brightness: Brightness.dark,
           ),
