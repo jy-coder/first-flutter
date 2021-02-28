@@ -79,7 +79,6 @@ class _ArticlesTabState extends State<ArticlesTab>
               ? TabBar(
                   controller: _tabController,
                   isScrollable: true,
-                  labelColor: Colors.black,
                   onTap: (int index) {
                     aProvider.filterByCategory(
                       categoryNames[index],

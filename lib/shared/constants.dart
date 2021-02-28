@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
-  fillColor: Colors.white,
   filled: true,
   contentPadding: EdgeInsets.all(12.0),
   enabledBorder: OutlineInputBorder(
@@ -13,7 +12,6 @@ const textInputDecoration = InputDecoration(
 );
 
 const searchInputDecoration = InputDecoration(
-  fillColor: Colors.white,
   filled: true,
   contentPadding: EdgeInsets.all(12.0),
   focusedBorder: UnderlineInputBorder(

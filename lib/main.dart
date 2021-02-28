@@ -16,6 +16,7 @@ import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/provider/auth.dart';
+import 'package:newheadline/shared/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -40,21 +41,11 @@ class MyApp extends StatelessWidget {
       value: Auth().user,
       child: MaterialApp(
           title: 'NewsHeadline',
-          theme: new ThemeData(
-              appBarTheme: AppBarTheme(
-                color: Colors.white,
-              ),
-              primaryTextTheme: TextTheme(
-                headline6: TextStyle(color: Colors.black),
-              ),
-              primaryIconTheme: IconThemeData(
-                color: Colors.black,
-              ),
-              buttonTheme: ButtonThemeData(
-                buttonColor: Colors.black87, //  <-- dark color
-                textTheme: ButtonTextTheme
-                    .primary, //  <-- this auto selects the right color
-              )),
+          theme: ThemeData(primarySwatch: white, brightness: Brightness.light),
+          themeMode: ThemeMode.dark,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+          ),
           home: HomeScreen(),
           routes: {
             ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),

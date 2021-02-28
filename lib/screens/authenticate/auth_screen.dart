@@ -74,6 +74,8 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
+        // unselectedItemColor: Colors.black54,
+        // selectedItemColor: Colors.blue,
         type: BottomNavigationBarType.fixed,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,

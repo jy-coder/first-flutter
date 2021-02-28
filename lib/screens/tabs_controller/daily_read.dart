@@ -52,7 +52,6 @@ class _DailyReadTabState extends State<DailyReadTab>
               ? TabBar(
                   controller: _tabController,
                   isScrollable: true,
-                  labelColor: Colors.black,
                   onTap: (int index) {
                     aProvider.filterByCategory(
                       cProvider.categoryNames[index],

@@ -52,7 +52,9 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
-        // type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
+        // unselectedItemColor: Colors.black54,
+        // selectedItemColor: Colors.blue,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.category),

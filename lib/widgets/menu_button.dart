@@ -84,7 +84,6 @@ class _MenuBtnState extends State<MenuBtn> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           title: FlatButton(
-                              textColor: Colors.grey[700],
                               onPressed: () async {
                                 Navigator.of(context).pop();
                                 await bookmarkAction(
