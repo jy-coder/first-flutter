@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/pageview/article_load_screen.dart';
 import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -16,6 +17,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   List<Article> articles = [];
   PageController _controller;
   int _initialPage = 1;
+  List<int> _extraScreen = [];
 
   void initState() {
     super.initState();
@@ -30,6 +32,11 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
       articles = aProvider.filteredItems;
     else {
       articles = aProvider.items;
+    }
+
+    int _length = 5 - articles.length;
+    for (var i = 0; i < _length; i++) {
+      _extraScreen.add(i);
     }
     _initialPage = aProvider.initialPage;
     _controller = PageController(
@@ -60,10 +67,11 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
             margin: EdgeInsets.only(top: 10, bottom: 20),
             child: SmoothPageIndicator(
               controller: _controller,
-              count: articles.length,
+              count: 10,
               effect: ScrollingDotsEffect(
                 dotWidth: 5.0,
                 dotHeight: 5.0,
+                activeDotScale: .5,
               ),
             ),
           ),
@@ -82,6 +90,11 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                         source: a.source,
                         category: a.category,
                         link: a.link))
+                    .toList(),
+                ..._extraScreen
+                    .map(
+                      (e) => ArticleLoadScreen(),
+                    )
                     .toList(),
               ],
             ),

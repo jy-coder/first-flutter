@@ -13,6 +13,7 @@ class ArticleProvider with ChangeNotifier {
   String _subtab = "";
   String _filteredDate = "";
   Map<String, int> _categoriesPage = {};
+  int _lastArticleId = 0;
 
   List<Article> get items {
     return [..._items];
@@ -66,6 +67,17 @@ class ArticleProvider with ChangeNotifier {
     return list.indexWhere((a) => a.articleId == id);
   }
 
+  int get lastArticleId {
+    if (_lastArticleId == 0)
+      return _filteredItems.last.articleId;
+    else
+      return _lastArticleId;
+  }
+
+  void setLastArticleId(int articleId) {
+    _lastArticleId = articleId;
+  }
+
   String get getFilteredCategory {
     return _categoryName;
   }
@@ -80,7 +92,7 @@ class ArticleProvider with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
     List<Map<String, dynamic>> data = await APIService().get(
-        "$ARTICLE_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
+        "$ARTICLES_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
 
     _categoriesPage[_categoryName]++;
 

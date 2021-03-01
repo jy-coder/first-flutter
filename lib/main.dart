@@ -19,7 +19,6 @@ import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
