@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
 import 'package:newheadline/screens/pages/daily_read_screen.dart';
 import 'package:newheadline/screens/pages/profile_screen.dart';
@@ -71,9 +72,14 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor:
+            tProvider.theme == "light" ? Colors.black54 : Colors.grey,
+        selectedItemColor:
+            tProvider.theme == "light" ? Colors.blue : Colors.green,
         type: BottomNavigationBarType.fixed,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,

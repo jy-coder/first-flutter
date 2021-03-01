@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
+import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
@@ -55,8 +57,10 @@ class _ArticleCardState extends State<ArticleCard> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
 
-    TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 15.0);
+    TextStyle defaultStyle =
+        CustomTextStyle.cardSummary(context, tProvider.fontSize);
     TextStyle linkStyle = TextStyle(color: Colors.blue);
 
     return Container(
@@ -102,7 +106,14 @@ class _ArticleCardState extends State<ArticleCard> {
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(flex: 8, child: Text(widget.title)),
+                          Expanded(
+                            flex: 8,
+                            child: Text(
+                              widget.title,
+                              style: CustomTextStyle.cardTitle(
+                                  context, tProvider.fontSize),
+                            ),
+                          ),
                           aProvider.tab != "History"
                               ? Expanded(child: MenuBtn(widget.id))
                               : Container()

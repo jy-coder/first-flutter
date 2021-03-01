@@ -3,6 +3,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/pages/articles_screen.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
@@ -16,45 +17,61 @@ import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/provider/auth.dart';
+import 'package:newheadline/shared/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: Auth()),
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider()),
-      ChangeNotifierProvider.value(value: SearchProvider())
+      ChangeNotifierProvider.value(value: SearchProvider()),
+      ChangeNotifierProvider.value(value: ThemeProvider()),
     ],
     child: MyApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _getStorage();
+  }
+
+  Future<void> _getStorage() async {
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    await tProvider.getStorage();
+  }
+
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return StreamProvider.value(
       value: Auth().user,
       child: MaterialApp(
           title: 'NewsHeadline',
-          theme: new ThemeData(
-              appBarTheme: AppBarTheme(
-                color: Colors.white,
-              ),
-              primaryTextTheme: TextTheme(
-                headline6: TextStyle(color: Colors.black),
-              ),
-              primaryIconTheme: IconThemeData(
-                color: Colors.black,
-              ),
-              buttonTheme: ButtonThemeData(
-                buttonColor: Colors.black87, //  <-- dark color
-                textTheme: ButtonTextTheme
-                    .primary, //  <-- this auto selects the right color
-              )),
+          theme: ThemeData(
+            primarySwatch: white,
+            brightness: Brightness.light,
+          ),
+          themeMode:
+              tProvider.theme == "dark" ? ThemeMode.dark : ThemeMode.light,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+          ),
           home: HomeScreen(),
           routes: {
             ArticlePageViewScreen.routeName: (ctx) => ArticlePageViewScreen(),
