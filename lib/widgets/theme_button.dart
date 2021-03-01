@@ -45,7 +45,7 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                                 max: 30,
                                 divisions: 5,
                                 label: _currentSliderValue.round().toString(),
-                                onChanged: (double value) {
+                                onChanged: (double value) async {
                                   setState(() {
                                     _currentSliderValue = value;
                                   });
@@ -77,7 +77,7 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
                             Expanded(
                               flex: 2,
                               child: MaterialButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   tProvider.setSelectedTheme("dark");
                                 },
                                 color: Colors.black,

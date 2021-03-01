@@ -19,10 +19,12 @@ import 'package:newheadline/screens/pageview/search_pageview.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: Auth()),
@@ -36,7 +38,24 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _getStorage();
+  }
+
+  Future<void> _getStorage() async {
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+    await tProvider.getStorage();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
