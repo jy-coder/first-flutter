@@ -14,6 +14,8 @@ class ArticleProvider with ChangeNotifier {
   String _filteredDate = "";
   Map<String, int> _categoriesPage = {};
   int _lastArticleId = 0;
+  int _pageViewCount = 0;
+  int _previousSwipeIndex = 0;
 
   List<Article> get items {
     return [..._items];
@@ -37,9 +39,12 @@ class ArticleProvider with ChangeNotifier {
     _filteredItems.clear();
     _tab = tabName;
     _page = 1;
+    _lastArticleId = 0;
+    print(tabName);
   }
 
   void setSubTab(String subtabName) {
+    print(subtabName);
     _items.clear();
     _subtab = subtabName;
     _page = 1;
@@ -101,8 +106,10 @@ class ArticleProvider with ChangeNotifier {
     return data;
   }
 
-  void filterByCategory(String categoryName) {
+  void filterByCategory(String categoryName) async {
     _categoryName = categoryName;
+    await fetchPageViewCount();
+    notifyListeners();
 
     if (categoryName != "all")
       _filteredItems =
@@ -122,6 +129,7 @@ class ArticleProvider with ChangeNotifier {
     _page++;
 
     addToSelectedList(data, _items);
+    await fetchPageViewCount();
 
     return data;
   }
@@ -132,6 +140,7 @@ class ArticleProvider with ChangeNotifier {
 
     _page++;
     addToSelectedList(data, _items);
+    await fetchPageViewCount();
 
     return data;
   }
@@ -155,5 +164,39 @@ class ArticleProvider with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  int get pageViewCount {
+    return _pageViewCount;
+  }
+
+  Future<void> fetchPageViewCount() async {
+    Map<String, dynamic> data = {};
+
+    if (_tab != "reading_list")
+      data = await APIService()
+          .getOne("$COUNT_URL/?tabName=$_tab&category=$_categoryName");
+    else
+      data = await APIService()
+          .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
+
+    _pageViewCount = data["count"];
+    notifyListeners();
+  }
+
+  String detectSwipeDirection(int currentSwipeIndex) {
+    String direction = "";
+
+    if (_previousSwipeIndex > currentSwipeIndex)
+      direction = "left";
+    else if (_previousSwipeIndex < currentSwipeIndex) direction = "right";
+
+    _previousSwipeIndex = currentSwipeIndex;
+    print(direction);
+    return direction;
+  }
+
+  void resetSwipeDirection() {
+    _previousSwipeIndex = 0;
   }
 }

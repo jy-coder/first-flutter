@@ -34,8 +34,8 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
       articles = aProvider.items;
     }
 
-    int _length = 5 - articles.length;
-    for (var i = 0; i < _length; i++) {
+    int _length = aProvider.pageViewCount - articles.length;
+    for (var i = 1; i < _length; i++) {
       _extraScreen.add(i);
     }
     _initialPage = aProvider.initialPage;
@@ -53,6 +53,8 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -67,7 +69,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
             margin: EdgeInsets.only(top: 10, bottom: 20),
             child: SmoothPageIndicator(
               controller: _controller,
-              count: 10,
+              count: aProvider.pageViewCount,
               effect: ScrollingDotsEffect(
                 dotWidth: 5.0,
                 dotHeight: 5.0,
@@ -93,7 +95,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                     .toList(),
                 ..._extraScreen
                     .map(
-                      (e) => ArticleLoadScreen(),
+                      (int e) => ArticleLoadScreen(e),
                     )
                     .toList(),
               ],

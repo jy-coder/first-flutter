@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/authenticate/register_screen.dart';
 import 'package:newheadline/screens/authenticate/login_screen.dart';
-// import 'package:newheadline/services/sign_in.dart';
 
 class Authenticate extends StatefulWidget {
   static final routeName = '/authenticate';
