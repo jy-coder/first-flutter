@@ -15,7 +15,6 @@ class ArticleProvider with ChangeNotifier {
   Map<String, int> _categoriesPage = {};
   int _lastArticleId = 0;
   int _pageViewCount = 0;
-  int _previousSwipeIndex = 0;
 
   List<Article> get items {
     return [..._items];
@@ -182,21 +181,5 @@ class ArticleProvider with ChangeNotifier {
 
     _pageViewCount = data["count"];
     notifyListeners();
-  }
-
-  String detectSwipeDirection(int currentSwipeIndex) {
-    String direction = "";
-
-    if (_previousSwipeIndex > currentSwipeIndex)
-      direction = "left";
-    else if (_previousSwipeIndex < currentSwipeIndex) direction = "right";
-
-    _previousSwipeIndex = currentSwipeIndex;
-    print(direction);
-    return direction;
-  }
-
-  void resetSwipeDirection() {
-    _previousSwipeIndex = 0;
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -23,7 +22,6 @@ class APIService {
         headers: {"Content-Type": "application/json", "x-id-token": token},
         body: json.encode(body));
 
-    // print(response.statusCode);
     return response.statusCode;
   }
 

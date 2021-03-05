@@ -3,6 +3,8 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/pages/article_screen.dart';
 import 'package:newheadline/screens/pageview/article_load_screen.dart';
+import 'package:newheadline/utils/response.dart';
+import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,16 +16,38 @@ class ArticlePageViewScreen extends StatefulWidget {
 }
 
 class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
+  bool _isLoading = true;
   List<Article> articles = [];
   PageController _controller;
-  int _initialPage = 1;
+  int _initialPage = 0;
   List<int> _extraScreen = [];
+  Article __loadArticle;
 
   void initState() {
+    setState(() {
+      _isLoading = true;
+    });
     super.initState();
   }
 
-  @override
+  void _fetchArticle(int newArticleId) async {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+
+    String currentCategory = aProvider.getFilteredCategory;
+    String currentTab = aProvider.tab;
+
+    Future apiCall = APIService().getOne(
+        "$ARTICLE_URL/?category=$currentCategory&tabName=$currentTab&index=$newArticleId");
+    apiCall.then((data) {
+      setState(() {
+        __loadArticle = Article.fromJson(data);
+        _isLoading = false;
+      });
+    });
+  }
+
+  // load once only
   void didChangeDependencies() {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
@@ -34,14 +58,18 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
       articles = aProvider.items;
     }
 
-    int _length = aProvider.pageViewCount - articles.length;
-    for (var i = 1; i < _length; i++) {
-      _extraScreen.add(i);
+    for (var i = articles.length; i <= aProvider.pageViewCount - 1; i++) {
+      _extraScreen.add(i - 1);
     }
+
     _initialPage = aProvider.initialPage;
     _controller = PageController(
       initialPage: _initialPage,
     );
+
+    setState(() {
+      _isLoading = false;
+    });
     super.didChangeDependencies();
   }
 
@@ -63,46 +91,55 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 10, bottom: 20),
-            child: SmoothPageIndicator(
-              controller: _controller,
-              count: aProvider.pageViewCount,
-              effect: ScrollingDotsEffect(
-                dotWidth: 5.0,
-                dotHeight: 5.0,
-                activeDotScale: .5,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: PageView(
-              controller: _controller,
-              children: <Widget>[
-                ...articles
-                    .map((Article a) => ArticleScreen(
-                        id: a.articleId,
-                        title: a.title,
-                        description: a.description,
-                        imageUrl: a.imageUrl,
-                        pubDate: a.pubDate,
-                        source: a.source,
-                        category: a.category,
-                        link: a.link))
-                    .toList(),
-                ..._extraScreen
-                    .map(
-                      (int e) => ArticleLoadScreen(e),
-                    )
-                    .toList(),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 20),
+                  child: SmoothPageIndicator(
+                    controller: _controller,
+                    count: aProvider.pageViewCount,
+                    effect: ScrollingDotsEffect(
+                      dotWidth: 5.0,
+                      dotHeight: 5.0,
+                      activeDotScale: 2.0,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: PageView(
+                    controller: _controller,
+                    onPageChanged: (int value) {
+                      if (value > articles.length - 1) {
+                        _fetchArticle(value);
+                      }
+                    },
+                    children: <Widget>[
+                      ...articles
+                          .map((Article a) => ArticleScreen(
+                              id: a.articleId,
+                              title: a.title,
+                              description: a.description,
+                              imageUrl: a.imageUrl,
+                              pubDate: a.pubDate,
+                              source: a.source,
+                              category: a.category,
+                              link: a.link))
+                          .toList(),
+                      ..._extraScreen
+                          .map(
+                            (int e) => ArticleLoadScreen(__loadArticle),
+                          )
+                          .toList(),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
