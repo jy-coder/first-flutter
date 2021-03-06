@@ -65,6 +65,7 @@ class _ArticlesTabState extends State<ArticlesTab>
     categoryNames.forEach((String name) => _categoriesPage[name] = 1);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+
     aProvider.setCategoriesPage(_categoriesPage);
   }
 

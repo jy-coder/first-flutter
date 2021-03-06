@@ -12,7 +12,7 @@ class ArticleProvider with ChangeNotifier {
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
-  Map<String, int> _categoriesPage = {};
+  Map<String, int> _categoriesPage = {"all": 1};
   int _lastArticleId = 0;
   int _pageViewCount = 0;
 
@@ -30,16 +30,16 @@ class ArticleProvider with ChangeNotifier {
 
   void setCategoriesPage(Map<String, int> categoriesPage) {
     _categoriesPage = categoriesPage;
+    notifyListeners();
   }
 
   void setTab(String tabName) {
-    _categoriesPage.clear();
+    _categoriesPage = {"all": 1};
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
     _page = 1;
     _lastArticleId = 0;
-    print(tabName);
   }
 
   void setSubTab(String subtabName) {
@@ -108,11 +108,12 @@ class ArticleProvider with ChangeNotifier {
   void filterByCategory(String categoryName) async {
     _categoryName = categoryName;
     await fetchPageViewCount();
-    notifyListeners();
 
     if (categoryName != "all")
-      _filteredItems =
-          _items.where((Article a) => a.category == categoryName).toList();
+      _filteredItems = _filteredItems
+          .where((Article a) => a.category == categoryName)
+          .toList();
+    notifyListeners();
   }
 
   void setPageViewArticle(int id) {

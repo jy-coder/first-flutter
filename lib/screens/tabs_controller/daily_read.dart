@@ -86,7 +86,9 @@ class _DailyReadTabState extends State<DailyReadTab>
                     .toList(),
               )
             : Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                ),
               ),
       ),
     );

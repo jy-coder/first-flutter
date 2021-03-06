@@ -26,7 +26,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadMore();
-      // print("mounted value:$mounted");
     });
   }
 
