@@ -76,6 +76,7 @@ class _DailyReadTabState extends State<DailyReadTab>
         ),
         body: !_isLoading
             ? TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: widget.categories
                     .map(

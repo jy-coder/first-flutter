@@ -104,6 +104,7 @@ class _ArticlesTabState extends State<ArticlesTab>
         ),
         body: !_isLoading
             ? TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: categories
                     .map(

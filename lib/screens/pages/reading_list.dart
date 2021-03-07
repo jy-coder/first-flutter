@@ -83,6 +83,7 @@ class _ReadListScreenState extends State<ReadListScreen>
         ),
         body: !_isLoading
             ? TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: readingList.map((String rl) {
                   Widget screen;
