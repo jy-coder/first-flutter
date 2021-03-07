@@ -12,7 +12,7 @@ class ArticleProvider with ChangeNotifier {
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
-  Map<String, int> _categoriesPage = {"all": 1};
+  Map<String, int> _categoriesPage = {};
   int _lastArticleId = 0;
   int _pageViewCount = 0;
 
@@ -30,16 +30,16 @@ class ArticleProvider with ChangeNotifier {
 
   void setCategoriesPage(Map<String, int> categoriesPage) {
     _categoriesPage = categoriesPage;
-    notifyListeners();
   }
 
   void setTab(String tabName) {
-    _categoriesPage = {"all": 1};
+    _categoriesPage.clear();
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
     _page = 1;
     _lastArticleId = 0;
+    print(tabName);
   }
 
   void setSubTab(String subtabName) {
@@ -88,10 +88,21 @@ class ArticleProvider with ChangeNotifier {
 
   void addToSelectedList(List<Map<String, dynamic>> data, List<Article> list) {
     for (Map<String, dynamic> d in data) {
-      list.add(
-        Article.fromJson(d),
-      );
+      if (!checkDuplicate(d['id']))
+        list.add(
+          Article.fromJson(d),
+        );
     }
+  }
+
+  // converting to set does not work so we check articleId for duplicate instead
+  bool checkDuplicate(int checkArticleId) {
+    for (Article a in _items) {
+      if (a.articleId == checkArticleId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
@@ -100,20 +111,29 @@ class ArticleProvider with ChangeNotifier {
 
     _categoriesPage[_categoryName]++;
 
-    addToSelectedList(data, _filteredItems);
+    addToSelectedList(data, _items);
 
+    if (_categoryName != "all") {
+      _filteredItems =
+          _items.where((Article a) => a.category == _categoryName).toList();
+    } else {
+      _filteredItems = _items;
+    }
+    notifyListeners();
     return data;
   }
 
   void filterByCategory(String categoryName) async {
     _categoryName = categoryName;
     await fetchPageViewCount();
-
-    if (categoryName != "all")
-      _filteredItems = _filteredItems
-          .where((Article a) => a.category == categoryName)
-          .toList();
     notifyListeners();
+
+    if (categoryName != "all") {
+      _filteredItems =
+          _items.where((Article a) => a.category == categoryName).toList();
+    } else {
+      _filteredItems = _items;
+    }
   }
 
   void setPageViewArticle(int id) {

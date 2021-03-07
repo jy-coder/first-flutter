@@ -24,15 +24,6 @@ class SubscriptionProvider with ChangeNotifier {
     return _items.firstWhere((cat) => cat.categoryId == id);
   }
 
-  void addToSelectedList(
-      List<Map<String, dynamic>> data, List<Subscription> list) {
-    for (Map<String, dynamic> d in data) {
-      list.add(
-        Subscription.fromJson(d),
-      );
-    }
-  }
-
   Future<void> fetchSubscriptionSetting([String token]) async {
     const url = SUBSCRIPTION_URL;
     final subscriptions = await APIService().get(url);

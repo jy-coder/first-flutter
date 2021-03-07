@@ -31,7 +31,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
 
   @override
   void dispose() {
-    // print("disposed");
     super.dispose();
   }
 
