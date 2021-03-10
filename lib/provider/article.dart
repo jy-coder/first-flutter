@@ -13,6 +13,8 @@ class ArticleProvider with ChangeNotifier {
   String _subtab = "";
   String _filteredDate = "";
   Map<String, int> _categoriesPage = {};
+  int _lastArticleId = 0;
+  int _pageViewCount = 0;
 
   List<Article> get items {
     return [..._items];
@@ -36,9 +38,12 @@ class ArticleProvider with ChangeNotifier {
     _filteredItems.clear();
     _tab = tabName;
     _page = 1;
+    _lastArticleId = 0;
+    print(tabName);
   }
 
   void setSubTab(String subtabName) {
+    print(subtabName);
     _items.clear();
     _subtab = subtabName;
     _page = 1;
@@ -66,35 +71,69 @@ class ArticleProvider with ChangeNotifier {
     return list.indexWhere((a) => a.articleId == id);
   }
 
+  int get lastArticleId {
+    if (_lastArticleId == 0)
+      return _filteredItems.last.articleId;
+    else
+      return _lastArticleId;
+  }
+
+  void setLastArticleId(int articleId) {
+    _lastArticleId = articleId;
+  }
+
   String get getFilteredCategory {
     return _categoryName;
   }
 
   void addToSelectedList(List<Map<String, dynamic>> data, List<Article> list) {
     for (Map<String, dynamic> d in data) {
-      list.add(
-        Article.fromJson(d),
-      );
+      if (!checkDuplicate(d['id']))
+        list.add(
+          Article.fromJson(d),
+        );
     }
+  }
+
+  // converting to set does not work so we check articleId for duplicate instead
+  bool checkDuplicate(int checkArticleId) {
+    for (Article a in _items) {
+      if (a.articleId == checkArticleId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
     List<Map<String, dynamic>> data = await APIService().get(
-        "$ARTICLE_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
+        "$ARTICLES_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
 
     _categoriesPage[_categoryName]++;
 
-    addToSelectedList(data, _filteredItems);
+    addToSelectedList(data, _items);
 
+    if (_categoryName != "all") {
+      _filteredItems =
+          _items.where((Article a) => a.category == _categoryName).toList();
+    } else {
+      _filteredItems = _items;
+    }
+    notifyListeners();
     return data;
   }
 
-  void filterByCategory(String categoryName) {
+  void filterByCategory(String categoryName) async {
     _categoryName = categoryName;
+    await fetchPageViewCount();
+    notifyListeners();
 
-    if (categoryName != "all")
+    if (categoryName != "all") {
       _filteredItems =
           _items.where((Article a) => a.category == categoryName).toList();
+    } else {
+      _filteredItems = _items;
+    }
   }
 
   void setPageViewArticle(int id) {
@@ -110,6 +149,7 @@ class ArticleProvider with ChangeNotifier {
     _page++;
 
     addToSelectedList(data, _items);
+    await fetchPageViewCount();
 
     return data;
   }
@@ -120,6 +160,7 @@ class ArticleProvider with ChangeNotifier {
 
     _page++;
     addToSelectedList(data, _items);
+    await fetchPageViewCount();
 
     return data;
   }
@@ -142,6 +183,24 @@ class ArticleProvider with ChangeNotifier {
       removeItemFromList(_items, articleId);
     }
 
+    notifyListeners();
+  }
+
+  int get pageViewCount {
+    return _pageViewCount;
+  }
+
+  Future<void> fetchPageViewCount() async {
+    Map<String, dynamic> data = {};
+
+    if (_tab != "reading_list")
+      data = await APIService()
+          .getOne("$COUNT_URL/?tabName=$_tab&category=$_categoryName");
+    else
+      data = await APIService()
+          .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
+
+    _pageViewCount = data["count"];
     notifyListeners();
   }
 }

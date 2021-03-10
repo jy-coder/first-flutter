@@ -76,6 +76,7 @@ class _DailyReadTabState extends State<DailyReadTab>
         ),
         body: !_isLoading
             ? TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: widget.categories
                     .map(
@@ -86,7 +87,9 @@ class _DailyReadTabState extends State<DailyReadTab>
                     .toList(),
               )
             : Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                ),
               ),
       ),
     );

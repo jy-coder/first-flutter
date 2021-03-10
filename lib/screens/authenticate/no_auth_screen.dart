@@ -35,6 +35,8 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
         Provider.of<ArticleProvider>(context, listen: false);
     SearchProvider sProvider =
         Provider.of<SearchProvider>(context, listen: false);
+    if (_selectedPageIndex == index) return;
+
     aProvider.setTab(_pages[index]['title']);
 
     if (_pages[index]['title'] == "Search") {

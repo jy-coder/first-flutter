@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pages/bookmark_screen.dart';
 import 'package:newheadline/screens/pages/history_screen.dart';
@@ -40,7 +39,6 @@ class _ReadListScreenState extends State<ReadListScreen>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        // drawer: AppDrawer(),
         appBar: AppBar(
           centerTitle: true,
           bottom: !_isLoading
@@ -85,6 +83,7 @@ class _ReadListScreenState extends State<ReadListScreen>
         ),
         body: !_isLoading
             ? TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: readingList.map((String rl) {
                   Widget screen;

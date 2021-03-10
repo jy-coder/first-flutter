@@ -7,7 +7,9 @@ const REGISTER_URL = "${HOST}register";
 const SUBSCRIPTION_URL = "${HOST}subscription";
 const USER_SUBSCRIPTION_URL = "${HOST}user_subscription";
 
+const ARTICLES_URL = "${HOST}articles";
 const ARTICLE_URL = "${HOST}article";
+const COUNT_URL = "${HOST}count";
 
 const HISTORY_URL = "${HOST}history";
 

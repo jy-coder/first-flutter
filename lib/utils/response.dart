@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -23,7 +22,6 @@ class APIService {
         headers: {"Content-Type": "application/json", "x-id-token": token},
         body: json.encode(body));
 
-    // print(response.statusCode);
     return response.statusCode;
   }
 
@@ -34,6 +32,15 @@ class APIService {
         headers: {"Content-Type": "application/json", "X-Id-Token": token});
 
     return List<Map<String, dynamic>>.from(json.decode(response.body));
+  }
+
+  Future<Map<String, dynamic>> getOne(String url) async {
+    String token = await getToken();
+
+    Response response = await http.get(url,
+        headers: {"Content-Type": "application/json", "X-Id-Token": token});
+
+    return Map<String, dynamic>.from(json.decode(response.body));
   }
 
   Future<int> delete(String url) async {

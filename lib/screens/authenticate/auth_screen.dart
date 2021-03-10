@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
@@ -52,7 +51,7 @@ class _AuthScreenState extends State<AuthScreen> {
         Provider.of<ArticleProvider>(context, listen: false);
     SearchProvider sProvider =
         Provider.of<SearchProvider>(context, listen: false);
-
+    if (_selectedPageIndex == index) return;
     aProvider.setTab(_pages[index]['title']);
 
     if (_pages[index]['title'] == "reading_list") {
