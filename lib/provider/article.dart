@@ -190,6 +190,7 @@ class ArticleProvider with ChangeNotifier {
     return _pageViewCount;
   }
 
+  // get number of articles of each category
   Future<void> fetchPageViewCount() async {
     Map<String, dynamic> data = {};
 
@@ -200,7 +201,7 @@ class ArticleProvider with ChangeNotifier {
       data = await APIService()
           .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
 
-    _pageViewCount = data["count"];
+    if (data != null) _pageViewCount = data["count"];
     notifyListeners();
   }
 }

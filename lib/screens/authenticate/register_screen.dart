@@ -82,7 +82,6 @@ class _RegisterState extends State<Register> {
                         await _auth.currentUser
                             .getIdToken()
                             .then((String token) {
-                          print("saving to database");
                           APIService().post(REGISTER_URL);
                           Navigator.of(context)
                               .pushReplacementNamed(HomeScreen.routeName);

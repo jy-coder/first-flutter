@@ -43,6 +43,8 @@ class _ReadListScreenState extends State<ReadListScreen>
           centerTitle: true,
           bottom: !_isLoading
               ? TabBar(
+                  indicatorColor:
+                      tProvider.theme == "light" ? Colors.blue : Colors.green,
                   controller: _tabController,
                   isScrollable: true,
                   labelColor: Colors.black,

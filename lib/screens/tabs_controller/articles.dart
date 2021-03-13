@@ -81,8 +81,11 @@ class _ArticlesTabState extends State<ArticlesTab>
           centerTitle: true,
           bottom: !_isLoading
               ? TabBar(
+                  indicatorColor:
+                      tProvider.theme == "light" ? Colors.blue : Colors.green,
                   controller: _tabController,
                   isScrollable: true,
+                  unselectedLabelColor: Colors.blue,
                   onTap: (int index) {
                     aProvider.filterByCategory(
                       categoryNames[index],

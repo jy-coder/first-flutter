@@ -28,6 +28,16 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
     }
   ];
 
+  @override
+  void initState() {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setTab("all_articles");
+    aProvider.fetchPageViewCount();
+
+    super.initState();
+  }
+
   int _selectedPageIndex = 0;
 
   void _selectPage(int index) {
@@ -36,10 +46,11 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
     SearchProvider sProvider =
         Provider.of<SearchProvider>(context, listen: false);
     if (_selectedPageIndex == index) return;
-
     aProvider.setTab(_pages[index]['title']);
 
-    if (_pages[index]['title'] == "Search") {
+    if (_pages[index]['title'] == "all_articles") {
+      aProvider.filterByCategory("all");
+    } else if (_pages[index]['title'] == "Search") {
       sProvider.emptyItems();
     }
 

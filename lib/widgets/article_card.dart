@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pageview/article_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -69,7 +70,7 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           InkWell(
             onTap: () async {
-              if (aProvider.subTab != "History")
+              if (aProvider.subTab != "History" && Auth().currentUser != null)
                 await saveReadingHistory(widget.id);
               aProvider.setPageViewArticle(widget.id);
               Navigator.pushNamed(
@@ -114,7 +115,8 @@ class _ArticleCardState extends State<ArticleCard> {
                                   context, tProvider.fontSize),
                             ),
                           ),
-                          aProvider.tab != "History"
+                          aProvider.tab != "History" &&
+                                  Auth().currentUser != null
                               ? Expanded(child: MenuBtn(widget.id))
                               : Container()
                         ],
