@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class ArticleScreen extends StatelessWidget {
+class ArticleScreen extends StatefulWidget {
   final int id;
   final String title;
   final String description;
@@ -28,9 +28,14 @@ class ArticleScreen extends StatelessWidget {
       this.link});
 
   @override
+  _ArticleScreenState createState() => _ArticleScreenState();
+}
+
+class _ArticleScreenState extends State<ArticleScreen> {
+  @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    DateTime dateTime = dateFormat.parse(pubDate);
+    DateTime dateTime = dateFormat.parse(widget.pubDate);
     String timeAgo = timeago.format(dateTime);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
@@ -45,8 +50,8 @@ class ArticleScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                 image: CachedNetworkImageProvider(
-                  this.imageUrl,
-                  cacheKey: this.id.toString(),
+                  this.widget.imageUrl,
+                  cacheKey: this.widget.id.toString(),
                 ),
                 fit: BoxFit.cover,
               )),
@@ -58,7 +63,7 @@ class ArticleScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    title,
+                    widget.title,
                     style: CustomTextStyle.title1(context, tProvider.fontSize),
                     textAlign: TextAlign.center,
                   ),
@@ -86,7 +91,7 @@ class ArticleScreen extends StatelessWidget {
                             children: [
                               Icon(Icons.source),
                               Text(
-                                source,
+                                widget.source,
                                 style: CustomTextStyle.small(
                                     context, tProvider.fontSize),
                                 textAlign: TextAlign.center,
@@ -101,7 +106,7 @@ class ArticleScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      description,
+                      widget.description,
                       style:
                           CustomTextStyle.normal(context, tProvider.fontSize),
                     ),
@@ -117,7 +122,7 @@ class ArticleScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    WebViewScreen(this.link)));
+                                    WebViewScreen(this.widget.link)));
                       },
                     ),
                   )

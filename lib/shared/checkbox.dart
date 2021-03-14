@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/theme.dart';
+import 'package:provider/provider.dart';
 
 class CheckBox extends StatefulWidget {
   final bool edit;
@@ -15,6 +17,7 @@ class CheckBox extends StatefulWidget {
 class _CheckBoxState extends State<CheckBox> {
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return Container(
       child: RefreshIndicator(
           onRefresh: () => widget.refreshSubscription(context),
@@ -26,6 +29,9 @@ class _CheckBoxState extends State<CheckBox> {
                 return Card(
                   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: CheckboxListTile(
+                    activeColor: tProvider.theme == "light"
+                        ? Colors.black54
+                        : Colors.white,
                     title: Text(c.categoryName),
                     value: widget.checkboxes[cId],
                     onChanged: !widget.edit

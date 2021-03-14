@@ -59,9 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
       aProvider.setFilteredDate("");
     } else if (_pages[index]['title'] == "Search") {
       sProvider.emptyItems();
-    } else if (_pages[index]['title'] == "daily_read" ||
-        _pages[index]['title'] == "all_articles") {
-      aProvider.filterByCategory("all");
     }
 
     setState(() {

@@ -8,13 +8,12 @@ class ArticleProvider with ChangeNotifier {
   List<Article> _filteredItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
-  int _page = 1;
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
-  Map<String, int> _categoriesPage = {};
   int _lastArticleId = 0;
   int _pageViewCount = 0;
+  bool _tabLoading = true;
 
   List<Article> get items {
     return [..._items];
@@ -28,30 +27,31 @@ class ArticleProvider with ChangeNotifier {
     return _subtab;
   }
 
-  void setCategoriesPage(Map<String, int> categoriesPage) {
-    _categoriesPage = categoriesPage;
+  bool get tabLoading {
+    return _tabLoading;
+  }
+
+  void setTabLoading(bool loading) {
+    _tabLoading = loading;
   }
 
   void setTab(String tabName) {
-    _categoriesPage.clear();
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
-    _page = 1;
     _lastArticleId = 0;
-    print(tabName);
+    setTabLoading(true);
   }
 
   void setSubTab(String subtabName) {
     print(subtabName);
     _items.clear();
     _subtab = subtabName;
-    _page = 1;
+
     notifyListeners();
   }
 
   void setFilteredDate(String dateRange) {
-    _page = 1;
     _filteredDate = dateRange;
   }
 
@@ -82,58 +82,41 @@ class ArticleProvider with ChangeNotifier {
     _lastArticleId = articleId;
   }
 
-  String get getFilteredCategory {
+  String get category {
     return _categoryName;
+  }
+
+  void setCategory(String categoryName) {
+    _filteredItems.clear();
+    _categoryName = categoryName;
+    notifyListeners();
   }
 
   void addToSelectedList(List<Map<String, dynamic>> data, List<Article> list) {
     for (Map<String, dynamic> d in data) {
-      if (!checkDuplicate(d['id']))
-        list.add(
-          Article.fromJson(d),
-        );
+      list.add(
+        Article.fromJson(d),
+      );
     }
   }
 
-  // converting to set does not work so we check articleId for duplicate instead
-  bool checkDuplicate(int checkArticleId) {
-    for (Article a in _items) {
-      if (a.articleId == checkArticleId) {
-        return true;
-      }
+  List<Article> jsonToArticle(List<Map<String, dynamic>> data) {
+    List<Article> articleList = [];
+    for (Map<String, dynamic> d in data) {
+      articleList.add(
+        Article.fromJson(d),
+      );
     }
-    return false;
+    return articleList;
   }
 
-  Future<List<Map<String, dynamic>>> fetchArticlesByCategory() async {
-    List<Map<String, dynamic>> data = await APIService().get(
-        "$ARTICLES_URL/?page=${_categoriesPage[_categoryName]}&category=$_categoryName&type=$_tab");
+  Future<List<Article>> fetchAll(String category) async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
 
-    _categoriesPage[_categoryName]++;
+    addToSelectedList(data, _filteredItems);
 
-    addToSelectedList(data, _items);
-
-    if (_categoryName != "all") {
-      _filteredItems =
-          _items.where((Article a) => a.category == _categoryName).toList();
-    } else {
-      _filteredItems = _items;
-    }
-    notifyListeners();
-    return data;
-  }
-
-  void filterByCategory(String categoryName) async {
-    _categoryName = categoryName;
-    await fetchPageViewCount();
-    notifyListeners();
-
-    if (categoryName != "all") {
-      _filteredItems =
-          _items.where((Article a) => a.category == categoryName).toList();
-    } else {
-      _filteredItems = _items;
-    }
+    return jsonToArticle(data);
   }
 
   void setPageViewArticle(int id) {
@@ -143,10 +126,8 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
-    List<Map<String, dynamic>> data = await APIService()
-        .get("$HISTORY_URL/?page=$_page&dateRange=$_filteredDate");
-
-    _page++;
+    List<Map<String, dynamic>> data =
+        await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
 
     addToSelectedList(data, _items);
     await fetchPageViewCount();
@@ -155,10 +136,7 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchBookmark() async {
-    List<Map<String, dynamic>> data =
-        await APIService().get("$BOOKMARK_URL/?page=$_page");
-
-    _page++;
+    List<Map<String, dynamic>> data = await APIService().get("$BOOKMARK_URL/");
     addToSelectedList(data, _items);
     await fetchPageViewCount();
 
@@ -166,24 +144,22 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void clearHistory() {
-    _page = 1;
     _items = [];
     notifyListeners();
   }
 
   void removeItemFromList(List<Article> list, int articleId) {
     list.removeWhere((item) => item.articleId == articleId);
+
+    notifyListeners();
   }
 
   void filterBookmark(int articleId) {
     if (_tab == "all_articles") {
-      removeItemFromList(_items, articleId);
       removeItemFromList(_filteredItems, articleId);
     } else if (_tab == "reading_list") {
       removeItemFromList(_items, articleId);
     }
-
-    notifyListeners();
   }
 
   int get pageViewCount {
@@ -202,6 +178,5 @@ class ArticleProvider with ChangeNotifier {
           .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
 
     if (data != null) _pageViewCount = data["count"];
-    notifyListeners();
   }
 }

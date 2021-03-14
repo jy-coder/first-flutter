@@ -41,10 +41,6 @@ class _DailyReadTabState extends State<DailyReadTab>
 
   @override
   Widget build(BuildContext context) {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
-    CategoryProvider cProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     return DefaultTabController(
       length: widget.categories.length,
@@ -57,11 +53,6 @@ class _DailyReadTabState extends State<DailyReadTab>
                       tProvider.theme == "light" ? Colors.blue : Colors.green,
                   controller: _tabController,
                   isScrollable: true,
-                  onTap: (int index) {
-                    aProvider.filterByCategory(
-                      cProvider.categoryNames[index],
-                    );
-                  },
                   tabs: widget.categories
                       .map(
                         (Category c) => Tab(
@@ -83,7 +74,7 @@ class _DailyReadTabState extends State<DailyReadTab>
                 children: widget.categories
                     .map(
                       (Category c) => Tab(
-                        child: ArticlesScreen(),
+                        child: ArticlesScreen(categoryName: c.categoryName),
                       ),
                     )
                     .toList(),

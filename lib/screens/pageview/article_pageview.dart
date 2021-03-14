@@ -34,12 +34,14 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    String currentCategory = aProvider.getFilteredCategory;
+    String currentCategory = aProvider.category;
+
     String currentTab = aProvider.tab;
 
     Future apiCall = APIService().getOne(
         "$ARTICLE_URL/?category=$currentCategory&tabName=$currentTab&index=$newArticleId");
     apiCall.then((data) {
+      if (!mounted) return;
       setState(() {
         __loadArticle = Article.fromJson(data);
         _isLoading = false;
@@ -93,7 +95,9 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.grey,
+              ),
             )
           : Column(
               children: [
@@ -114,9 +118,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                   child: PageView(
                     controller: _controller,
                     onPageChanged: (int value) {
-                      if (value > articles.length - 1) {
-                        _fetchArticle(value);
-                      }
+                      _fetchArticle(value);
                     },
                     children: <Widget>[
                       ...articles

@@ -99,7 +99,9 @@ class _ReadListScreenState extends State<ReadListScreen>
                 }).toList(),
               )
             : Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                ),
               ),
       ),
     );

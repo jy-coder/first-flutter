@@ -19,7 +19,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   bool _isLoading = false;
   Map<String, bool> checkboxes = {};
   List<Subscription> categories = [];
-  // final _formKey = GlobalKey<FormState>();
 
   @override
   void didChangeDependencies() {
@@ -118,7 +117,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       categories: categories,
                     ),
                   )
-                : Center(child: CircularProgressIndicator()),
+                : Center(
+                    child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                  )),
           ],
         ),
       ),

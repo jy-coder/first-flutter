@@ -33,7 +33,6 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     aProvider.setTab("all_articles");
-    aProvider.fetchPageViewCount();
 
     super.initState();
   }
@@ -48,9 +47,7 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
     if (_selectedPageIndex == index) return;
     aProvider.setTab(_pages[index]['title']);
 
-    if (_pages[index]['title'] == "all_articles") {
-      aProvider.filterByCategory("all");
-    } else if (_pages[index]['title'] == "Search") {
+    if (_pages[index]['title'] == "Search") {
       sProvider.emptyItems();
     }
 

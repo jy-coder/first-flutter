@@ -22,7 +22,6 @@ class _ArticlesTabState extends State<ArticlesTab>
   List<Article> articles = [];
   TabController _tabController;
   List<String> categoryNames = [];
-  Map<String, int> _categoriesPage = {};
 
   @override
   void initState() {
@@ -38,7 +37,7 @@ class _ArticlesTabState extends State<ArticlesTab>
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -53,20 +52,11 @@ class _ArticlesTabState extends State<ArticlesTab>
           categories = cProvider.items;
           categoryNames = cProvider.categoryNames;
         });
-        _setPages(cProvider.categoryNames);
       });
     }
 
     _isInit = false;
     super.didChangeDependencies();
-  }
-
-  void _setPages(List<String> categoryNames) {
-    categoryNames.forEach((String name) => _categoriesPage[name] = 1);
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
-
-    aProvider.setCategoriesPage(_categoriesPage);
   }
 
   @override
@@ -87,7 +77,7 @@ class _ArticlesTabState extends State<ArticlesTab>
                   isScrollable: true,
                   unselectedLabelColor: Colors.blue,
                   onTap: (int index) {
-                    aProvider.filterByCategory(
+                    aProvider.setCategory(
                       categoryNames[index],
                     );
                   },
@@ -112,13 +102,15 @@ class _ArticlesTabState extends State<ArticlesTab>
                 children: categories
                     .map(
                       (Category c) => Tab(
-                        child: ArticlesScreen(),
+                        child: ArticlesScreen(categoryName: c.categoryName),
                       ),
                     )
                     .toList(),
               )
             : Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                ),
               ),
       ),
     );

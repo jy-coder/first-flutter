@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/utils/load_image.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +13,6 @@ class BookmarkScreen extends StatefulWidget {
 
 class _BookmarkScreenState extends State<BookmarkScreen> {
   bool _isLoading = true;
-  bool _hasMore = true;
   List<String> filterValues = [];
   String selectedValue = "";
   bool refresh = false;
@@ -23,15 +21,14 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-    _hasMore = true;
-    _loadMore();
+
+    _loadBookMark();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _isLoading = true;
-    _hasMore = true;
   }
 
   @override
@@ -39,28 +36,18 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     super.dispose();
   }
 
-  void _loadMore() async {
+  void _loadBookMark() async {
     if (!mounted) return;
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    _isLoading = true;
 
-    aProvider.fetchBookmark().then((result) async {
-      await Future.wait(aProvider.items
-          .map((a) =>
-              Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
-          .toList());
+    setState(() {
+      _isLoading = true;
+    });
+    await aProvider.fetchBookmark();
 
-      if (result.isEmpty) {
-        setState(() {
-          _isLoading = false;
-          _hasMore = false;
-        });
-      } else {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -69,38 +56,27 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
     List<Article> bookmarkItems = aProvider.items;
-    return Scaffold(
-      body: ListView.builder(
-          padding: const EdgeInsets.all(10.0),
-          itemCount: _hasMore ? bookmarkItems.length + 1 : bookmarkItems.length,
-          itemBuilder: (ctx, i) {
-            // print(bookmarkItems[i].historyDate);
-            // Don't trigger if one async loading is already under way
-            if (i >= bookmarkItems.length) {
-              // Don't trigger if one async loading is already under way
-              if (!_isLoading) {
-                _loadMore();
-              }
-              return Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-
-            return ArticleCard(
-                bookmarkItems[i].articleId,
-                bookmarkItems[i].title,
-                bookmarkItems[i].imageUrl,
-                bookmarkItems[i].summary,
-                bookmarkItems[i].link,
-                bookmarkItems[i].description,
-                bookmarkItems[i].pubDate,
-                bookmarkItems[i].source,
-                bookmarkItems[i].category,
-                bookmarkItems[i].historyDate);
-          }),
-    );
+    return _isLoading
+        ? CircularProgressIndicator(
+            backgroundColor: Colors.grey,
+          )
+        : Scaffold(
+            body: ListView.builder(
+                padding: const EdgeInsets.all(10.0),
+                itemCount: bookmarkItems.length,
+                itemBuilder: (ctx, i) {
+                  return ArticleCard(
+                      bookmarkItems[i].articleId,
+                      bookmarkItems[i].title,
+                      bookmarkItems[i].imageUrl,
+                      bookmarkItems[i].summary,
+                      bookmarkItems[i].link,
+                      bookmarkItems[i].description,
+                      bookmarkItems[i].pubDate,
+                      bookmarkItems[i].source,
+                      bookmarkItems[i].category,
+                      bookmarkItems[i].historyDate);
+                }),
+          );
   }
 }

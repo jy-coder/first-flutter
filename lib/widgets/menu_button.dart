@@ -17,7 +17,6 @@ class MenuBtn extends StatefulWidget {
 
 Future<void> bookmarkAction(
     int articleId, String action, BuildContext context) async {
-  print(action);
   String url = "";
   int responseCode = 0;
   String successMsg = "";
@@ -41,17 +40,18 @@ Future<void> bookmarkAction(
 
   if (responseCode == 200) {
     aProvider.filterBookmark(articleId);
+    print("succesfully added");
   }
 
-  Flushbar(
-    message: responseCode == 500
-        ? errorMsg
-        : responseCode == 200
-            ? successMsg
-            : null,
-    duration: Duration(seconds: 1),
-    isDismissible: false,
-  )..show(context);
+  // Flushbar(
+  //   message: responseCode == 500
+  //       ? errorMsg
+  //       : responseCode == 200
+  //           ? successMsg
+  //           : null,
+  //   duration: Duration(seconds: 1),
+  //   isDismissible: false,
+  // )..show(context);
 }
 
 class _MenuBtnState extends State<MenuBtn> {
