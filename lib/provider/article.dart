@@ -87,8 +87,17 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setCategory(String categoryName) {
-    _filteredItems.clear();
     _categoryName = categoryName;
+    filterItemsCategory(categoryName);
+  }
+
+  void filterItemsCategory(String categoryName) {
+    if (categoryName != "all")
+      _filteredItems =
+          _items.where((Article a) => a.category == categoryName).toList();
+    else
+      _filteredItems = _items;
+
     notifyListeners();
   }
 
@@ -113,10 +122,9 @@ class ArticleProvider with ChangeNotifier {
   Future<List<Article>> fetchAll(String category) async {
     List<Map<String, dynamic>> data =
         await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
+    if (category == "all") addToSelectedList(data, _items);
 
-    addToSelectedList(data, _filteredItems);
-
-    return jsonToArticle(data);
+    filterItemsCategory(_categoryName);
   }
 
   void setPageViewArticle(int id) {

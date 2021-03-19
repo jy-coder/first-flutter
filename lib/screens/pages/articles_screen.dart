@@ -31,6 +31,12 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     filterItems();
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   filterItems();
+  //   super.didChangeDependencies();
+  // }
+
   @override
   void dispose() {
     super.dispose();
@@ -43,15 +49,13 @@ class _ArticlesScreenState extends State<ArticlesScreen>
       });
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    aProvider.fetchAll(widget.categoryName).then((List<Article> a) async {
-      if (!mounted) return;
 
-      await aProvider.fetchPageViewCount();
-      if (!mounted) return;
-      setState(() {
-        articles = a;
-        _isLoading = false;
-      });
+    await aProvider.fetchAll(widget.categoryName);
+
+    await aProvider.fetchPageViewCount();
+    if (!mounted) return;
+    setState(() {
+      _isLoading = false;
     });
   }
 
