@@ -53,6 +53,7 @@ class ArticleProvider with ChangeNotifier {
 
   void setFilteredDate(String dateRange) {
     _filteredDate = dateRange;
+    notifyListeners();
   }
 
   List<Article> get filteredItems {
@@ -134,6 +135,7 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
+    print("history fetched called");
     List<Map<String, dynamic>> data =
         await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
 

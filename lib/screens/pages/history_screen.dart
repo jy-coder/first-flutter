@@ -20,33 +20,37 @@ class _HistoryScreenState extends State<HistoryScreen> {
   bool refresh = false;
 
   @override
-  void initState() {
-    super.initState();
-    _isLoading = true;
-    _loadMore();
+  void dispose() {
+    super.dispose();
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void didChangeDependencies() {
+    _isLoading = true;
+    _loadMore();
+    super.didChangeDependencies();
   }
 
   void _loadMore() async {
     if (!mounted) return;
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    _isLoading = true;
-
-    aProvider.fetchReadingHistory().then((result) async {
-      await Future.wait(aProvider.items
-          .map((a) =>
-              Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
-          .toList());
-
-      setState(() {
-        _isLoading = false;
-      });
+    setState(() {
+      _isLoading = true;
     });
+
+    await aProvider.fetchReadingHistory();
+
+    // aProvider.fetchReadingHistory().then((result) async {
+    //   await Future.wait(aProvider.items
+    //       .map((a) =>
+    //           Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
+    //       .toList());
+
+    setState(() {
+      _isLoading = false;
+    });
+    // });
   }
 
   @override
