@@ -98,6 +98,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         }),
                     TextButton(
                         child: Text("Cancel"),
+                        style: TextButton.styleFrom(
+                          primary: Colors.blue,
+                        ),
                         onPressed: () {
                           refreshSubscription(context);
                           toggleButton();

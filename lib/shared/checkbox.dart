@@ -32,7 +32,12 @@ class _CheckBoxState extends State<CheckBox> {
                     activeColor: tProvider.theme == "light"
                         ? Colors.black54
                         : Colors.white,
-                    title: Text(c.categoryName),
+                    checkColor: tProvider.theme == "light"
+                        ? Colors.white
+                        : Colors.black54,
+                    title: Text(
+                      "${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}",
+                    ),
                     value: widget.checkboxes[cId],
                     onChanged: !widget.edit
                         ? null

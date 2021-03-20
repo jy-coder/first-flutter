@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Profile Settings"),
+        title: Text("Profile"),
       ),
       body: ListView.builder(
         itemCount: profileList.length,
@@ -39,7 +39,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                 },
                 child: ListTile(
-                  title: Text(profileList[index]),
+                  title: Text(
+                    profileList[index],
+                  ),
                 ),
               ),
               Divider(),

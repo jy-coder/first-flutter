@@ -119,7 +119,7 @@ class ArticleProvider with ChangeNotifier {
     return articleList;
   }
 
-  Future<List<Article>> fetchAll(String category) async {
+  Future<void> fetchAll(String category) async {
     List<Map<String, dynamic>> data =
         await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
     if (category == "all") addToSelectedList(data, _items);

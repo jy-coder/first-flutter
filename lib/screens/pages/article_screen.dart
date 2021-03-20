@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/pages/webview_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
-import 'package:intl/intl.dart';
+import 'package:newheadline/utils/date.dart';
 import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleScreen extends StatefulWidget {
   final int id;
@@ -34,16 +33,13 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    DateTime dateTime = dateFormat.parse(widget.pubDate);
-    String timeAgo = timeago.format(dateTime);
+    String timeAgo = formatDate(widget.pubDate);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
 
     return SingleChildScrollView(
       child: Container(
         child: Wrap(
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: 300,

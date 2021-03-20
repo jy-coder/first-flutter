@@ -54,7 +54,7 @@ class Article {
         source: json["source"] as String,
         link: json["link"] as String,
         title: json["title"] as String,
-        imageUrl: "https://via.placeholder.com/500x300",
+        imageUrl: json["image_url"] as String,
         description: json["description"],
         pubDate: json["publication_date"],
         historyDate: json["history_date"] != null ? json["history_date"] : "",

@@ -21,14 +21,12 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   void initState() {
     super.initState();
     _isLoading = true;
-
     _loadBookMark();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _isLoading = true;
   }
 
   @override
