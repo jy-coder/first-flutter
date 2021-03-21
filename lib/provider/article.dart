@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/utils/convert.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 
@@ -13,7 +14,6 @@ class ArticleProvider with ChangeNotifier {
   String _filteredDate = "";
   int _lastArticleId = 0;
   int _pageViewCount = 0;
-  bool _tabLoading = true;
 
   List<Article> get items {
     return [..._items];
@@ -27,20 +27,11 @@ class ArticleProvider with ChangeNotifier {
     return _subtab;
   }
 
-  bool get tabLoading {
-    return _tabLoading;
-  }
-
-  void setTabLoading(bool loading) {
-    _tabLoading = loading;
-  }
-
   void setTab(String tabName) {
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
     _lastArticleId = 0;
-    setTabLoading(true);
   }
 
   void setSubTab(String subtabName) {
@@ -110,16 +101,6 @@ class ArticleProvider with ChangeNotifier {
     }
   }
 
-  List<Article> jsonToArticle(List<Map<String, dynamic>> data) {
-    List<Article> articleList = [];
-    for (Map<String, dynamic> d in data) {
-      articleList.add(
-        Article.fromJson(d),
-      );
-    }
-    return articleList;
-  }
-
   Future<void> fetchAll(String category) async {
     List<Map<String, dynamic>> data =
         await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
@@ -135,11 +116,10 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
-    print("history fetched called");
     List<Map<String, dynamic>> data =
         await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
 
-    addToSelectedList(data, _items);
+    _items = jsonToArticleList(data);
     await fetchPageViewCount();
 
     return data;
@@ -147,7 +127,7 @@ class ArticleProvider with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchBookmark() async {
     List<Map<String, dynamic>> data = await APIService().get("$BOOKMARK_URL/");
-    addToSelectedList(data, _items);
+    _items = jsonToArticleList(data);
     await fetchPageViewCount();
 
     return data;
@@ -164,13 +144,15 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void filterBookmark(int articleId) {
-    if (_tab == "all_articles") {
-      removeItemFromList(_filteredItems, articleId);
-    } else if (_tab == "reading_list") {
-      removeItemFromList(_items, articleId);
-    }
-  }
+  // change this to starred instead of removing from list
+  // void filterBookmark(int articleId) {
+  //   if (_tab == "all_articles") {
+  //     removeItemFromList(_filteredItems, articleId);
+  //   } else if (_tab == "reading_list") {
+  //     removeItemFromList(_items, articleId);
+  //   }
+  //   notifyListeners();
+  // }
 
   int get pageViewCount {
     return _pageViewCount;

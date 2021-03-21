@@ -45,8 +45,6 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       suggestions = temp;
     });
-
-    // print(suggestions);
   }
 
   void searchInput(String searchInput) {
@@ -64,7 +62,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Container(child: SearchBar(searchInput: searchInput)),
+          title: Container(
+            child: SearchBar(searchInput: searchInput),
+          ),
         ),
         body: ListView.builder(
             padding: const EdgeInsets.all(10.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -38,6 +39,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
+    HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: true);
     return DefaultTabController(
       length: homeTab.length,
       child: SafeArea(
@@ -54,6 +56,9 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
                             : Colors.green,
                         controller: _tabController,
                         isScrollable: true,
+                        onTap: (int index) {
+                          hProvider.setTab(homeTab[index]);
+                        },
                         tabs: homeTab
                             .map(
                               (String tabName) => Tab(

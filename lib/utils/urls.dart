@@ -18,3 +18,4 @@ const BOOKMARK_URL = "${HOST}bookmark";
 const SEARCH_SUGGESTION_URL = "${HOST}search_suggestion";
 
 const SEARCH_RESULT_URL = "${HOST}search_result";
+const RECOMMEND_URL = "${HOST}recommend";

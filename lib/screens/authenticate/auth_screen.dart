@@ -3,7 +3,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
-import 'package:newheadline/screens/home/daily_read_screen.dart';
+import 'package:newheadline/screens/home/recommend1.dart';
 import 'package:newheadline/screens/profile/profile_screen.dart';
 import 'package:newheadline/screens/reading_list/reading_list.dart';
 import 'package:newheadline/screens/search/search_screen.dart';

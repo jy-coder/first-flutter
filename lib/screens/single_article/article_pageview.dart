@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
-import 'package:newheadline/screens/single_article/article_load_screen.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/theme_button.dart';
@@ -20,8 +19,6 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   List<Article> articles = [];
   PageController _controller;
   int _initialPage = 0;
-  List<int> _extraScreen = [];
-  Article __loadArticle;
 
   void initState() {
     setState(() {
@@ -43,7 +40,6 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     apiCall.then((data) {
       if (!mounted) return;
       setState(() {
-        __loadArticle = Article.fromJson(data);
         _isLoading = false;
       });
     });
@@ -54,14 +50,10 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    if (aProvider.tab == "all_articles" || aProvider.tab == "daily_read")
+    if (aProvider.tab == "all_articles")
       articles = aProvider.filteredItems;
     else {
       articles = aProvider.items;
-    }
-
-    for (var i = articles.length; i <= aProvider.pageViewCount - 1; i++) {
-      _extraScreen.add(i - 1);
     }
 
     _initialPage = aProvider.initialPage;
@@ -123,20 +115,16 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                     children: <Widget>[
                       ...articles
                           .map((Article a) => ArticleScreen(
-                              id: a.articleId,
-                              title: a.title,
-                              description: a.description,
-                              imageUrl: a.imageUrl,
-                              pubDate: a.pubDate,
-                              source: a.source,
-                              category: a.category,
-                              link: a.link))
-                          .toList(),
-                      ..._extraScreen
-                          .map(
-                            (int e) => ArticleLoadScreen(__loadArticle),
-                          )
-                          .toList(),
+                                id: a.articleId,
+                                title: a.title,
+                                description: a.description,
+                                imageUrl: a.imageUrl,
+                                pubDate: a.pubDate,
+                                source: a.source,
+                                category: a.category,
+                                link: a.link,
+                              ))
+                          .toList()
                     ],
                   ),
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newheadline/screens/home/daily_read_screen.dart';
+import 'package:newheadline/screens/home/recommend1.dart';
 import 'package:newheadline/screens/home/trend_screen.dart';
 
 class DisplayScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
   Widget build(BuildContext context) {
     if (widget.displayTabName == "For You") {
       return Container(
-        child: DailyReadScreen(),
+        child: RecommendScreen1(),
       );
     } else if (widget.displayTabName == "Trending") {
       return Container(

@@ -3,16 +3,16 @@ import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
-import 'package:newheadline/screens/tabs_controller/daily_read.dart';
+import 'package:newheadline/screens/home/recommend2.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 
-class DailyReadScreen extends StatefulWidget {
+class RecommendScreen1 extends StatefulWidget {
   @override
-  _DailyReadScreenState createState() => _DailyReadScreenState();
+  _RecommendScreen1State createState() => _RecommendScreen1State();
 }
 
-class _DailyReadScreenState extends State<DailyReadScreen> {
+class _RecommendScreen1State extends State<RecommendScreen1> {
   var _isLoading = false;
 
   List<String> categories = [];
@@ -44,8 +44,7 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<SubscriptionProvider>(context, listen: true);
-    CategoryProvider cProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
+
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
 
@@ -56,7 +55,7 @@ class _DailyReadScreenState extends State<DailyReadScreen> {
             ),
           )
         : !_isLoading && categories.isNotEmpty
-            ? DailyReadTab(categories: cProvider.items)
+            ? RecommendScreen2()
             : Center(
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
