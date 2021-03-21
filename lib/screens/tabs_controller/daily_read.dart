@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/screens/pages/articles_screen.dart';
+import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,6 @@ class DailyReadTab extends StatefulWidget {
 
 class _DailyReadTabState extends State<DailyReadTab>
     with SingleTickerProviderStateMixin {
-  var _isLoading = false;
   List<Article> articles = [];
   TabController _tabController;
   List<String> categoryNames = [];
@@ -42,49 +40,6 @@ class _DailyReadTabState extends State<DailyReadTab>
   @override
   Widget build(BuildContext context) {
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
-    return DefaultTabController(
-      length: widget.categories.length,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          bottom: !_isLoading
-              ? TabBar(
-                  indicatorColor:
-                      tProvider.theme == "light" ? Colors.blue : Colors.green,
-                  controller: _tabController,
-                  isScrollable: true,
-                  tabs: widget.categories
-                      .map(
-                        (Category c) => Tab(
-                            child: Text(
-                          '${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}',
-                          style: CustomTextStyle.normalBold(
-                              context, tProvider.fontSize),
-                        )),
-                      )
-                      .toList(),
-                )
-              : null,
-          title: Text('Daily Read'),
-        ),
-        body: !_isLoading
-            ? TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: widget.categories
-                    .map(
-                      (Category c) => Tab(
-                        child: ArticlesScreen(categoryName: c.categoryName),
-                      ),
-                    )
-                    .toList(),
-              )
-            : Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                ),
-              ),
-      ),
-    );
+    return Container(child: Text("I am subscribed"));
   }
 }

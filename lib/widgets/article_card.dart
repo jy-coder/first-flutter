@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/screens/pageview/article_pageview.dart';
+import 'package:newheadline/screens/single_article/article_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/response.dart';

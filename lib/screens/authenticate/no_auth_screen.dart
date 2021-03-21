@@ -4,7 +4,7 @@ import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
-import 'package:newheadline/screens/pages/search_screen.dart';
+import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:provider/provider.dart';
 
 class NoAuthScreen extends StatefulWidget {

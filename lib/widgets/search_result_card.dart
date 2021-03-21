@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/screens/pageview/search_pageview.dart';
+import 'package:newheadline/screens/single_article/search_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';

@@ -3,7 +3,7 @@ import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/screens/pages/articles_screen.dart';
+import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:provider/provider.dart';
 

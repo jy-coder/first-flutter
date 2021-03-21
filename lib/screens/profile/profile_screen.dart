@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
-import 'package:newheadline/screens/pages/subscription_setting_screen.dart';
+import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {

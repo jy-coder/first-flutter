@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
-import 'package:newheadline/screens/pageview/article_load_screen.dart';
+import 'package:newheadline/screens/single_article/article_screen.dart';
+import 'package:newheadline/screens/single_article/article_load_screen.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/theme_button.dart';

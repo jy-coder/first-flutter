@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/screens/pages/article_screen.dart';
+import 'package:newheadline/screens/single_article/article_screen.dart';
 
 class ArticleLoadScreen extends StatefulWidget {
   Article article;

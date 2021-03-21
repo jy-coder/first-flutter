@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/screens/pages/bookmark_screen.dart';
-import 'package:newheadline/screens/pages/history_screen.dart';
+import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
+import 'package:newheadline/screens/reading_list/history_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/widgets/date_filter.dart';
 import 'package:provider/provider.dart';

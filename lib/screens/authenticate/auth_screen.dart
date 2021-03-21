@@ -3,10 +3,11 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/tabs_controller/articles.dart';
-import 'package:newheadline/screens/pages/daily_read_screen.dart';
-import 'package:newheadline/screens/pages/profile_screen.dart';
-import 'package:newheadline/screens/pages/reading_list.dart';
-import 'package:newheadline/screens/pages/search_screen.dart';
+import 'package:newheadline/screens/home/daily_read_screen.dart';
+import 'package:newheadline/screens/profile/profile_screen.dart';
+import 'package:newheadline/screens/reading_list/reading_list.dart';
+import 'package:newheadline/screens/search/search_screen.dart';
+import 'package:newheadline/screens/home/home.dart';
 import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
   int _selectedPageIndex = 0;
   final List<Map<String, Object>> _pages = [
     {
-      'page': DailyReadScreen(),
+      'page': HomeTab(),
       'title': 'daily_read',
     },
     {
