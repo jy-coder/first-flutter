@@ -86,15 +86,15 @@ class _ArticleCardState extends State<ArticleCard> {
             },
             child: Column(
               children: [
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: CachedNetworkImageProvider(widget.imageUrl,
-                        cacheKey: widget.id.toString()),
-                    fit: BoxFit.cover,
-                  )),
-                ),
+                // Container(
+                //   height: 300,
+                //   decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //     image: CachedNetworkImageProvider(widget.imageUrl,
+                //         cacheKey: widget.id.toString()),
+                //     fit: BoxFit.cover,
+                //   )),
+                // ),
                 Column(
                   children: [
                     aProvider.subTab == "History" && widget.historyDate != ""
