@@ -12,7 +12,6 @@ class ArticleProvider with ChangeNotifier {
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
-  int _lastArticleId = 0;
   int _pageViewCount = 0;
 
   List<Article> get items {
@@ -31,11 +30,9 @@ class ArticleProvider with ChangeNotifier {
     _items.clear();
     _filteredItems.clear();
     _tab = tabName;
-    _lastArticleId = 0;
   }
 
   void setSubTab(String subtabName) {
-    print(subtabName);
     _items.clear();
     _subtab = subtabName;
 
@@ -55,23 +52,8 @@ class ArticleProvider with ChangeNotifier {
     return _initialPage;
   }
 
-  Article findById(int id) {
-    return _items.firstWhere((a) => a.articleId == id);
-  }
-
   int getPos(int id, List<Article> list) {
     return list.indexWhere((a) => a.articleId == id);
-  }
-
-  int get lastArticleId {
-    if (_lastArticleId == 0)
-      return _filteredItems.last.articleId;
-    else
-      return _lastArticleId;
-  }
-
-  void setLastArticleId(int articleId) {
-    _lastArticleId = articleId;
   }
 
   String get category {
@@ -93,24 +75,23 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addToSelectedList(List<Map<String, dynamic>> data, List<Article> list) {
-    for (Map<String, dynamic> d in data) {
-      list.add(
-        Article.fromJson(d),
-      );
-    }
-  }
-
   Future<void> fetchAll(String category) async {
     List<Map<String, dynamic>> data =
         await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
-    if (category == "all") addToSelectedList(data, _items);
+    if (category == "all") {
+      _items = jsonToArticleList(data);
+    }
 
     filterItemsCategory(_categoryName);
   }
 
   void setPageViewArticle(int id) {
-    int ind = getPos(id, _filteredItems);
+    int ind = 0;
+    if (_tab == "all_articles") {
+      ind = getPos(id, _filteredItems);
+    } else {
+      ind = getPos(id, _items);
+    }
 
     _initialPage = ind;
   }
@@ -144,15 +125,15 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // change this to starred instead of removing from list
-  // void filterBookmark(int articleId) {
-  //   if (_tab == "all_articles") {
-  //     removeItemFromList(_filteredItems, articleId);
-  //   } else if (_tab == "reading_list") {
-  //     removeItemFromList(_items, articleId);
-  //   }
-  //   notifyListeners();
-  // }
+  // add starred too
+  void filterBookmark(int articleId) {
+    if (_tab == "all_articles") {
+      removeItemFromList(_filteredItems, articleId);
+    } else if (_tab == "reading_list") {
+      removeItemFromList(_items, articleId);
+    }
+    notifyListeners();
+  }
 
   int get pageViewCount {
     return _pageViewCount;

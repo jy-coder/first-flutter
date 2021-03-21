@@ -9,7 +9,7 @@ import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/screens/home/recommend_pageview.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
-import 'package:newheadline/screens/tabs_controller/articles.dart';
+import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/reading_list/history_screen.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/reading_list/reading_list.dart';

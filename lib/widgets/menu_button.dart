@@ -21,8 +21,8 @@ Future<void> bookmarkAction(
   int responseCode = 0;
   String successMsg = "";
   String errorMsg = "";
-  // ArticleProvider aProvider =
-  //     Provider.of<ArticleProvider>(context, listen: false);
+  ArticleProvider aProvider =
+      Provider.of<ArticleProvider>(context, listen: false);
 
   if (action.toLowerCase().contains("Bookmark".toLowerCase())) {
     url = "$BOOKMARK_URL/?article=$articleId";
@@ -38,9 +38,9 @@ Future<void> bookmarkAction(
     }
   }
   //change this to starred instead
-  // if (responseCode == 200) {
-  //   aProvider.filterBookmark(articleId);
-  // }
+  if (responseCode == 200) {
+    aProvider.filterBookmark(articleId);
+  }
 
   Flushbar(
     message: responseCode == 500

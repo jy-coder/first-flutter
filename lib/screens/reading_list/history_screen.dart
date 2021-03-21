@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/utils/load_image.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
