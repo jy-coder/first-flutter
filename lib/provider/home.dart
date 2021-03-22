@@ -7,7 +7,7 @@ import 'package:newheadline/utils/urls.dart';
 class HomeProvider with ChangeNotifier {
   List<Article> _items = [];
   int _initialPage = 1;
-  String _tab = "";
+  String _tab = "For You";
 
   List<Article> get items {
     return [..._items];
@@ -25,12 +25,6 @@ class HomeProvider with ChangeNotifier {
 
   int getPos(int id, List<Article> list) {
     return list.indexWhere((a) => a.articleId == id);
-  }
-
-  void getPageViewArticle(int id) {
-    int ind = getPos(id, _items);
-
-    _initialPage = ind;
   }
 
   void setPageViewArticle(int id) {
