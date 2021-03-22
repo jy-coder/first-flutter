@@ -13,6 +13,7 @@ class ArticleProvider with ChangeNotifier {
   String _subtab = "";
   String _filteredDate = "";
   int _pageViewCount = 0;
+  List<int> _bookmarkIds = [];
 
   List<Article> get items {
     return [..._items];
@@ -151,5 +152,15 @@ class ArticleProvider with ChangeNotifier {
           .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
 
     if (data != null) _pageViewCount = data["count"];
+  }
+
+  List<int> get bookmarkIds {
+    return _bookmarkIds;
+  }
+
+  Future<void> fetchBookmarkId() async {
+    Map<String, dynamic> data = {};
+    data = await APIService().getOne("$BOOKMARKED_URL");
+    _bookmarkIds = data["data"].cast<int>();
   }
 }

@@ -14,6 +14,7 @@ const COUNT_URL = "${HOST}count";
 const HISTORY_URL = "${HOST}history";
 
 const BOOKMARK_URL = "${HOST}bookmark";
+const BOOKMARKED_URL = "${HOST}bookmark_article_ids";
 
 const SEARCH_SUGGESTION_URL = "${HOST}search_suggestion";
 

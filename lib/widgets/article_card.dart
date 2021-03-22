@@ -122,8 +122,9 @@ class _ArticleCardState extends State<ArticleCard> {
                           ),
                           aProvider.tab != "History" &&
                                   Auth().currentUser != null
-                              ? Expanded(child: MenuBtn(widget.id))
-                              : Container()
+                              ? Expanded(flex: 1, child: MenuBtn(widget.id))
+                              : Container(),
+                          Expanded(child: Text("test"))
                         ],
                       )),
                     ),
