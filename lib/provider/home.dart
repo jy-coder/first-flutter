@@ -19,16 +19,12 @@ class HomeProvider with ChangeNotifier {
 
   void setTab(String tabName) {
     _items.clear();
+    _tab = tabName;
+    notifyListeners();
   }
 
   int getPos(int id, List<Article> list) {
     return list.indexWhere((a) => a.articleId == id);
-  }
-
-  void getPageViewArticle(int id) {
-    int ind = getPos(id, _items);
-
-    _initialPage = ind;
   }
 
   void setPageViewArticle(int id) {
@@ -40,7 +36,9 @@ class HomeProvider with ChangeNotifier {
     List<Map<String, dynamic>> data = [];
     if (_tab == "For You") {
       data = await APIService().get("$RECOMMEND_URL/");
-    } else if (_tab == "Trending") {}
+    } else if (_tab == "Trending") {
+      data = await APIService().get("$TREND_URL/");
+    }
 
     _items = jsonToArticleList(data);
   }

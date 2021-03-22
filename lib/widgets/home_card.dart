@@ -68,7 +68,6 @@ class _HomeCardState extends State<HomeCard> {
           InkWell(
             onTap: () async {
               await saveReadingHistory(widget.id);
-
               hProvider.setPageViewArticle(widget.id);
               Navigator.pushNamed(
                 context,
