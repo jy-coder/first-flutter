@@ -6,6 +6,7 @@ import 'package:newheadline/widgets/home_card.dart';
 import 'package:provider/provider.dart';
 
 class TrendScreen extends StatefulWidget {
+  static const routeName = '/trend';
   @override
   _TrendScreenState createState() => _TrendScreenState();
 }
@@ -25,6 +26,7 @@ class _TrendScreenState extends State<TrendScreen>
 
   void _fetchTrend() async {
     HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: false);
+
     await hProvider.fetchHome();
     setState(() {
       _isLoading = false;

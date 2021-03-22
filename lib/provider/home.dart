@@ -7,7 +7,7 @@ import 'package:newheadline/utils/urls.dart';
 class HomeProvider with ChangeNotifier {
   List<Article> _items = [];
   int _initialPage = 1;
-  String _tab = "For You";
+  String _tab = "";
 
   List<Article> get items {
     return [..._items];
@@ -19,6 +19,8 @@ class HomeProvider with ChangeNotifier {
 
   void setTab(String tabName) {
     _items.clear();
+    _tab = tabName;
+    notifyListeners();
   }
 
   int getPos(int id, List<Article> list) {
@@ -40,7 +42,9 @@ class HomeProvider with ChangeNotifier {
     List<Map<String, dynamic>> data = [];
     if (_tab == "For You") {
       data = await APIService().get("$RECOMMEND_URL/");
-    } else if (_tab == "Trending") {}
+    } else if (_tab == "Trending") {
+      data = await APIService().get("$TREND_URL/");
+    }
 
     _items = jsonToArticleList(data);
   }
