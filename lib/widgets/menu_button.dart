@@ -5,6 +5,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/provider/theme.dart';
 
 class MenuBtn extends StatefulWidget {
   final int articleId;
@@ -60,26 +61,32 @@ class _MenuBtnState extends State<MenuBtn> {
   List _bookMarkOptions = ['Remove bookmark'];
   List _icons = [Icons.bookmark, Icons.cancel];
   List _options = [];
-  Color iconColor = Colors.white;
+  Color darkIconColor = Colors.white;
+  Color lightIconColor = Colors.black;
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
 
     if (aProvider.tab == "reading_list" && aProvider.subTab == "Saved") {
       _options = [..._bookMarkOptions];
     } else {
       _options = [..._articleOptions];
     }
-    print(aProvider.bookmarkIds);
+
     for (var bookmarkId in aProvider.bookmarkIds) {
       if (bookmarkId == widget.articleId) {
-        iconColor = Colors.yellow;
+        darkIconColor = Colors.yellow;
+        lightIconColor = Colors.yellow[700];
       }
     }
 
     return IconButton(
-      icon: Icon(Icons.linear_scale_outlined, color: iconColor, size: 15),
+      icon: Icon(Icons.linear_scale_outlined,
+          color: tProvider.theme == "dark" ? darkIconColor : lightIconColor,
+          size: 15),
       onPressed: () {
         showModalBottomSheet(
             context: context,
