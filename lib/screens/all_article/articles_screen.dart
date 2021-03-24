@@ -70,6 +70,7 @@ class _ArticlesScreenState extends State<ArticlesScreen>
         ? CircularProgressIndicator(backgroundColor: Colors.grey)
         : !_isLoading && filteredArticles.length > 0
             ? ListView.builder(
+                shrinkWrap: true,
                 padding: const EdgeInsets.all(10.0),
                 itemCount: filteredArticles.length,
                 itemBuilder: (ctx, i) {

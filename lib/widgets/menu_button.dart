@@ -31,15 +31,17 @@ Future<void> bookmarkAction(
       responseCode = await APIService().post(url);
       errorMsg = "Already bookmarked";
       successMsg = "Successfully bookmark";
+      aProvider.addBookmarkIds(articleId);
     } else if (action == "Remove bookmark") {
       errorMsg = "Something went wrong";
       successMsg = "Successfully remove bookmark";
       responseCode = await APIService().delete(url);
+      aProvider.removeBookmarkIds(articleId);
+      //change this to starred instead
+      if (responseCode == 200) {
+        aProvider.filterBookmark(articleId);
+      }
     }
-  }
-  //change this to starred instead
-  if (responseCode == 200) {
-    aProvider.filterBookmark(articleId);
   }
 
   Flushbar(
@@ -58,7 +60,7 @@ class _MenuBtnState extends State<MenuBtn> {
   List _bookMarkOptions = ['Remove bookmark'];
   List _icons = [Icons.bookmark, Icons.cancel];
   List _options = [];
-
+  Color iconColor = Colors.white;
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
@@ -69,9 +71,15 @@ class _MenuBtnState extends State<MenuBtn> {
     } else {
       _options = [..._articleOptions];
     }
+    print(aProvider.bookmarkIds);
+    for (var bookmarkId in aProvider.bookmarkIds) {
+      if (bookmarkId == widget.articleId) {
+        iconColor = Colors.yellow;
+      }
+    }
 
     return IconButton(
-      icon: Icon(Icons.linear_scale_outlined, size: 15),
+      icon: Icon(Icons.linear_scale_outlined, color: iconColor, size: 15),
       onPressed: () {
         showModalBottomSheet(
             context: context,

@@ -158,6 +158,16 @@ class ArticleProvider with ChangeNotifier {
     return _bookmarkIds;
   }
 
+  void addBookmarkIds(int bookmarkId) {
+    _bookmarkIds.add(bookmarkId);
+    notifyListeners();
+  }
+
+  void removeBookmarkIds(int bookmarkId) {
+    _bookmarkIds.remove(bookmarkId);
+    notifyListeners();
+  }
+
   Future<void> fetchBookmarkId() async {
     Map<String, dynamic> data = {};
     data = await APIService().getOne("$BOOKMARKED_URL");

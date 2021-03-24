@@ -6,7 +6,9 @@ import 'package:newheadline/screens/home/recommend_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/widgets/menu_button.dart';
 
 class HomeCard extends StatefulWidget {
   final int id;
@@ -104,6 +106,14 @@ class _HomeCardState extends State<HomeCard> {
                               style: CustomTextStyle.cardTitle(
                                   context, tProvider.fontSize),
                             ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: Column(children: [
+                              Expanded(flex: 1, child: MenuBtn(widget.id)),
+                              Expanded(
+                                  flex: 1, child: ShareBtn(link: widget.link))
+                            ]),
                           ),
                         ],
                       )),

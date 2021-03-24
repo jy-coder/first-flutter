@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
+import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:newheadline/widgets/theme_button.dart';
 
 class RecommendPageViewScreen extends StatefulWidget {
   static final routeName = '/Recommend-pageview';
@@ -43,7 +45,20 @@ class _RecommendPageViewScreenState extends State<RecommendPageViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Container(
+              width: 50,
+              height: 50,
+              child: PageView(
+                controller: _controller,
+                children: [
+                  ...articles.map((Article a) => ShareBtn(link: a.link)),
+                ],
+              )),
+          CustomizeThemeButton(),
+        ],
+      ),
       body: Column(
         children: [
           Container(
