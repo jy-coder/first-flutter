@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:newheadline/provider/theme.dart';
-import 'package:provider/provider.dart';
 
 class ShareBtn extends StatefulWidget {
   final String link;
