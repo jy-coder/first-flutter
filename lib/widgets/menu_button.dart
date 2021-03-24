@@ -5,6 +5,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/provider/theme.dart';
 
 class MenuBtn extends StatefulWidget {
   final int articleId;
@@ -31,15 +32,17 @@ Future<void> bookmarkAction(
       responseCode = await APIService().post(url);
       errorMsg = "Already bookmarked";
       successMsg = "Successfully bookmark";
+      aProvider.addBookmarkIds(articleId);
     } else if (action == "Remove bookmark") {
       errorMsg = "Something went wrong";
       successMsg = "Successfully remove bookmark";
       responseCode = await APIService().delete(url);
+      aProvider.removeBookmarkIds(articleId);
+      //change this to starred instead
+      if (responseCode == 200) {
+        aProvider.filterBookmark(articleId);
+      }
     }
-  }
-  //change this to starred instead
-  if (responseCode == 200) {
-    aProvider.filterBookmark(articleId);
   }
 
   Flushbar(
@@ -58,11 +61,14 @@ class _MenuBtnState extends State<MenuBtn> {
   List _bookMarkOptions = ['Remove bookmark'];
   List _icons = [Icons.bookmark, Icons.cancel];
   List _options = [];
-
+  Color darkIconColor = Colors.white;
+  Color lightIconColor = Colors.black;
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
 
     if (aProvider.tab == "reading_list" && aProvider.subTab == "Saved") {
       _options = [..._bookMarkOptions];
@@ -70,8 +76,17 @@ class _MenuBtnState extends State<MenuBtn> {
       _options = [..._articleOptions];
     }
 
+    for (var bookmarkId in aProvider.bookmarkIds) {
+      if (bookmarkId == widget.articleId) {
+        darkIconColor = Colors.yellow;
+        lightIconColor = Colors.yellow[700];
+      }
+    }
+
     return IconButton(
-      icon: Icon(Icons.linear_scale_outlined, size: 15),
+      icon: Icon(Icons.linear_scale_outlined,
+          color: tProvider.theme == "dark" ? darkIconColor : lightIconColor,
+          size: 15),
       onPressed: () {
         showModalBottomSheet(
             context: context,

@@ -10,6 +10,7 @@ import 'package:newheadline/utils/date.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/menu_button.dart';
+import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
 
 class ArticleCard extends StatefulWidget {
@@ -120,11 +121,17 @@ class _ArticleCardState extends State<ArticleCard> {
                                   context, tProvider.fontSize),
                             ),
                           ),
-                          aProvider.tab != "History" &&
-                                  Auth().currentUser != null
-                              ? Expanded(flex: 1, child: MenuBtn(widget.id))
-                              : Container(),
-                          Expanded(child: Text("test"))
+                          SizedBox(
+                            height: 50,
+                            child: Column(children: [
+                              aProvider.tab != "History" &&
+                                      Auth().currentUser != null
+                                  ? Expanded(flex: 1, child: MenuBtn(widget.id))
+                                  : Container(),
+                              Expanded(
+                                  flex: 1, child: ShareBtn(link: widget.link))
+                            ]),
+                          )
                         ],
                       )),
                     ),

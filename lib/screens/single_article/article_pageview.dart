@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
+import 'package:newheadline/widgets/share_button.dart';
 import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -55,12 +56,20 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           Container(
-            child: CustomizeThemeButton(),
-          ),
+              width: 50,
+              height: 50,
+              child: PageView(
+                controller: _controller,
+                children: [
+                  ...articles.map((Article a) => ShareBtn(link: a.link)),
+                ],
+              )),
+          CustomizeThemeButton(),
         ],
       ),
       body: _isLoading
