@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/shared/error_dialog.dart';
 import 'package:newheadline/shared/app_drawer.dart';
@@ -67,9 +68,8 @@ class _LoginState extends State<LoginScreen> {
                     hintText: 'Password',
                   ),
                   obscureText: true,
-                  validator: (val) => val.length < 6
-                      ? 'Password must be at least 6 characters long'
-                      : null,
+                  validator: (val) =>
+                      val.length < 0 ? 'Password must not be empty' : null,
                   onChanged: (val) {
                     setState(() => password = val);
                   },
@@ -84,11 +84,7 @@ class _LoginState extends State<LoginScreen> {
                         setState(() => loading = true);
                         dynamic result = await _auth.signInWithEmailAndPassword(
                             email, password);
-
-                        if (result != null) {
-                          Navigator.of(context)
-                              .pushReplacementNamed(HomeScreen.routeName);
-                        } else {
+                        if (result.runtimeType == PlatformException) {
                           var dialog = ErrorDialog(
                             content: "Invalid credentials. Please try again",
                           );
@@ -96,6 +92,9 @@ class _LoginState extends State<LoginScreen> {
                             context: context,
                             builder: (BuildContext context) => dialog,
                           );
+                        } else if (result != null) {
+                          Navigator.of(context)
+                              .pushReplacementNamed(HomeScreen.routeName);
                         }
                       }
                     }),

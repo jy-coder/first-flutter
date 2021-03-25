@@ -47,7 +47,7 @@ class _ArticleCardState extends State<ArticleCard> {
   Future<void> saveReadingHistory(int articleId) async {
     try {
       String url = "$HISTORY_URL/?article=$articleId";
-      var result = await APIService().post(url);
+      var result = await APIService().post(url, "");
     } on Exception catch (e) {
       print(e);
     }

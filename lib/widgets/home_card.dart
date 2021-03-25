@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/home/recommend_pageview.dart';
@@ -40,10 +41,10 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   bool showFullSummary = false;
 
-  Future<void> saveReadingHistory(int articleId) async {
+  Future<void> saveReadingHistory(int articleId, String token) async {
     try {
       String url = "$HISTORY_URL/?article=$articleId";
-      var result = await APIService().post(url);
+      var result = await APIService().post(url, token);
     } on Exception catch (e) {
       print(e);
     }
@@ -59,6 +60,7 @@ class _HomeCardState extends State<HomeCard> {
   Widget build(BuildContext context) {
     HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: false);
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
+    Auth aProvider = Provider.of<Auth>(context, listen: true);
 
     TextStyle defaultStyle =
         CustomTextStyle.cardSummary(context, tProvider.fontSize);
@@ -69,7 +71,7 @@ class _HomeCardState extends State<HomeCard> {
         children: [
           InkWell(
             onTap: () async {
-              await saveReadingHistory(widget.id);
+              await saveReadingHistory(widget.id, aProvider.token);
               hProvider.setPageViewArticle(widget.id);
               Navigator.pushNamed(
                 context,

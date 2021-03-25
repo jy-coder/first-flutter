@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
@@ -38,11 +39,11 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     if (!mounted) return;
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
     setState(() {
       _isLoading = true;
     });
-    await aProvider.fetchBookmark();
+    await aProvider.fetchBookmark(auProvider.token);
 
     setState(() {
       _isLoading = false;

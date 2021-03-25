@@ -37,9 +37,9 @@ class SearchProvider with ChangeNotifier {
     _items.clear();
   }
 
-  Future<void> fetchSearchResults(String searchResult) async {
+  Future<void> fetchSearchResults(String searchResult, String token) async {
     List<Map<String, dynamic>> data =
-        await APIService().get("$SEARCH_RESULT_URL/?q=$searchResult");
+        await APIService().get("$SEARCH_RESULT_URL/?q=$searchResult", token);
 
     addToSelectedList(data, _items);
 

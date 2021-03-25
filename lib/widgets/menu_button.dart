@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class MenuBtn extends StatefulWidget {
 }
 
 Future<void> bookmarkAction(
-    int articleId, String action, BuildContext context) async {
+    int articleId, String action, BuildContext context, String token) async {
   String url = "";
   int responseCode = 0;
   String successMsg = "";
@@ -29,14 +30,14 @@ Future<void> bookmarkAction(
     url = "$BOOKMARK_URL/?article=$articleId";
 
     if (action == "Bookmark") {
-      responseCode = await APIService().post(url);
+      responseCode = await APIService().post(url, token);
       errorMsg = "Already bookmarked";
       successMsg = "Successfully bookmark";
       aProvider.addBookmarkIds(articleId);
     } else if (action == "Remove bookmark") {
       errorMsg = "Something went wrong";
       successMsg = "Successfully remove bookmark";
-      responseCode = await APIService().delete(url);
+      responseCode = await APIService().delete(url, token);
       aProvider.removeBookmarkIds(articleId);
       //change this to starred instead
       if (responseCode == 200) {
@@ -69,6 +70,7 @@ class _MenuBtnState extends State<MenuBtn> {
         Provider.of<ArticleProvider>(context, listen: false);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
+    Auth auProvider = Provider.of<Auth>(context, listen: true);
 
     if (aProvider.tab == "reading_list" && aProvider.subTab == "Saved") {
       _options = [..._bookMarkOptions];
@@ -100,11 +102,8 @@ class _MenuBtnState extends State<MenuBtn> {
                           title: FlatButton(
                               onPressed: () async {
                                 Navigator.of(context).pop();
-                                await bookmarkAction(
-                                  widget.articleId,
-                                  _options[index],
-                                  context,
-                                );
+                                await bookmarkAction(widget.articleId,
+                                    _options[index], context, auProvider.token);
                               },
                               child: Row(
                                 children: [

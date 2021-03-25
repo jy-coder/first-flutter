@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
@@ -49,10 +50,11 @@ class _ArticlesScreenState extends State<ArticlesScreen>
       });
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
+    print(auProvider.token);
+    await aProvider.fetchAll(widget.categoryName, auProvider.token);
 
-    await aProvider.fetchAll(widget.categoryName);
-
-    await aProvider.fetchPageViewCount();
+    await aProvider.fetchPageViewCount(auProvider.token);
     if (!mounted) return;
     setState(() {
       _isLoading = false;

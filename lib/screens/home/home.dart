@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
@@ -30,8 +31,9 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
     super.initState();
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
     _tabController = TabController(vsync: this, length: homeTab.length);
-    aProvider.fetchBookmarkId();
+    aProvider.fetchBookmarkId(auProvider.token);
   }
 
   @override

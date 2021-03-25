@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/search/search_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -39,9 +40,9 @@ class SearchResultCard extends StatefulWidget {
 class _SearchResultCardState extends State<SearchResultCard> {
   bool showFullSummary = false;
 
-  Future<void> saveReadingHistory(int articleId) async {
+  Future<void> saveReadingHistory(int articleId, String token) async {
     String url = "$HISTORY_URL/?article=$articleId";
-    await APIService().post(url);
+    await APIService().post(url, token);
   }
 
   String truncateWithEllipsis(int cutoff, String myString) {
@@ -56,13 +57,14 @@ class _SearchResultCardState extends State<SearchResultCard> {
         Provider.of<ArticleProvider>(context, listen: false);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
+    Auth auProvider = Provider.of<Auth>(context, listen: true);
     return Container(
       child: Container(
         child: Wrap(
           children: [
             InkWell(
               onTap: () async {
-                await saveReadingHistory(widget.id);
+                await saveReadingHistory(widget.id, auProvider.token);
                 aProvider.setPageViewArticle(widget.id);
                 Navigator.pushNamed(
                   context,

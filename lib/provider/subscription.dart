@@ -26,7 +26,7 @@ class SubscriptionProvider with ChangeNotifier {
 
   Future<void> fetchSubscriptionSetting([String token]) async {
     const url = SUBSCRIPTION_URL;
-    final subscriptions = await APIService().get(url);
+    final subscriptions = await APIService().get(url, token);
 
     List<Subscription> items = [];
     Map<String, bool> checkBoxes = {};
@@ -46,8 +46,10 @@ class SubscriptionProvider with ChangeNotifier {
     _checkBoxes = checkBoxes;
   }
 
-  Future<int> updateSubscription(Map<String, bool> checkboxes) async {
-    int responseCode = await APIService().post(SUBSCRIPTION_URL, checkboxes);
+  Future<int> updateSubscription(
+      Map<String, bool> checkboxes, String token) async {
+    int responseCode =
+        await APIService().post(SUBSCRIPTION_URL, token, checkboxes);
 
     if (responseCode == 200) notifyListeners();
 

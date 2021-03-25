@@ -76,9 +76,9 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAll(String category) async {
-    List<Map<String, dynamic>> data =
-        await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
+  Future<void> fetchAll(String category, String token) async {
+    List<Map<String, dynamic>> data = await APIService()
+        .get("$ARTICLES_URL/?type=$_tab&category=$category", token);
     if (category == "all") {
       _items = jsonToArticleList(data);
     }
@@ -97,20 +97,21 @@ class ArticleProvider with ChangeNotifier {
     _initialPage = ind;
   }
 
-  Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
+  Future<List<Map<String, dynamic>>> fetchReadingHistory(String token) async {
     List<Map<String, dynamic>> data =
-        await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
+        await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate", token);
 
     _items = jsonToArticleList(data);
-    await fetchPageViewCount();
+    await fetchPageViewCount(token);
 
     return data;
   }
 
-  Future<List<Map<String, dynamic>>> fetchBookmark() async {
-    List<Map<String, dynamic>> data = await APIService().get("$BOOKMARK_URL/");
+  Future<List<Map<String, dynamic>>> fetchBookmark(String token) async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$BOOKMARK_URL/", token);
     _items = jsonToArticleList(data);
-    await fetchPageViewCount();
+    await fetchPageViewCount(token);
 
     return data;
   }
@@ -141,15 +142,15 @@ class ArticleProvider with ChangeNotifier {
   }
 
   // get number of articles of each category
-  Future<void> fetchPageViewCount() async {
+  Future<void> fetchPageViewCount(String token) async {
     Map<String, dynamic> data = {};
 
     if (_tab != "reading_list")
       data = await APIService()
-          .getOne("$COUNT_URL/?tabName=$_tab&category=$_categoryName");
+          .getOne("$COUNT_URL/?tabName=$_tab&category=$_categoryName", token);
     else
-      data = await APIService()
-          .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
+      data = await APIService().getOne(
+          "$COUNT_URL/?tabName=$_subtab&category=$_categoryName", token);
 
     if (data != null) _pageViewCount = data["count"];
   }
@@ -168,9 +169,9 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchBookmarkId() async {
+  Future<void> fetchBookmarkId(String token) async {
     Map<String, dynamic> data = {};
-    data = await APIService().getOne("$BOOKMARKED_URL");
-    _bookmarkIds = data["data"].cast<int>();
+    data = await APIService().getOne("$BOOKMARKED_URL", token);
+    if (data != null) _bookmarkIds = data["data"].cast<int>();
   }
 }

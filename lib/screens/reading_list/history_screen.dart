@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       _isLoading = true;
     });
 
-    await aProvider.fetchReadingHistory();
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
+
+    await aProvider.fetchReadingHistory(auProvider.token);
 
     // aProvider.fetchReadingHistory().then((result) async {
     //   await Future.wait(aProvider.items

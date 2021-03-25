@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:newheadline/widgets/home_card.dart';
@@ -32,7 +33,8 @@ class _RecommendScreen2State extends State<RecommendScreen2>
 
   void _fetchRecommend() async {
     HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: false);
-    await hProvider.fetchHome();
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
+    await hProvider.fetchHome(auProvider.token);
     setState(() {
       _isLoading = false;
     });

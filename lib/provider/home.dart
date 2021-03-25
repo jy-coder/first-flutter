@@ -32,12 +32,12 @@ class HomeProvider with ChangeNotifier {
     _initialPage = ind;
   }
 
-  Future<void> fetchHome() async {
+  Future<void> fetchHome(String token) async {
     List<Map<String, dynamic>> data = [];
     if (_tab == "For You") {
-      data = await APIService().get("$RECOMMEND_URL/");
+      data = await APIService().get("$RECOMMEND_URL/", token);
     } else if (_tab == "Trending") {
-      data = await APIService().get("$TREND_URL/");
+      data = await APIService().get("$TREND_URL/", token);
     }
 
     _items = jsonToArticleList(data);

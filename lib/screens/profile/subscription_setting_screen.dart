@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/shared/checkbox.dart';
 
@@ -60,7 +61,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Future<void> updateSetting(BuildContext context) async {
     SubscriptionProvider sProvider =
         Provider.of<SubscriptionProvider>(context, listen: false);
-    int responseCode = await sProvider.updateSubscription(checkboxes);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
+    int responseCode = await sProvider.updateSubscription(
+      checkboxes,
+      auProvider.token,
+    );
 
     Flushbar(
       message: responseCode == 500

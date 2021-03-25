@@ -25,11 +25,11 @@ class CategoryProvider with ChangeNotifier {
     return _items.firstWhere((cat) => cat.categoryId == id);
   }
 
-  Future<void> fetchCategories([String token]) async {
+  Future<void> fetchCategories(String token) async {
     _categoryNames.clear();
     _items.clear();
     const url = CATEGORIES_URL;
-    final List<Map<String, dynamic>> data = await APIService().get(url);
+    final List<Map<String, dynamic>> data = await APIService().get(url, token);
 
     List<Category> items = [];
     Map<String, bool> checkBoxes = {};
@@ -48,10 +48,10 @@ class CategoryProvider with ChangeNotifier {
     _categoryNames = categoryNames;
   }
 
-  Future<void> fetchSubscriptionCategories() async {
+  Future<void> fetchSubscriptionCategories(String token) async {
     _categoryNames.clear();
     _items.clear();
-    final data = await APIService().get(USER_SUBSCRIPTION_URL);
+    final data = await APIService().get(USER_SUBSCRIPTION_URL, token);
     for (Map<String, dynamic> d in data) {
       _items.add(
         Category.fromJson(d),

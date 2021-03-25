@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
@@ -45,8 +46,9 @@ class _ArticlesTabState extends State<ArticlesTab>
 
       CategoryProvider cProvider =
           Provider.of<CategoryProvider>(context, listen: false);
+      Auth auProvider = Provider.of<Auth>(context, listen: false);
 
-      cProvider.fetchCategories().then((_) {
+      cProvider.fetchCategories(auProvider.token).then((_) {
         setState(() {
           _isLoading = false;
           categories = cProvider.items;

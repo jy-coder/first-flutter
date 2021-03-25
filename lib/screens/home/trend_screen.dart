@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:newheadline/widgets/home_card.dart';
@@ -26,8 +27,9 @@ class _TrendScreenState extends State<TrendScreen>
 
   void _fetchTrend() async {
     HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: false);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
 
-    await hProvider.fetchHome();
+    await hProvider.fetchHome(auProvider.token);
     setState(() {
       _isLoading = false;
     });

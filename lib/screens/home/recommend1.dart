@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
@@ -30,8 +31,9 @@ class _RecommendScreen1State extends State<RecommendScreen1> {
 
     CategoryProvider cProvider =
         Provider.of<CategoryProvider>(context, listen: true);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
 
-    cProvider.fetchSubscriptionCategories().then((_) {
+    cProvider.fetchSubscriptionCategories(auProvider.token).then((_) {
       setState(() {
         _isLoading = false;
         categories = cProvider.categoryNames;

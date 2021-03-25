@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/shared/constants.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     SearchProvider sProvider =
         Provider.of<SearchProvider>(context, listen: true);
+    Auth auProvider = Provider.of<Auth>(context, listen: false);
     return Container(
       child: Form(
         key: _formKey,
@@ -31,7 +33,7 @@ class _SearchBarState extends State<SearchBar> {
           },
           onFieldSubmitted: (val) async {
             sProvider.emptyItems();
-            await sProvider.fetchSearchResults(val);
+            await sProvider.fetchSearchResults(val, auProvider.token);
             // widget.searchSubmit(val);
           },
         ),
