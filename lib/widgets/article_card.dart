@@ -98,16 +98,21 @@ class _ArticleCardState extends State<ArticleCard> {
                 // ),
                 Column(
                   children: [
-                    aProvider.subTab == "History" && widget.historyDate != ""
-                        ? ListTile(
-                            visualDensity:
-                                VisualDensity(horizontal: 0, vertical: -4),
-                            dense: true,
-                            subtitle: Text(
-                              formatDate(widget.historyDate),
+                    ListTile(
+                      visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                      dense: true,
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.source),
+                            Text(
+                              aProvider.subTab == "History" &&
+                                      widget.historyDate != ""
+                                  ? "viewed: ${formatDate(widget.historyDate)}"
+                                  : formatDate(widget.pubDate),
                             ),
-                          )
-                        : Container(),
+                          ]),
+                    ),
                     ListTile(
                       title: Container(
                           child: Row(

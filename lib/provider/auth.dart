@@ -47,13 +47,23 @@ class Auth with ChangeNotifier {
           email: email, password: password);
 
       User user = result.user;
-
-      // notifyListeners();
-
       return user != null ? user : null;
     } catch (error) {
-      // print(error.toString());
       return null;
+    }
+  }
+
+  Future resetPassword(String password) async {
+    String currentEmail = _auth.currentUser.email;
+
+    AuthCredential credential =
+        EmailAuthProvider.credential(email: currentEmail, password: password);
+    try {
+      await _auth.currentUser.reauthenticateWithCredential(credential);
+      await _auth.sendPasswordResetEmail(email: "");
+    } catch (err) {
+      print(err);
+      return err;
     }
   }
 

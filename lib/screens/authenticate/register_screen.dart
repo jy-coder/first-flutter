@@ -10,6 +10,7 @@ import 'package:newheadline/utils/urls.dart';
 class Register extends StatefulWidget {
   final Function toggleView;
   Register({this.toggleView});
+  static final routeName = '/register';
 
   @override
   _RegisterState createState() => _RegisterState();

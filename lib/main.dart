@@ -7,6 +7,8 @@ import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
+import 'package:newheadline/screens/authenticate/register_screen.dart';
+import 'package:newheadline/screens/authenticate/reset_screen.dart';
 import 'package:newheadline/screens/home/recommend_pageview.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
@@ -90,7 +92,8 @@ class _MyAppState extends State<MyApp> {
             SearchPageViewScreen.routeName: (ctx) => SearchPageViewScreen(),
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
             RecommendPageViewScreen.routeName: (ctx) =>
-                RecommendPageViewScreen()
+                RecommendPageViewScreen(),
+            ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
           }),
     );
   }
