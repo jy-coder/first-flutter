@@ -7,7 +7,10 @@ class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    if (Auth().currentUser != null) {
+    var _user;
+    Auth().currentUser.then((user) => print(user));
+
+    if (_user != null) {
       return AuthScreen();
     } else {
       return NoAuthScreen();

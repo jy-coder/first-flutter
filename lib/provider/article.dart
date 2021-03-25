@@ -171,6 +171,8 @@ class ArticleProvider with ChangeNotifier {
   Future<void> fetchBookmarkId() async {
     Map<String, dynamic> data = {};
     data = await APIService().getOne("$BOOKMARKED_URL");
-    _bookmarkIds = data["data"].cast<int>();
+    if (data != null) {
+      _bookmarkIds = data["data"].cast<int>();
+    }
   }
 }

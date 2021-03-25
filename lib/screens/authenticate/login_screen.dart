@@ -84,7 +84,6 @@ class _LoginState extends State<LoginScreen> {
                         setState(() => loading = true);
                         dynamic result = await _auth.signInWithEmailAndPassword(
                             email, password);
-
                         if (result != null) {
                           Navigator.of(context)
                               .pushReplacementNamed(HomeScreen.routeName);

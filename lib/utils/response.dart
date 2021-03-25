@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:newheadline/provider/auth.dart';
@@ -7,11 +6,13 @@ import 'package:newheadline/provider/auth.dart';
 class APIService {
   Future<String> getToken() async {
     String token = "";
-    User user = Auth().currentUser;
-    if (user != null)
-      await user.getIdToken().then((String t) {
-        token = t;
-      });
+
+    Auth().currentUser.then((user) {
+      if (user != null)
+        user.getIdToken().then((result) {
+          token = result.token.toString();
+        });
+    });
     return token;
   }
 

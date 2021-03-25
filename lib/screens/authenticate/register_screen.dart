@@ -33,18 +33,36 @@ class _RegisterState extends State<Register> {
   Future<void> _handleSubmit(BuildContext context) async {
     result = await _auth.registerWithEmailAndPassword(email, password);
 
-    if (result != null && _auth.currentUser != null) {
-      await _auth.currentUser.getIdToken().then((String token) async {
-        LoadDialog.showLoadingDialog(context, _keyLoader);
-        APIService().post(REGISTER_URL);
-
-        await Future.delayed(const Duration(seconds: 5), () {
-          Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
-          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    if (result != null) {
+      Auth().currentUser.then((user) {
+        user.getIdToken().then((result) async {
+          LoadDialog.showLoadingDialog(context, _keyLoader);
+          APIService().post(REGISTER_URL);
+          await Future.delayed(const Duration(seconds: 5), () {
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          });
         });
       });
     }
   }
+
+  // await Future.delayed(const Duration(seconds: 5), () {
+  //   Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+  //   Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+  // });
+  // });
+
+  //   await _auth.currentUser.getIdToken().then((String token) async {
+  //     LoadDialog.showLoadingDialog(context, _keyLoader);
+  //     APIService().post(REGISTER_URL);
+
+  // await Future.delayed(const Duration(seconds: 5), () {
+  //   Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+  //   Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+  // });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
