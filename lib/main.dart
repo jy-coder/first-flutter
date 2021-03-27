@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
-import 'package:newheadline/provider/home.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
-import 'package:newheadline/screens/home/recommend_pageview.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/reading_list/history_screen.dart';
@@ -19,7 +17,6 @@ import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
-import 'package:newheadline/shared/page_view.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +31,6 @@ void main() async {
       ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider()),
       ChangeNotifierProvider.value(value: ThemeProvider()),
-      ChangeNotifierProvider.value(value: HomeProvider())
     ],
     child: MyApp(),
   ));
@@ -87,10 +83,7 @@ class _MyAppState extends State<MyApp> {
             BookmarkScreen.routeName: (ctx) => BookmarkScreen(),
             SearchScreen.routeName: (ctx) => SearchScreen(),
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
-            RecommendPageViewScreen.routeName: (ctx) =>
-                RecommendPageViewScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
-            PageViewScreen.routeName: (ctx) => PageViewScreen()
           }),
     );
   }

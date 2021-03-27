@@ -69,16 +69,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
               itemCount: historyItems.length,
               itemBuilder: (ctx, i) {
                 return ArticleCard(
-                    historyItems[i].articleId,
-                    historyItems[i].title,
-                    historyItems[i].imageUrl,
-                    historyItems[i].summary,
-                    historyItems[i].link,
-                    historyItems[i].description,
-                    historyItems[i].pubDate,
-                    historyItems[i].source,
-                    historyItems[i].category,
-                    historyItems[i].historyDate);
+                  historyItems[i].articleId,
+                  historyItems[i].title,
+                  historyItems[i].imageUrl,
+                  historyItems[i].summary,
+                  historyItems[i].link,
+                  historyItems[i].description,
+                  historyItems[i].pubDate,
+                  historyItems[i].source,
+                  historyItems[i].category,
+                );
               }),
     );
   }

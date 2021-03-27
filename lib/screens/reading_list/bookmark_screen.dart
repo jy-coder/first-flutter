@@ -64,16 +64,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                 itemCount: bookmarkItems.length,
                 itemBuilder: (ctx, i) {
                   return ArticleCard(
-                      bookmarkItems[i].articleId,
-                      bookmarkItems[i].title,
-                      bookmarkItems[i].imageUrl,
-                      bookmarkItems[i].summary,
-                      bookmarkItems[i].link,
-                      bookmarkItems[i].description,
-                      bookmarkItems[i].pubDate,
-                      bookmarkItems[i].source,
-                      bookmarkItems[i].category,
-                      bookmarkItems[i].historyDate);
+                    bookmarkItems[i].articleId,
+                    bookmarkItems[i].title,
+                    bookmarkItems[i].imageUrl,
+                    bookmarkItems[i].summary,
+                    bookmarkItems[i].link,
+                    bookmarkItems[i].description,
+                    bookmarkItems[i].pubDate,
+                    bookmarkItems[i].source,
+                    bookmarkItems[i].category,
+                  );
                 }),
           );
   }
