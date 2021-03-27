@@ -94,12 +94,12 @@ class _ArticleCardState extends State<ArticleCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.source),
-                            // Text(
-                            //   aProvider.subTab == "History" &&
-                            //           widget.historyDate != ""
-                            //       ? "viewed: ${formatDate(widget.historyDate)}"
-                            //       : formatDate(widget.pubDate),
-                            // ),
+                            Text(
+                              aProvider.subTab == "History" &&
+                                      widget.historyDate != null
+                                  ? "viewed: ${formatDate(widget.historyDate)}"
+                                  : formatDate(widget.pubDate),
+                            ),
                           ]),
                     ),
                     ListTile(

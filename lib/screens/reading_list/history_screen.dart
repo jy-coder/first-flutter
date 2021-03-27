@@ -40,12 +40,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     await aProvider.fetchReadingHistory();
 
-    // aProvider.fetchReadingHistory().then((result) async {
-    //   await Future.wait(aProvider.items
-    //       .map((a) =>
-    //           Utils.cacheImage(context, a.imageUrl, a.articleId.toString()))
-    //       .toList());
-
     setState(() {
       _isLoading = false;
     });
@@ -78,6 +72,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   historyItems[i].pubDate,
                   historyItems[i].source,
                   historyItems[i].category,
+                  historyDate: historyItems[i].historyDate,
                 );
               }),
     );
