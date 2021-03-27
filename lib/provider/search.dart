@@ -27,6 +27,11 @@ class SearchProvider with ChangeNotifier {
     return list.indexWhere((a) => a.articleId == id);
   }
 
+  void setPageViewArticle(int id) {
+    int ind = getPos(id, _items);
+    _initialPage = ind;
+  }
+
   void getPageViewArticle(int id) {
     int ind = getPos(id, _items);
 

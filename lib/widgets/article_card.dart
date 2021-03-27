@@ -45,12 +45,8 @@ class _ArticleCardState extends State<ArticleCard> {
   bool showFullSummary = false;
 
   Future<void> saveReadingHistory(int articleId) async {
-    try {
-      String url = "$HISTORY_URL/?article=$articleId";
-      var result = await APIService().post(url);
-    } on Exception catch (e) {
-      print(e);
-    }
+    String url = "$HISTORY_URL/?article=$articleId";
+    var result = await APIService().post(url);
   }
 
   String truncateWithEllipsis(int cutoff, String myString) {
@@ -75,7 +71,8 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           InkWell(
             onTap: () async {
-              if (aProvider.subTab != "History" && Auth().currentUser != null) {
+              if (aProvider.tab != "reading_list" ||
+                  aProvider.subTab != "History") {
                 await saveReadingHistory(widget.id);
               }
               aProvider.setPageViewArticle(widget.id);

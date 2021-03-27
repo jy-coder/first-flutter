@@ -29,7 +29,6 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   void didChangeDependencies() {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    print(aProvider.tab);
 
     if (aProvider.tab == "all_articles") {
       articles = aProvider.filteredItems;
@@ -56,20 +55,16 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
           Container(
-              width: 50,
-              height: 50,
-              child: PageView(
-                controller: _controller,
-                children: [
-                  ...articles.map((Article a) => ShareBtn(link: a.link)),
-                ],
-              )),
-          CustomizeThemeButton(),
+            child: Row(
+              children: [
+                CustomizeThemeButton(),
+              ],
+            ),
+          ),
         ],
       ),
       body: _isLoading

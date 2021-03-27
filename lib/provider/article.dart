@@ -93,8 +93,12 @@ class ArticleProvider with ChangeNotifier {
     } else {
       ind = getPos(id, _items);
     }
-
     _initialPage = ind;
+  }
+
+  void setInitialPage(int pageNum) {
+    _initialPage = pageNum;
+    notifyListeners();
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {

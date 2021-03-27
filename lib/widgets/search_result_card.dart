@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/search/search_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
@@ -52,8 +53,8 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
   @override
   Widget build(BuildContext context) {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+    SearchProvider sProvider =
+        Provider.of<SearchProvider>(context, listen: false);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     return Container(
@@ -63,7 +64,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
             InkWell(
               onTap: () async {
                 await saveReadingHistory(widget.id);
-                aProvider.setPageViewArticle(widget.id);
+                sProvider.setPageViewArticle(widget.id);
                 Navigator.pushNamed(
                   context,
                   SearchPageViewScreen.routeName,
@@ -85,9 +86,6 @@ class _SearchResultCardState extends State<SearchResultCard> {
                                   widget.title,
                                   style: CustomTextStyle.smallbold(
                                       context, tProvider.fontSize),
-                                ),
-                                Text(
-                                  truncateWithEllipsis(75, widget.summary),
                                 ),
                               ],
                             ),
