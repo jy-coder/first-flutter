@@ -12,6 +12,7 @@ class ArticleProvider with ChangeNotifier {
   String _tab = "";
   String _subtab = "";
   String _filteredDate = "";
+  String _shareLink = "";
   int _pageViewCount = 0;
   List<int> _bookmarkIds = [];
 
@@ -25,6 +26,15 @@ class ArticleProvider with ChangeNotifier {
 
   String get subTab {
     return _subtab;
+  }
+
+  String get shareLink {
+    return _shareLink;
+  }
+
+  void setShareLink(String link) {
+    _shareLink = link;
+    notifyListeners();
   }
 
   void setTab(String tabName) {

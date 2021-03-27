@@ -54,13 +54,14 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         actions: [
           Container(
             child: Row(
               children: [
+                ShareBtn(link: aProvider.shareLink),
                 CustomizeThemeButton(),
               ],
             ),
@@ -90,6 +91,9 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                 Expanded(
                   flex: 1,
                   child: PageView(
+                    onPageChanged: (int index) {
+                      aProvider.setShareLink(articles[index].link);
+                    },
                     controller: _controller,
                     children: <Widget>[
                       ...articles

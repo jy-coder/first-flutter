@@ -8,6 +8,7 @@ class HomeProvider with ChangeNotifier {
   List<Article> _items = [];
   int _initialPage = 1;
   String _tab = "For You";
+  String _shareLink = "";
 
   List<Article> get items {
     return [..._items];
@@ -15,6 +16,15 @@ class HomeProvider with ChangeNotifier {
 
   int get initialPage {
     return _initialPage;
+  }
+
+  String get shareLink {
+    return _shareLink;
+  }
+
+  void setShareLink(String link) {
+    _shareLink = link;
+    notifyListeners();
   }
 
   void setTab(String tabName) {

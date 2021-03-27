@@ -71,6 +71,7 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           InkWell(
             onTap: () async {
+              aProvider.setShareLink(widget.link);
               if (aProvider.tab != "reading_list" ||
                   aProvider.subTab != "History") {
                 await saveReadingHistory(widget.id);

@@ -69,6 +69,7 @@ class _HomeCardState extends State<HomeCard> {
         children: [
           InkWell(
             onTap: () async {
+              hProvider.setShareLink(widget.link);
               await saveReadingHistory(widget.id);
               hProvider.setPageViewArticle(widget.id);
               Navigator.pushNamed(

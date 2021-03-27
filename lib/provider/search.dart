@@ -6,6 +6,7 @@ import 'package:newheadline/utils/urls.dart';
 class SearchProvider with ChangeNotifier {
   List<Article> _items = [];
   int _initialPage = 1;
+  String _shareLink = "";
 
   List<Article> get searchItems {
     return [..._items];
@@ -13,6 +14,15 @@ class SearchProvider with ChangeNotifier {
 
   int get initialPage {
     return _initialPage;
+  }
+
+  String get shareLink {
+    return _shareLink;
+  }
+
+  void setShareLink(String link) {
+    _shareLink = link;
+    notifyListeners();
   }
 
   void addToSelectedList(List<Map<String, dynamic>> data, List<Article> list) {

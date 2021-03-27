@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
+import 'package:newheadline/widgets/share_button.dart';
+import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -40,8 +42,21 @@ class _SearchPageViewScreenState extends State<SearchPageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SearchProvider sProvider =
+        Provider.of<SearchProvider>(context, listen: true);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Container(
+            child: Row(
+              children: [
+                ShareBtn(link: sProvider.shareLink),
+                CustomizeThemeButton(),
+              ],
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Container(
@@ -58,6 +73,9 @@ class _SearchPageViewScreenState extends State<SearchPageViewScreen> {
           Expanded(
             flex: 1,
             child: PageView(
+              onPageChanged: (int index) {
+                sProvider.setShareLink(articles[index].link);
+              },
               controller: _controller,
               children: <Widget>[
                 ...articles

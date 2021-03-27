@@ -63,6 +63,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
           children: [
             InkWell(
               onTap: () async {
+                sProvider.setShareLink(widget.link);
                 await saveReadingHistory(widget.id);
                 sProvider.setPageViewArticle(widget.id);
                 Navigator.pushNamed(
