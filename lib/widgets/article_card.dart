@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
@@ -25,17 +24,9 @@ class ArticleCard extends StatefulWidget {
   final String category;
   final String historyDate;
 
-  ArticleCard(
-      this.id,
-      this.title,
-      this.imageUrl,
-      this.summary,
-      this.link,
-      this.description,
-      this.pubDate,
-      this.source,
-      this.category,
-      this.historyDate);
+  ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
+      this.description, this.pubDate, this.source, this.category,
+      {this.historyDate});
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -105,7 +96,7 @@ class _ArticleCardState extends State<ArticleCard> {
                             Text(widget.source),
                             Text(
                               aProvider.subTab == "History" &&
-                                      widget.historyDate != ""
+                                      widget.historyDate != null
                                   ? "viewed: ${formatDate(widget.historyDate)}"
                                   : formatDate(widget.pubDate),
                             ),

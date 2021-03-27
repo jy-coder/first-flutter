@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
-import 'package:newheadline/provider/home.dart';
-import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
-import 'package:newheadline/screens/authenticate/register_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
-import 'package:newheadline/screens/home/recommend_pageview.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/reading_list/history_screen.dart';
@@ -19,7 +15,6 @@ import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:newheadline/screens/single_article/article_pageview.dart';
 import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:newheadline/screens/search/search_pageview.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/theme.dart';
@@ -35,9 +30,7 @@ void main() async {
       ChangeNotifierProvider.value(value: CategoryProvider()),
       ChangeNotifierProvider.value(value: ArticleProvider()),
       ChangeNotifierProvider.value(value: SubscriptionProvider()),
-      ChangeNotifierProvider.value(value: SearchProvider()),
       ChangeNotifierProvider.value(value: ThemeProvider()),
-      ChangeNotifierProvider.value(value: HomeProvider())
     ],
     child: MyApp(),
   ));
@@ -89,10 +82,7 @@ class _MyAppState extends State<MyApp> {
             ReadListScreen.routeName: (ctx) => ReadListScreen(),
             BookmarkScreen.routeName: (ctx) => BookmarkScreen(),
             SearchScreen.routeName: (ctx) => SearchScreen(),
-            SearchPageViewScreen.routeName: (ctx) => SearchPageViewScreen(),
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
-            RecommendPageViewScreen.routeName: (ctx) =>
-                RecommendPageViewScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
           }),
     );

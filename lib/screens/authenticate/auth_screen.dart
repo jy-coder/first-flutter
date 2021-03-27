@@ -50,8 +50,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void _selectPage(int index) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    SearchProvider sProvider =
-        Provider.of<SearchProvider>(context, listen: false);
+
     if (_selectedPageIndex == index) return;
     aProvider.setTab(_pages[index]['title']);
 
@@ -59,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
       aProvider.setSubTab("Saved");
       aProvider.setFilteredDate("");
     } else if (_pages[index]['title'] == "Search") {
-      sProvider.emptyItems();
+      aProvider.emptyItems();
     }
 
     setState(() {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
-import 'package:newheadline/provider/home.dart';
+import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/widgets/article_card.dart';
-import 'package:newheadline/widgets/home_card.dart';
 import 'package:provider/provider.dart';
 
 class TrendScreen extends StatefulWidget {
@@ -25,7 +24,8 @@ class _TrendScreenState extends State<TrendScreen>
   }
 
   void _fetchTrend() async {
-    HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: false);
+    ArticleProvider hProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
 
     await hProvider.fetchHome();
     setState(() {
@@ -43,7 +43,8 @@ class _TrendScreenState extends State<TrendScreen>
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider hProvider = Provider.of<HomeProvider>(context, listen: true);
+    ArticleProvider hProvider =
+        Provider.of<ArticleProvider>(context, listen: true);
     articles = hProvider.items;
 
     return _isLoading
@@ -53,7 +54,7 @@ class _TrendScreenState extends State<TrendScreen>
                 padding: const EdgeInsets.all(10.0),
                 itemCount: articles.length,
                 itemBuilder: (ctx, i) {
-                  return HomeCard(
+                  return ArticleCard(
                     articles[i].articleId,
                     articles[i].title,
                     articles[i].imageUrl,

@@ -52,7 +52,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
 
     await aProvider.fetchAll(widget.categoryName);
 
-    await aProvider.fetchPageViewCount();
     if (!mounted) return;
     setState(() {
       _isLoading = false;
@@ -64,29 +63,26 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     super.build(context);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    List<Article> filteredArticles = aProvider.filteredItems;
+    List<Article> articles = aProvider.items;
 
     return _isLoading
         ? CircularProgressIndicator(backgroundColor: Colors.grey)
-        : !_isLoading && filteredArticles.length > 0
+        : !_isLoading && articles.length > 0
             ? ListView.builder(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(10.0),
-                itemCount: filteredArticles.length,
+                itemCount: articles.length,
                 itemBuilder: (ctx, i) {
                   return ArticleCard(
-                    filteredArticles[i].articleId,
-                    filteredArticles[i].title,
-                    filteredArticles[i].imageUrl,
-                    filteredArticles[i].summary,
-                    filteredArticles[i].link,
-                    filteredArticles[i].description,
-                    filteredArticles[i].pubDate,
-                    filteredArticles[i].source,
-                    filteredArticles[i].category,
-                    filteredArticles[i].historyDate == ""
-                        ? ""
-                        : filteredArticles[i].historyDate,
+                    articles[i].articleId,
+                    articles[i].title,
+                    articles[i].imageUrl,
+                    articles[i].summary,
+                    articles[i].link,
+                    articles[i].description,
+                    articles[i].pubDate,
+                    articles[i].source,
+                    articles[i].category,
                   );
                 })
             : Container();

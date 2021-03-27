@@ -6,7 +6,7 @@ import 'package:newheadline/utils/urls.dart';
 
 class ArticleProvider with ChangeNotifier {
   List<Article> _items = [];
-  List<Article> _filteredItems = [];
+  List<Article> _allItems = [];
   int _initialPage = 0;
   String _categoryName = "all"; //default fliter
   String _tab = "";
@@ -15,6 +15,7 @@ class ArticleProvider with ChangeNotifier {
   String _shareLink = "";
   int _pageViewCount = 0;
   List<int> _bookmarkIds = [];
+  String _homeTab = "For You";
 
   List<Article> get items {
     return [..._items];
@@ -39,15 +40,15 @@ class ArticleProvider with ChangeNotifier {
 
   void setTab(String tabName) {
     _items.clear();
-    _filteredItems.clear();
+    _allItems.clear();
     _tab = tabName;
+    // notifyListeners();
   }
 
   void setSubTab(String subtabName) {
     _items.clear();
     _subtab = subtabName;
-
-    notifyListeners();
+    // notifyListeners();
   }
 
   void setFilteredDate(String dateRange) {
@@ -55,8 +56,8 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Article> get filteredItems {
-    return [..._filteredItems];
+  List<Article> get allItems {
+    return [..._allItems];
   }
 
   int get initialPage {
@@ -78,10 +79,10 @@ class ArticleProvider with ChangeNotifier {
 
   void filterItemsCategory(String categoryName) {
     if (categoryName != "all")
-      _filteredItems =
-          _items.where((Article a) => a.category == categoryName).toList();
+      _items =
+          _allItems.where((Article a) => a.category == categoryName).toList();
     else
-      _filteredItems = _items;
+      _items = _allItems;
 
     notifyListeners();
   }
@@ -90,7 +91,7 @@ class ArticleProvider with ChangeNotifier {
     List<Map<String, dynamic>> data =
         await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
     if (category == "all") {
-      _items = jsonToArticleList(data);
+      _allItems = jsonToArticleList(data);
     }
 
     filterItemsCategory(_categoryName);
@@ -99,11 +100,13 @@ class ArticleProvider with ChangeNotifier {
   void setPageViewArticle(int id) {
     int ind = 0;
     if (_tab == "all_articles") {
-      ind = getPos(id, _filteredItems);
+      ind = getPos(id, _allItems);
     } else {
       ind = getPos(id, _items);
     }
     _initialPage = ind;
+
+    // notifyListeners();
   }
 
   void setInitialPage(int pageNum) {
@@ -116,7 +119,6 @@ class ArticleProvider with ChangeNotifier {
         await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
 
     _items = jsonToArticleList(data);
-    await fetchPageViewCount();
 
     return data;
   }
@@ -124,7 +126,6 @@ class ArticleProvider with ChangeNotifier {
   Future<List<Map<String, dynamic>>> fetchBookmark() async {
     List<Map<String, dynamic>> data = await APIService().get("$BOOKMARK_URL/");
     _items = jsonToArticleList(data);
-    await fetchPageViewCount();
 
     return data;
   }
@@ -143,7 +144,7 @@ class ArticleProvider with ChangeNotifier {
   // add starred too
   void filterBookmark(int articleId) {
     if (_tab == "all_articles") {
-      removeItemFromList(_filteredItems, articleId);
+      removeItemFromList(_items, articleId);
     } else if (_tab == "reading_list") {
       removeItemFromList(_items, articleId);
     }
@@ -152,20 +153,6 @@ class ArticleProvider with ChangeNotifier {
 
   int get pageViewCount {
     return _pageViewCount;
-  }
-
-  // get number of articles of each category
-  Future<void> fetchPageViewCount() async {
-    Map<String, dynamic> data = {};
-
-    if (_tab != "reading_list")
-      data = await APIService()
-          .getOne("$COUNT_URL/?tabName=$_tab&category=$_categoryName");
-    else
-      data = await APIService()
-          .getOne("$COUNT_URL/?tabName=$_subtab&category=$_categoryName");
-
-    if (data != null) _pageViewCount = data["count"];
   }
 
   List<int> get bookmarkIds {
@@ -186,5 +173,29 @@ class ArticleProvider with ChangeNotifier {
     Map<String, dynamic> data = {};
     data = await APIService().getOne("$BOOKMARKED_URL");
     _bookmarkIds = data["data"].cast<int>();
+  }
+
+  Future<void> fetchSearchResults(String searchResult) async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$SEARCH_RESULT_URL/?q=$searchResult");
+
+    _items = jsonToArticleList(data);
+
+    notifyListeners();
+  }
+
+  void emptyItems() {
+    _items.clear();
+  }
+
+  Future<void> fetchHome() async {
+    List<Map<String, dynamic>> data = [];
+    if (_homeTab == "For You") {
+      data = await APIService().get("$RECOMMEND_URL/");
+    } else if (_homeTab == "Trending") {
+      data = await APIService().get("$TREND_URL/");
+    }
+
+    _items = jsonToArticleList(data);
   }
 }
