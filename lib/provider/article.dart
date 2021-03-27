@@ -187,4 +187,17 @@ class ArticleProvider with ChangeNotifier {
     data = await APIService().getOne("$BOOKMARKED_URL");
     _bookmarkIds = data["data"].cast<int>();
   }
+
+  Future<void> fetchSearchResults(String searchResult) async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$SEARCH_RESULT_URL/?q=$searchResult");
+
+    _items = jsonToArticleList(data);
+
+    notifyListeners();
+  }
+
+  void emptyItems() {
+    _items.clear();
+  }
 }
