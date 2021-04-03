@@ -84,7 +84,9 @@ class _ArticleCardState extends State<ArticleCard> {
                       subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.category),
+                            Text(capitalize(widget.category),
+                            style: TextStyle(color:Colors.green[600]),
+                            ),
                             Text(widget.source),
                             Text(
                               aProvider.subTab == "History" &&
