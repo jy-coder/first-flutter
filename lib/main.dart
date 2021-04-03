@@ -18,7 +18,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/theme.dart';
+import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +49,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _getStorage();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   Future<void> _getStorage() async {

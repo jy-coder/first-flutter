@@ -1,4 +1,5 @@
 const HOST = "http://10.0.2.2:8000/";
+const WEBSOCKET_URL = "ws://10.0.2.2:8000/ws";
 
 const CATEGORIES_URL = "${HOST}category";
 const CATEGORY_URL = "";

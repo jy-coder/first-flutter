@@ -42,7 +42,6 @@ class ArticleProvider with ChangeNotifier {
     _items.clear();
     _allItems.clear();
     _tab = tabName;
-    // notifyListeners();
   }
 
   void setSubTab(String subtabName) {
@@ -99,14 +98,8 @@ class ArticleProvider with ChangeNotifier {
 
   void setPageViewArticle(int id) {
     int ind = 0;
-    if (_tab == "all_articles") {
-      ind = getPos(id, _allItems);
-    } else {
-      ind = getPos(id, _items);
-    }
+    ind = getPos(id, _items);
     _initialPage = ind;
-
-    // notifyListeners();
   }
 
   void setInitialPage(int pageNum) {
@@ -172,7 +165,7 @@ class ArticleProvider with ChangeNotifier {
   Future<void> fetchBookmarkId() async {
     Map<String, dynamic> data = {};
     data = await APIService().getOne("$BOOKMARKED_URL");
-    _bookmarkIds = data["data"].cast<int>();
+    if (data != null) _bookmarkIds = data["data"].cast<int>();
   }
 
   Future<void> fetchSearchResults(String searchResult) async {

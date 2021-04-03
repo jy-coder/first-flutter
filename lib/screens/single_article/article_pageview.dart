@@ -30,11 +30,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    if (aProvider.tab == "all_articles") {
-      articles = aProvider.allItems;
-    } else {
       articles = aProvider.items;
-    }
 
     _controller = PageController(
       initialPage: aProvider.initialPage,
@@ -80,7 +76,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: SmoothPageIndicator(
                     controller: _controller,
-                    count: aProvider.items.length,
+                    count: articles.length,
                     effect: ScrollingDotsEffect(
                       dotWidth: 5.0,
                       dotHeight: 5.0,

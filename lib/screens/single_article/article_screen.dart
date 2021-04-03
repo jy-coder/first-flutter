@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/single_article/webview_screen.dart';
@@ -43,14 +42,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
           children: [
             Container(
               height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: CachedNetworkImageProvider(
-                  this.widget.imageUrl,
-                  cacheKey: this.widget.id.toString(),
-                ),
-                fit: BoxFit.cover,
-              )),
+             
             ),
             Container(
               alignment: Alignment.center,

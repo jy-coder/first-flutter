@@ -24,6 +24,7 @@ class _RecommendScreen1State extends State<RecommendScreen1> {
 
   @override
   void didChangeDependencies() {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
     });
