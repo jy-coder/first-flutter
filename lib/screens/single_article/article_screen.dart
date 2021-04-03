@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/single_article/webview_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
-import 'package:newheadline/utils/date.dart';
+import 'package:newheadline/utils/common.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreen extends StatefulWidget {

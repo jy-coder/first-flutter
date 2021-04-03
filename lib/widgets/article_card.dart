@@ -5,7 +5,7 @@ import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/single_article/article_pageview.dart';
 import 'package:newheadline/shared/textstyle.dart';
-import 'package:newheadline/utils/date.dart';
+import 'package:newheadline/utils/common.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/menu_button.dart';
@@ -76,15 +76,6 @@ class _ArticleCardState extends State<ArticleCard> {
             },
             child: Column(
               children: [
-                // Container(
-                //   height: 300,
-                //   decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //     image: CachedNetworkImageProvider(widget.imageUrl,
-                //         cacheKey: widget.id.toString()),
-                //     fit: BoxFit.cover,
-                //   )),
-                // ),
                 Column(
                   children: [
                     ListTile(
@@ -93,6 +84,7 @@ class _ArticleCardState extends State<ArticleCard> {
                       subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(widget.category),
                             Text(widget.source),
                             Text(
                               aProvider.subTab == "History" &&

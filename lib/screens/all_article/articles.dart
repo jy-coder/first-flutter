@@ -5,6 +5,7 @@ import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
+import 'package:newheadline/utils/common.dart';
 import 'package:provider/provider.dart';
 
 class ArticlesTab extends StatefulWidget {
@@ -85,7 +86,7 @@ class _ArticlesTabState extends State<ArticlesTab>
                       .map(
                         (Category c) => Tab(
                             child: Text(
-                          '${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}',
+                          capitalize(c.categoryName),
                           style: CustomTextStyle.normalBold(
                               context, tProvider.fontSize),
                         )),

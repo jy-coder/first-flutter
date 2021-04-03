@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/theme.dart';
+import 'package:newheadline/utils/common.dart';
 import 'package:provider/provider.dart';
 
 class CheckBox extends StatefulWidget {
@@ -36,7 +37,7 @@ class _CheckBoxState extends State<CheckBox> {
                         ? Colors.white
                         : Colors.black54,
                     title: Text(
-                      "${c.categoryName[0].toUpperCase()}${c.categoryName.substring(1)}",
+                      capitalize(c.categoryName)
                     ),
                     value: widget.checkboxes[cId],
                     onChanged: !widget.edit
