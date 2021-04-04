@@ -22,11 +22,14 @@ import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await MobileAds.instance.initialize();
+  await DotEnv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: Auth()),

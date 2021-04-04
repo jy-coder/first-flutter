@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/utils/admob.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
 
@@ -72,5 +73,9 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                   );
                 })
             : Container();
+    // ElevatedButton(
+    //     child: Text("click here"),
+    //     onPressed: () => AdMobService.createBannerAd(),
+    //   );
   }
 }
