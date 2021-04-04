@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/shared/error_dialog.dart';
-import 'package:newheadline/shared/app_drawer.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/shared/constants.dart';
+import 'package:newheadline/shared/load_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/login";
@@ -20,9 +20,32 @@ class _LoginState extends State<LoginScreen> {
 
   bool loading = false;
 
-  // text field state
   String email = '';
   String password = '';
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
+  Future<void> _handleSubmit(BuildContext context) async {
+    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+    if(result != null){
+     await _auth.currentUser.getIdToken().then((String token) async {
+        LoadDialog.showLoadingDialog(context, _keyLoader);
+        await Future.delayed(const Duration(seconds: 3), () {
+          Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        });
+      });
+    }
+
+   else {
+      var dialog = ErrorDialog(
+        content: "Invalid credentials. Please try again",
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => dialog,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +104,7 @@ class _LoginState extends State<LoginScreen> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        setState(() => loading = true);
-                        dynamic result = await _auth.signInWithEmailAndPassword(
-                            email, password);
-
-                        if (result != null) {
-                          Navigator.of(context)
-                              .pushReplacementNamed(HomeScreen.routeName);
-                        } else {
-                          var dialog = ErrorDialog(
-                            content: "Invalid credentials. Please try again",
-                          );
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => dialog,
-                          );
-                        }
+                        _handleSubmit(context);
                       }
                     }),
               ],

@@ -22,7 +22,6 @@ class _RegisterState extends State<Register> {
 
   Auth _auth = Auth();
 
-  // text field state
   String email = '';
   String password = '';
   String confirmPassword = '';
