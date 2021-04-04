@@ -7,7 +7,7 @@ import 'package:newheadline/screens/profile/checkbox.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionScreen extends StatefulWidget {
-  static const routeName = "/settings";
+  static const routeName = "/subscription-settings";
 
   @override
   _SubscriptionScreenState createState() => _SubscriptionScreenState();
@@ -82,7 +82,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-            "Subscription",
+            "",
           ),
           actions: <Widget>[
             !edit

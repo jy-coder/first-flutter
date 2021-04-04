@@ -3,6 +3,7 @@ import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/screens/authenticate/register_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
+import 'package:newheadline/screens/profile/site_subscription.dart';
 import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +13,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  List<String> profileList = ["Setting", "Logout", "Reset Password"];
+  List<String> profileList = ["Category Subscription", "New Site Subscription", 
+                              "Reset Password","Logout"];
   List<String> navigator = [
     SubscriptionScreen.routeName,
+    SiteSubscription.routeName,
+    ResetPasswordScreen.routeName,
     HomeScreen.routeName,
-    ResetPasswordScreen.routeName
+    
   ];
 
   @override
@@ -39,15 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.of(context).pushReplacementNamed(
                       navigator[index],
                     );
-                  } else if (profileList[index] == "Setting") {
+                  } else {
                     Navigator.of(context).pushNamed(
                       navigator[index],
                     );
-                  } else if (profileList[index] == "Reset Password") {
-                    Navigator.of(context).pushNamed(
-                      navigator[index],
-                    );
-                  }
+                  } 
                 },
                 child: ListTile(
                   title: Text(

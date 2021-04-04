@@ -6,6 +6,7 @@ import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
+import 'package:newheadline/screens/profile/site_subscription.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/reading_list/history_screen.dart';
@@ -20,7 +21,6 @@ import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -99,6 +99,7 @@ class _MyAppState extends State<MyApp> {
             SearchScreen.routeName: (ctx) => SearchScreen(),
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
+            SiteSubscription.routeName: (ctx) => SiteSubscription(),
           }),
     );
   }
