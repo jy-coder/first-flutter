@@ -42,8 +42,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     setState(() {
       _isLoading = true;
     });
-    await aProvider.fetchBookmark();
-
+    dynamic result = await aProvider.fetchBookmark();
     setState(() {
       _isLoading = false;
     });
@@ -59,6 +58,10 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
             backgroundColor: Colors.grey,
           )
         : Scaffold(
+            appBar: AppBar(
+              title: Text("Bookmark"),
+              centerTitle: true,
+            ),
             body: ListView.builder(
                 padding: const EdgeInsets.all(10.0),
                 itemCount: bookmarkItems.length,

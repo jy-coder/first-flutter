@@ -34,6 +34,7 @@ class ArticleCard extends StatefulWidget {
 
 class _ArticleCardState extends State<ArticleCard> {
   bool showFullSummary = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> saveReadingHistory(int articleId) async {
     String url = "$HISTORY_URL/?article=$articleId";
@@ -61,15 +62,14 @@ class _ArticleCardState extends State<ArticleCard> {
           child: Wrap(
         children: [
           InkWell(
-            onTap: () async {
+            key: _scaffoldKey,
+            onTap: () {
               aProvider.setShareLink(widget.link);
-              if (aProvider.tab != "reading_list" ||
-                  aProvider.subTab != "History") {
-                await saveReadingHistory(widget.id);
+              if (aProvider.tab != "profile") {
+                saveReadingHistory(widget.id);
               }
               aProvider.setPageViewArticle(widget.id);
-              Navigator.pushNamed(
-                context,
+              Navigator.of(context).pushNamed(
                 ArticlePageViewScreen.routeName,
                 arguments: widget.id,
               );

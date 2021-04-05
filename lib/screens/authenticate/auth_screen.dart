@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
-import 'package:newheadline/provider/search.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
-import 'package:newheadline/screens/home/recommend1.dart';
 import 'package:newheadline/screens/profile/profile_screen.dart';
-import 'package:newheadline/screens/reading_list/reading_list.dart';
 import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:newheadline/screens/home/home.dart';
 import 'package:provider/provider.dart';
@@ -25,10 +22,6 @@ class _AuthScreenState extends State<AuthScreen> {
     {
       'page': ArticlesTab(),
       'title': 'all_articles',
-    },
-    {
-      'page': ReadListScreen(),
-      'title': 'reading_list',
     },
     {
       'page': ProfileScreen(),
@@ -54,10 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_selectedPageIndex == index) return;
     aProvider.setTab(_pages[index]['title']);
 
-    if (_pages[index]['title'] == "reading_list") {
-      aProvider.setSubTab("Saved");
-      aProvider.setFilteredDate("");
-    } else if (_pages[index]['title'] == "Search") {
+    if (_pages[index]['title'] == "Search") {
       aProvider.emptyItems();
     }
 
@@ -87,10 +77,6 @@ class _AuthScreenState extends State<AuthScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.text_fields),
             label: "All Articles",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: "Reading List",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
