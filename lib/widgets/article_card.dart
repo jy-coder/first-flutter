@@ -55,7 +55,6 @@ class _ArticleCardState extends State<ArticleCard> {
 
     TextStyle defaultStyle =
         CustomTextStyle.cardSummary(context, tProvider.fontSize);
-    TextStyle linkStyle = TextStyle(color: Colors.blue);
 
     return Container(
       child: Card(
@@ -145,17 +144,6 @@ class _ArticleCardState extends State<ArticleCard> {
                                   ? truncateWithEllipsis(200, widget.summary)
                                   : truncateWithEllipsis(1000, widget.summary),
                             ),
-                            TextSpan(
-                                text: !showFullSummary
-                                    ? 'Show More'
-                                    : 'Show Less',
-                                style: linkStyle,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    setState(() {
-                                      showFullSummary = !showFullSummary;
-                                    });
-                                  }),
                           ],
                         ),
                       ),

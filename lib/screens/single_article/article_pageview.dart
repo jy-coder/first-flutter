@@ -30,7 +30,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-      articles = aProvider.items;
+    articles = aProvider.items;
 
     _controller = PageController(
       initialPage: aProvider.initialPage,

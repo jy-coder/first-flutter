@@ -98,15 +98,23 @@ class _SearchResultCardState extends State<SearchResultCard> {
                         Expanded(
                           flex: 3,
                           child: Container(
-                            height: 100,
-                            alignment: AlignmentDirectional.center,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: CachedNetworkImageProvider(widget.imageUrl,
-                                  cacheKey: widget.id.toString()),
-                              fit: BoxFit.cover,
-                            )),
-                          ),
+                              height: 100,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: CachedNetworkImage(
+                                  imageUrl: widget.imageUrl,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          SizedBox(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  errorWidget: (context, ud, error) =>
+                                      Icon(Icons.error),
+                                ),
+                              )),
                         ),
                       ],
                     ),

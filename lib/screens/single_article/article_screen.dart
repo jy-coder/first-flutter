@@ -4,6 +4,7 @@ import 'package:newheadline/screens/single_article/webview_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/common.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleScreen extends StatefulWidget {
   final int id;
@@ -41,9 +42,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
         child: Wrap(
           children: [
             Container(
-              height: 300,
-             
-            ),
+                height: 300,
+                width: 500,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.imageUrl,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => SizedBox(
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                      height: 30,
+                      width: 30,
+                    ),
+                    errorWidget: (context, ud, error) => Icon(Icons.error),
+                  ),
+                )),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(top: 5),
