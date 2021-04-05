@@ -39,6 +39,7 @@ class ArticleProvider with ChangeNotifier {
   }
 
   void setTab(String tabName) {
+    print(tabName);
     _items.clear();
     _allItems.clear();
     _tab = tabName;

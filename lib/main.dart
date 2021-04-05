@@ -6,7 +6,6 @@ import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
-import 'package:newheadline/screens/profile/site_subscription.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/reading_list/history_screen.dart';
@@ -99,7 +98,6 @@ class _MyAppState extends State<MyApp> {
             SearchScreen.routeName: (ctx) => SearchScreen(),
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
-            SiteSubscription.routeName: (ctx) => SiteSubscription(),
           }),
     );
   }

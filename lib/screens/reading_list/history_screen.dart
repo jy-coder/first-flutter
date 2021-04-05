@@ -52,6 +52,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Provider.of<ArticleProvider>(context, listen: true);
     List<Article> historyItems = aProvider.items;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("History"),
+        centerTitle: true,
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(
