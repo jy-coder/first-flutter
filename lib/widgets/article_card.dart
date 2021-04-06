@@ -11,6 +11,7 @@ import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/menu_button.dart';
 import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/widgets/like_button.dart';
 
 class ArticleCard extends StatefulWidget {
   final int id;
@@ -110,14 +111,20 @@ class _ArticleCardState extends State<ArticleCard> {
                             ),
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 80,
                             child: Column(children: [
                               aProvider.tab != "History" &&
                                       Auth().currentUser != null
                                   ? Expanded(flex: 1, child: MenuBtn(widget.id))
                                   : Container(),
                               Expanded(
-                                  flex: 1, child: ShareBtn(link: widget.link))
+                                flex: 1,
+                                child: ShareBtn(link: widget.link),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: LikeBtn(articleId: widget.id),
+                              )
                             ]),
                           )
                         ],

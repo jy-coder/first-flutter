@@ -31,6 +31,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
         Provider.of<ArticleProvider>(context, listen: false);
     _tabController = TabController(vsync: this, length: homeTab.length);
     aProvider.fetchBookmarkId();
+    aProvider.fetchLikekId();
   }
 
   @override
