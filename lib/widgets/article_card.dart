@@ -208,6 +208,10 @@ class _ArticleCardState extends State<ArticleCard> {
                                               ),
                                               Expanded(
                                                 flex: 1,
+                                                child: LikeBtn(widget.id),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
                                                 child: BookmarkBtn(widget.id),
                                               ),
                                               Expanded(
@@ -215,10 +219,6 @@ class _ArticleCardState extends State<ArticleCard> {
                                                 child:
                                                     ShareBtn(link: widget.link),
                                               ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: LikeBtn(widget.id),
-                                              )
                                             ])
                                           : Container(),
                                     )
