@@ -24,17 +24,18 @@ class ArticleCard extends StatefulWidget {
   final String source;
   final String category;
   final String historyDate;
+  final int similarity;
+  final String similarHeadline;
 
   ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
       this.description, this.pubDate, this.source, this.category,
-      {this.historyDate});
+      {this.similarHeadline, this.similarity, this.historyDate});
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
 }
 
 class _ArticleCardState extends State<ArticleCard> {
-  bool showFullSummary = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> saveReadingHistory(int articleId) async {
@@ -95,6 +96,12 @@ class _ArticleCardState extends State<ArticleCard> {
                                   ? "viewed: ${formatDate(widget.historyDate)}"
                                   : formatDate(widget.pubDate),
                             ),
+                            aProvider.tab == "daily_read"
+                                ? Text("similar to ${widget.similarHeadline}")
+                                : Container(height: 0),
+                            aProvider.tab == "daily_read"
+                                ? Text("similarity ${widget.similarity}")
+                                : Container(height: 0),
                           ]),
                     ),
                     ListTile(
@@ -147,9 +154,7 @@ class _ArticleCardState extends State<ArticleCard> {
                           style: defaultStyle,
                           children: <TextSpan>[
                             TextSpan(
-                              text: !showFullSummary
-                                  ? truncateWithEllipsis(200, widget.summary)
-                                  : truncateWithEllipsis(1000, widget.summary),
+                              text: truncateWithEllipsis(200, widget.summary),
                             ),
                           ],
                         ),

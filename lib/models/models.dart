@@ -5,14 +5,12 @@ import 'package:flutter/foundation.dart';
 class Category with ChangeNotifier {
   final int categoryId;
   final String categoryName;
-  final String imageUrl;
-  Category(
-      {@required this.categoryId, @required this.categoryName, this.imageUrl});
+
+  Category({@required this.categoryId, @required this.categoryName});
 
   factory Category.fromJson(Map<dynamic, dynamic> json) => Category(
       categoryId: json["category_id"] as int,
-      categoryName: json["category_name"] as String,
-      imageUrl: "https://via.placeholder.com/500x300");
+      categoryName: json["category_name"] as String);
 
   // List<Category> parseCategory(String responseBody) {
   //   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
@@ -33,6 +31,8 @@ class Article {
   final String pubDate;
   final String date;
   final String historyDate;
+  final int similarity;
+  final String similarHeadline;
 
   Article(
       {@required this.articleId,
@@ -45,19 +45,23 @@ class Article {
       this.imageUrl,
       this.pubDate,
       this.date,
-      this.historyDate});
+      this.historyDate,
+      this.similarity,
+      this.similarHeadline});
 
   factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
         articleId: json["id"] as int,
-        category: json["category"] as String,
-        summary: json["summary"] as String,
-        source: json["source"] as String,
-        link: json["link"] as String,
-        title: json["title"] as String,
-        imageUrl: json["image_url"] as String,
+        category: json["category"],
+        summary: json["summary"],
+        source: json["source"],
+        link: json["link"],
+        title: json["title"],
+        imageUrl: json["image_url"],
         description: json["description"],
         pubDate: json["publication_date"],
         historyDate: json["history_date"] != null ? json["history_date"] : "",
+        similarity: json["similarity"] as int,
+        similarHeadline: json["similar_headline"],
       );
 }
 
@@ -74,7 +78,7 @@ class Subscription {
 
   factory Subscription.fromJson(Map<dynamic, dynamic> json) => Subscription(
         categoryId: json["category_id"] as int,
-        categoryName: json["category_name"] as String,
+        categoryName: json["category_name"],
       );
 }
 
