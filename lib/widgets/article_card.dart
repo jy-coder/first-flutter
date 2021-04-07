@@ -147,16 +147,41 @@ class _ArticleCardState extends State<ArticleCard> {
                           style: defaultStyle,
                           children: <TextSpan>[
                             TextSpan(
-                              text: truncateWithEllipsis(100,
-                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tellus a molestie blandit. In sed augue sed quam porttitor semper vel ac nisl. Curabitur eu velit sed quam dictum dictum placerat."),
+                              text: truncateWithEllipsis(
+                                100,
+                                widget.summary,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(height: 10),
                       Container(
+                        child: aProvider.tab == "daily_read"
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "similar to ${widget.similarHeadline}",
+                                        ),
+                                        Text(
+                                          "similarity ${widget.similarity}",
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(height: 0),
+                      ),
+                      Container(
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,35 +193,37 @@ class _ArticleCardState extends State<ArticleCard> {
                                         ? "viewed: ${formatDate(widget.historyDate)}"
                                         : formatDate(widget.pubDate),
                                   ),
-                                  aProvider.tab == "daily_read"
-                                      ? Text(
-                                          "similar to ${widget.similarHeadline}")
-                                      : Container(height: 0),
-                                  aProvider.tab == "daily_read"
-                                      ? Text("similarity ${widget.similarity}")
-                                      : Container(height: 0),
                                 ],
                               ),
-                              SizedBox(
-                                // height: 80,
-                                width: 120,
-                                child: Row(children: [
-                                  aProvider.tab != "History" &&
-                                          Auth().currentUser != null
-                                      ? Expanded(
-                                          flex: 1,
-                                          child: BookmarkBtn(widget.id),
-                                        )
-                                      : Container(),
-                                  Expanded(
-                                    flex: 1,
-                                    child: ShareBtn(link: widget.link),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: LikeBtn(widget.id),
-                                  )
-                                ]),
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: aProvider.tab != "History" &&
+                                              Auth().currentUser != null
+                                          ? Row(children: [
+                                              Expanded(
+                                                flex: 4,
+                                                child: Container(),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: BookmarkBtn(widget.id),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child:
+                                                    ShareBtn(link: widget.link),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: LikeBtn(widget.id),
+                                              )
+                                            ])
+                                          : Container(),
+                                    )
+                                  ],
+                                ),
                               )
                             ]),
                       )
