@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
@@ -81,6 +82,7 @@ class _ArticleCardState extends State<ArticleCard> {
               children: [
                 Column(
                   children: [
+                    SizedBox(height: 10),
                     ListTile(
                       visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                       dense: true,
@@ -91,19 +93,24 @@ class _ArticleCardState extends State<ArticleCard> {
                               capitalize(widget.category),
                               style: TextStyle(color: Colors.green[600]),
                             ),
-                            Text(widget.source),
-                            Text(
-                              aProvider.subTab == "History" &&
-                                      widget.historyDate != null
-                                  ? "viewed: ${formatDate(widget.historyDate)}"
-                                  : formatDate(widget.pubDate),
-                            ),
-                            aProvider.tab == "daily_read"
-                                ? Text("similar to ${widget.similarHeadline}")
-                                : Container(height: 0),
-                            aProvider.tab == "daily_read"
-                                ? Text("similarity ${widget.similarity}")
-                                : Container(height: 0),
+                            SizedBox(height: 10),
+                            FittedBox(
+                                child: Align(
+                              alignment: Alignment.center,
+                              child: CachedNetworkImage(
+                                imageUrl: widget.imageUrl,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                        SizedBox(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                                  height: 30,
+                                  width: 30,
+                                ),
+                                errorWidget: (context, ud, error) =>
+                                    Icon(Icons.error),
+                              ),
+                            )),
                           ]),
                     ),
                     ListTile(
@@ -119,26 +126,6 @@ class _ArticleCardState extends State<ArticleCard> {
                                   context, tProvider.fontSize),
                             ),
                           ),
-                          SizedBox(
-                            height: 80,
-                            child: Column(children: [
-                              aProvider.tab != "History" &&
-                                      Auth().currentUser != null
-                                  ? Expanded(
-                                      flex: 1,
-                                      child: BookmarkBtn(widget.id),
-                                    )
-                                  : Container(),
-                              Expanded(
-                                flex: 1,
-                                child: ShareBtn(link: widget.link),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: LikeBtn(widget.id),
-                              )
-                            ]),
-                          )
                         ],
                       )),
                     ),
@@ -151,19 +138,68 @@ class _ArticleCardState extends State<ArticleCard> {
             children: [
               Flexible(
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(15),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       RichText(
                         text: TextSpan(
                           style: defaultStyle,
                           children: <TextSpan>[
                             TextSpan(
-                              text: truncateWithEllipsis(200, widget.summary),
+                              text: truncateWithEllipsis(100,
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus tellus a molestie blandit. In sed augue sed quam porttitor semper vel ac nisl. Curabitur eu velit sed quam dictum dictum placerat."),
                             ),
                           ],
                         ),
                       ),
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(widget.source),
+                                  Text(
+                                    aProvider.subTab == "History" &&
+                                            widget.historyDate != null
+                                        ? "viewed: ${formatDate(widget.historyDate)}"
+                                        : formatDate(widget.pubDate),
+                                  ),
+                                  aProvider.tab == "daily_read"
+                                      ? Text(
+                                          "similar to ${widget.similarHeadline}")
+                                      : Container(height: 0),
+                                  aProvider.tab == "daily_read"
+                                      ? Text("similarity ${widget.similarity}")
+                                      : Container(height: 0),
+                                ],
+                              ),
+                              SizedBox(
+                                // height: 80,
+                                width: 120,
+                                child: Row(children: [
+                                  aProvider.tab != "History" &&
+                                          Auth().currentUser != null
+                                      ? Expanded(
+                                          flex: 1,
+                                          child: BookmarkBtn(widget.id),
+                                        )
+                                      : Container(),
+                                  Expanded(
+                                    flex: 1,
+                                    child: ShareBtn(link: widget.link),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: LikeBtn(widget.id),
+                                  )
+                                ]),
+                              )
+                            ]),
+                      )
                     ],
                   ),
                 ),
