@@ -7,15 +7,15 @@ import 'package:newheadline/utils/urls.dart';
 import 'package:provider/provider.dart';
 import 'package:newheadline/provider/theme.dart';
 
-class LikeBtn extends StatefulWidget {
+class BookmarkBtn extends StatefulWidget {
   final int articleId;
-  LikeBtn(this.articleId);
+  BookmarkBtn(this.articleId);
 
   @override
-  _LikeBtnState createState() => _LikeBtnState();
+  _BookmarkBtnState createState() => _BookmarkBtnState();
 }
 
-Future<void> likeAction(
+Future<void> bookmarkAction(
     int articleId, String action, BuildContext context) async {
   String url = "";
   int responseCode = 0;
@@ -23,21 +23,22 @@ Future<void> likeAction(
   String errorMsg = "";
   ArticleProvider aProvider =
       Provider.of<ArticleProvider>(context, listen: false);
-  if (action.toLowerCase().contains("Like".toLowerCase())) {
-    url = "$LIKE_URL/?article=$articleId";
+  if (action.toLowerCase().contains("Bookmark".toLowerCase())) {
+    url = "$BOOKMARK_URL/?article=$articleId";
 
-    if (action == "Like") {
+    if (action == "Bookmark") {
       responseCode = await APIService().post(url);
       errorMsg = "Something went wrong";
-      successMsg = "Sucessfully Liked this article";
-      aProvider.addLikeIds(articleId);
-    } else if (action == "Unlike") {
+      successMsg = "Sucessfully Bookmarked this article";
+      aProvider.addBookmarkIds(articleId);
+    } else if (action == "Unbookmark") {
       responseCode = await APIService().delete(url);
       errorMsg = "Something went wrong";
-      successMsg = "Sucessfully unliked this article";
-      aProvider.removeLikeIds(articleId);
+      successMsg = "Sucessfully unbookmarked this article";
+      aProvider.removeBookmarkIds(articleId);
     }
   }
+
   // Flushbar(
   //   message: responseCode == 500
   //       ? errorMsg
@@ -49,8 +50,8 @@ Future<void> likeAction(
   // )..show(context);
 }
 
-class _LikeBtnState extends State<LikeBtn> {
-  bool _isPostLiked = false;
+class _BookmarkBtnState extends State<BookmarkBtn> {
+  bool _isPostBookmarked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,28 +62,28 @@ class _LikeBtnState extends State<LikeBtn> {
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
 
-    for (int likeId in aProvider.likeIds) {
-      if (likeId == widget.articleId) {
-        darkIconColor = lightIconColor = Colors.red;
-        _isPostLiked = true;
+    for (int bookmarkId in aProvider.bookmarkIds) {
+      if (bookmarkId == widget.articleId) {
+        darkIconColor = lightIconColor = Colors.yellow[700];
+        _isPostBookmarked = true;
       }
     }
 
     return IconButton(
-        icon: Icon(Icons.favorite,
+        icon: Icon(Icons.bookmark,
             color: tProvider.theme == "dark" ? darkIconColor : lightIconColor,
             size: 15),
         onPressed: () async {
-          if (_isPostLiked == false) {
-            await likeAction(widget.articleId, "Like", context);
-            setState(() => darkIconColor = lightIconColor = Colors.red);
+          if (_isPostBookmarked == false) {
+            await bookmarkAction(widget.articleId, "Bookmark", context);
+            setState(() => darkIconColor = lightIconColor = Colors.yellow[700]);
           } else {
-            await likeAction(widget.articleId, "Unlike", context);
+            await bookmarkAction(widget.articleId, "Unbookmark", context);
             setState(() => tProvider.theme == "dark"
                 ? darkIconColor = Colors.white
                 : lightIconColor = Colors.black);
           }
-          _isPostLiked = !_isPostLiked;
+          _isPostBookmarked = !_isPostBookmarked;
         });
   }
 }

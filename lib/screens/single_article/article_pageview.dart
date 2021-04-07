@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
+import 'package:newheadline/widgets/bookmark_button.dart';
+import 'package:newheadline/widgets/like_button.dart';
+import 'package:newheadline/widgets/menu_button.dart';
 import 'package:newheadline/widgets/share_button.dart';
 import 'package:newheadline/widgets/theme_button.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +60,8 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
           Container(
             child: Row(
               children: [
+                BookmarkBtn(aProvider.articleId),
+                LikeBtn(aProvider.articleId),
                 ShareBtn(link: aProvider.shareLink),
                 CustomizeThemeButton(),
               ],
@@ -89,6 +94,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
                   child: PageView(
                     onPageChanged: (int index) {
                       aProvider.setShareLink(articles[index].link);
+                      aProvider.setCurrentArticleId(articles[index].articleId);
                     },
                     controller: _controller,
                     children: <Widget>[

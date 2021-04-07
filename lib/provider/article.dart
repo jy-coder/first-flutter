@@ -17,6 +17,7 @@ class ArticleProvider with ChangeNotifier {
   List<int> _bookmarkIds = [];
   List<int> _likeIds = [];
   String _homeTab = "For You";
+  int _currentArticleId = 0;
 
   List<Article> get items {
     return [..._items];
@@ -34,9 +35,17 @@ class ArticleProvider with ChangeNotifier {
     return _shareLink;
   }
 
+  int get articleId {
+    return _currentArticleId;
+  }
+
   void setShareLink(String link) {
     _shareLink = link;
     notifyListeners();
+  }
+
+  void setCurrentArticleId(int articleId) {
+    _currentArticleId = articleId;
   }
 
   void setTab(String tabName) {

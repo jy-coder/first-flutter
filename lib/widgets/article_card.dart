@@ -8,6 +8,7 @@ import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/common.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:newheadline/widgets/bookmark_button.dart';
 import 'package:newheadline/widgets/menu_button.dart';
 import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
@@ -66,6 +67,7 @@ class _ArticleCardState extends State<ArticleCard> {
             key: _scaffoldKey,
             onTap: () {
               aProvider.setShareLink(widget.link);
+              aProvider.setCurrentArticleId(widget.id);
               if (aProvider.tab != "profile") {
                 saveReadingHistory(widget.id);
               }
@@ -122,7 +124,10 @@ class _ArticleCardState extends State<ArticleCard> {
                             child: Column(children: [
                               aProvider.tab != "History" &&
                                       Auth().currentUser != null
-                                  ? Expanded(flex: 1, child: MenuBtn(widget.id))
+                                  ? Expanded(
+                                      flex: 1,
+                                      child: BookmarkBtn(widget.id),
+                                    )
                                   : Container(),
                               Expanded(
                                 flex: 1,
@@ -130,7 +135,7 @@ class _ArticleCardState extends State<ArticleCard> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: LikeBtn(articleId: widget.id),
+                                child: LikeBtn(widget.id),
                               )
                             ]),
                           )
