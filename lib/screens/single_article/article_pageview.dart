@@ -60,8 +60,8 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
           Container(
             child: Row(
               children: [
-                BookmarkBtn(aProvider.articleId),
                 LikeBtn(aProvider.articleId),
+                BookmarkBtn(aProvider.articleId),
                 ShareBtn(link: aProvider.shareLink),
                 CustomizeThemeButton(),
               ],
