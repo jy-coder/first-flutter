@@ -61,10 +61,11 @@ class _MenuBtnState extends State<MenuBtn> {
   List _bookMarkOptions = ['Remove bookmark'];
   List _icons = [Icons.bookmark, Icons.cancel];
   List _options = [];
-  Color darkIconColor = Colors.white;
-  Color lightIconColor = Colors.black;
+
   @override
   Widget build(BuildContext context) {
+    Color darkIconColor;
+    Color lightIconColor;
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     ThemeProvider tProvider =

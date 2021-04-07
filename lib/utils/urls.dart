@@ -22,3 +22,6 @@ const SEARCH_SUGGESTION_URL = "${HOST}search_suggestion";
 const SEARCH_RESULT_URL = "${HOST}search_result";
 const RECOMMEND_URL = "${HOST}recommend";
 const TREND_URL = "${HOST}trend";
+
+const LIKE_URL = "${HOST}like";
+const LIKED_URL = "${HOST}like_article_ids";
