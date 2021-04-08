@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/theme.dart';
+import 'package:newheadline/screens/authenticate/auth_screen.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
+import 'package:newheadline/widgets/date_filter.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -45,59 +47,29 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     ArticleProvider hProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    return DefaultTabController(
-      length: homeTab.length,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size(double.infinity, 60),
-            child: !_isLoading
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TabBar(
-                        indicatorColor: tProvider.theme == "light"
-                            ? Colors.blue
-                            : Colors.green,
-                        controller: _tabController,
-                        isScrollable: true,
-                        onTap: (int index) {
-                          hProvider.setTab(homeTab[index]);
-                        },
-                        tabs: homeTab
-                            .map(
-                              (String tabName) => Tab(
-                                  child: Text(
-                                tabName,
-                                style: CustomTextStyle.normalBold(
-                                    context, tProvider.fontSize),
-                              )),
-                            )
-                            .toList(),
-                      ),
-                    ],
-                  )
-                : null,
-          ),
-          body: !_isLoading
-              ? TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: _tabController,
-                  children: homeTab
-                      .map(
-                        (String tabName) => Tab(
-                          child: DisplayScreen(displayTabName: tabName),
-                        ),
-                      )
-                      .toList(),
-                )
-              : Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                  ),
-                ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Filter(),
+        ],
       ),
+      body: !_isLoading
+          ? TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children: homeTab
+                  .map(
+                    (String tabName) => Tab(
+                      child: DisplayScreen(displayTabName: tabName),
+                    ),
+                  )
+                  .toList(),
+            )
+          : Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.grey,
+              ),
+            ),
     );
   }
 }

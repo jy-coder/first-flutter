@@ -70,11 +70,11 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
             tProvider.theme == "light" ? Colors.blue : Colors.green,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'All articles',
+            icon: Icon(Icons.chrome_reader_mode_outlined),
+            label: 'Articles',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(Icons.login),
             label: 'Login',
           ),
           BottomNavigationBarItem(

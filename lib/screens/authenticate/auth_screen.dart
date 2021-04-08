@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
+import 'package:newheadline/screens/home/trend_screen.dart';
 import 'package:newheadline/screens/profile/profile_screen.dart';
 import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:newheadline/screens/home/home.dart';
@@ -18,6 +19,10 @@ class _AuthScreenState extends State<AuthScreen> {
     {
       'page': HomeTab(),
       'title': 'daily_read',
+    },
+    {
+      'page': TrendScreen(),
+      'title': 'trend',
     },
     {
       'page': ArticlesTab(),
@@ -75,8 +80,12 @@ class _AuthScreenState extends State<AuthScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.text_fields),
-            label: "All Articles",
+            icon: Icon(Icons.trending_up),
+            label: "Trend",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chrome_reader_mode_outlined),
+            label: "Articles",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

@@ -47,25 +47,31 @@ class _TrendScreenState extends State<TrendScreen>
         Provider.of<ArticleProvider>(context, listen: true);
     articles = hProvider.items;
 
-    return _isLoading
-        ? CircularProgressIndicator(backgroundColor: Colors.grey)
-        : !_isLoading
-            ? ListView.builder(
-                padding: const EdgeInsets.all(10.0),
-                itemCount: articles.length,
-                itemBuilder: (ctx, i) {
-                  return ArticleCard(
-                    articles[i].articleId,
-                    articles[i].title,
-                    articles[i].imageUrl,
-                    articles[i].summary,
-                    articles[i].link,
-                    articles[i].description,
-                    articles[i].pubDate,
-                    articles[i].source,
-                    articles[i].category,
-                  );
-                })
-            : Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Trending"),
+        centerTitle: true,
+      ),
+      body: _isLoading
+          ? CircularProgressIndicator(backgroundColor: Colors.grey)
+          : !_isLoading
+              ? ListView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  itemCount: articles.length,
+                  itemBuilder: (ctx, i) {
+                    return ArticleCard(
+                      articles[i].articleId,
+                      articles[i].title,
+                      articles[i].imageUrl,
+                      articles[i].summary,
+                      articles[i].link,
+                      articles[i].description,
+                      articles[i].pubDate,
+                      articles[i].source,
+                      articles[i].category,
+                    );
+                  })
+              : Container(),
+    );
   }
 }
