@@ -15,7 +15,7 @@ class _CustomizeThemeButtonState extends State<CustomizeThemeButton> {
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     return IconButton(
-        icon: Icon(Icons.font_download),
+        icon: Icon(Icons.font_download, size: 16),
         onPressed: () {
           showModalBottomSheet(
             context: context,

@@ -25,11 +25,6 @@ class _RecommendScreen2State extends State<RecommendScreen2>
     _fetchRecommend();
     super.initState();
   }
-  // @override
-  // void didChangeDependencies() {
-  //   _fetchRecommend();
-  //   super.didChangeDependencies();
-  // }
 
   void _fetchRecommend() async {
     ArticleProvider hProvider =
@@ -57,25 +52,53 @@ class _RecommendScreen2State extends State<RecommendScreen2>
 
     return _isLoading
         ? CircularProgressIndicator(backgroundColor: Colors.grey)
-        // : !_isLoading
-        //   ?
-        // ListView.builder(
-        //     padding: const EdgeInsets.all(10.0),
-        //     itemCount: articles.length,
-        //     itemBuilder: (ctx, i) {
-        //       return ArticleCard(
-        //         articles[i].articleId,
-        //         articles[i].title,
-        //         articles[i].imageUrl,
-        //         articles[i].summary,
-        //         articles[i].link,
-        //         articles[i].description,
-        //         articles[i].pubDate,
-        //         articles[i].source,
-        //         articles[i].category,
-        //       );
-        //     })
-        // : Container();
-        : Container(child: AdMobService.publisherAd, height: 300, width: 300);
+        : !_isLoading
+            ? ListView.builder(
+                padding: const EdgeInsets.all(10.0),
+                itemCount: articles.length,
+                itemBuilder: (ctx, i) {
+                  if (i % 3 == 0) {
+                    return Column(
+                      children: [
+                        Container(
+                          child: AdMobService.publisherAd,
+                          height: 300,
+                          width: 300,
+                        ),
+                        ArticleCard(
+                          articles[i].articleId,
+                          articles[i].title,
+                          articles[i].imageUrl,
+                          articles[i].summary,
+                          articles[i].link,
+                          articles[i].description,
+                          articles[i].pubDate,
+                          articles[i].source,
+                          articles[i].category,
+                          similarHeadline: articles[i].similarHeadline,
+                          similarity: articles[i].similarity,
+                        )
+                      ],
+                    );
+                  }
+                  return ArticleCard(
+                    articles[i].articleId,
+                    articles[i].title,
+                    articles[i].imageUrl,
+                    articles[i].summary,
+                    articles[i].link,
+                    articles[i].description,
+                    articles[i].pubDate,
+                    articles[i].source,
+                    articles[i].category,
+                    similarHeadline: articles[i].similarHeadline,
+                    similarity: articles[i].similarity,
+                  );
+                })
+            : Container();
+    // :ElevatedButton(
+    //     child: Text("click here"),
+    //     onPressed: () => AdMobService.createBannerAd(),
+    //   );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
@@ -8,9 +9,11 @@ import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/common.dart';
 import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:newheadline/widgets/bookmark_button.dart';
 import 'package:newheadline/widgets/menu_button.dart';
 import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/widgets/like_button.dart';
 
 class ArticleCard extends StatefulWidget {
   final int id;
@@ -23,17 +26,18 @@ class ArticleCard extends StatefulWidget {
   final String source;
   final String category;
   final String historyDate;
+  final int similarity;
+  final String similarHeadline;
 
   ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
       this.description, this.pubDate, this.source, this.category,
-      {this.historyDate});
+      {this.similarHeadline, this.similarity, this.historyDate});
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
 }
 
 class _ArticleCardState extends State<ArticleCard> {
-  bool showFullSummary = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> saveReadingHistory(int articleId) async {
@@ -64,6 +68,7 @@ class _ArticleCardState extends State<ArticleCard> {
             key: _scaffoldKey,
             onTap: () {
               aProvider.setShareLink(widget.link);
+              aProvider.setCurrentArticleId(widget.id);
               if (aProvider.tab != "profile") {
                 saveReadingHistory(widget.id);
               }
@@ -77,6 +82,7 @@ class _ArticleCardState extends State<ArticleCard> {
               children: [
                 Column(
                   children: [
+                    SizedBox(height: 10),
                     ListTile(
                       visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                       dense: true,
@@ -87,13 +93,54 @@ class _ArticleCardState extends State<ArticleCard> {
                               capitalize(widget.category),
                               style: TextStyle(color: Colors.green[600]),
                             ),
-                            Text(widget.source),
-                            Text(
-                              aProvider.subTab == "History" &&
-                                      widget.historyDate != null
-                                  ? "viewed: ${formatDate(widget.historyDate)}"
-                                  : formatDate(widget.pubDate),
+                            Container(
+                              child: aProvider.tab == "daily_read"
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Similar To ${widget.similarHeadline}",
+                                                style: CustomTextStyle.italic(
+                                                    context,
+                                                    tProvider.fontSize),
+                                              ),
+                                              Text(
+                                                "Similarity ${widget.similarity}",
+                                                style: CustomTextStyle.italic(
+                                                    context,
+                                                    tProvider.fontSize),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(height: 0),
                             ),
+                            SizedBox(height: 10),
+                            FittedBox(
+                                child: Align(
+                              alignment: Alignment.center,
+                              child: CachedNetworkImage(
+                                imageUrl: widget.imageUrl,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                        SizedBox(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                                  height: 30,
+                                  width: 30,
+                                ),
+                                errorWidget: (context, ud, error) =>
+                                    Icon(Icons.error),
+                              ),
+                            )),
                           ]),
                     ),
                     ListTile(
@@ -109,17 +156,6 @@ class _ArticleCardState extends State<ArticleCard> {
                                   context, tProvider.fontSize),
                             ),
                           ),
-                          SizedBox(
-                            height: 50,
-                            child: Column(children: [
-                              aProvider.tab != "History" &&
-                                      Auth().currentUser != null
-                                  ? Expanded(flex: 1, child: MenuBtn(widget.id))
-                                  : Container(),
-                              Expanded(
-                                  flex: 1, child: ShareBtn(link: widget.link))
-                            ]),
-                          )
                         ],
                       )),
                     ),
@@ -132,21 +168,72 @@ class _ArticleCardState extends State<ArticleCard> {
             children: [
               Flexible(
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(15),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       RichText(
                         text: TextSpan(
                           style: defaultStyle,
                           children: <TextSpan>[
                             TextSpan(
-                              text: !showFullSummary
-                                  ? truncateWithEllipsis(200, widget.summary)
-                                  : truncateWithEllipsis(1000, widget.summary),
+                              text: truncateWithEllipsis(
+                                100,
+                                widget.summary,
+                              ),
                             ),
                           ],
                         ),
                       ),
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(widget.source),
+                                  Text(
+                                    aProvider.subTab == "History" &&
+                                            widget.historyDate != null
+                                        ? "viewed: ${formatDate(widget.historyDate)}"
+                                        : formatDate(widget.pubDate),
+                                  ),
+                                ],
+                              ),
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: aProvider.tab != "History" &&
+                                              Auth().currentUser != null
+                                          ? Row(children: [
+                                              Expanded(
+                                                flex: 4,
+                                                child: Container(),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: LikeBtn(widget.id),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: BookmarkBtn(widget.id),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child:
+                                                    ShareBtn(link: widget.link),
+                                              ),
+                                            ])
+                                          : Container(),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ]),
+                      )
                     ],
                   ),
                 ),

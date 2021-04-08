@@ -15,7 +15,9 @@ class ArticleProvider with ChangeNotifier {
   String _shareLink = "";
   int _pageViewCount = 0;
   List<int> _bookmarkIds = [];
+  List<int> _likeIds = [];
   String _homeTab = "For You";
+  int _currentArticleId = 0;
 
   List<Article> get items {
     return [..._items];
@@ -33,9 +35,17 @@ class ArticleProvider with ChangeNotifier {
     return _shareLink;
   }
 
+  int get articleId {
+    return _currentArticleId;
+  }
+
   void setShareLink(String link) {
     _shareLink = link;
     notifyListeners();
+  }
+
+  void setCurrentArticleId(int articleId) {
+    _currentArticleId = articleId;
   }
 
   void setTab(String tabName) {
@@ -191,5 +201,25 @@ class ArticleProvider with ChangeNotifier {
     }
 
     _items = jsonToArticleList(data);
+  }
+
+  Future<void> fetchLikekId() async {
+    Map<String, dynamic> data = {};
+    data = await APIService().getOne("$LIKED_URL");
+    if (data != null) _likeIds = data["data"].cast<int>();
+  }
+
+  List<int> get likeIds {
+    return _likeIds;
+  }
+
+  void addLikeIds(int likeId) {
+    _likeIds.add(likeId);
+    notifyListeners();
+  }
+
+  void removeLikeIds(int likeId) {
+    _likeIds.remove(likeId);
+    notifyListeners();
   }
 }

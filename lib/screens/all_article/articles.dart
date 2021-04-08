@@ -94,7 +94,7 @@ class _ArticlesTabState extends State<ArticlesTab>
                       .toList(),
                 )
               : null,
-          title: Text('All news'),
+          title: Text('News'),
         ),
         body: !_isLoading
             ? TabBarView(
