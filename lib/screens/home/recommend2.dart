@@ -24,11 +24,6 @@ class _RecommendScreen2State extends State<RecommendScreen2>
     _fetchRecommend();
     super.initState();
   }
-  // @override
-  // void didChangeDependencies() {
-  //   _fetchRecommend();
-  //   super.didChangeDependencies();
-  // }
 
   void _fetchRecommend() async {
     ArticleProvider hProvider =

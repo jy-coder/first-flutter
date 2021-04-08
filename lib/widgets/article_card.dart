@@ -93,6 +93,36 @@ class _ArticleCardState extends State<ArticleCard> {
                               capitalize(widget.category),
                               style: TextStyle(color: Colors.green[600]),
                             ),
+                            Container(
+                              child: aProvider.tab == "daily_read"
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Similar To ${widget.similarHeadline}",
+                                                style: CustomTextStyle.italic(
+                                                    context,
+                                                    tProvider.fontSize),
+                                              ),
+                                              Text(
+                                                "Similarity ${widget.similarity}",
+                                                style: CustomTextStyle.italic(
+                                                    context,
+                                                    tProvider.fontSize),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(height: 0),
+                            ),
                             SizedBox(height: 10),
                             FittedBox(
                                 child: Align(
@@ -156,29 +186,6 @@ class _ArticleCardState extends State<ArticleCard> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Container(
-                        child: aProvider.tab == "daily_read"
-                            ? Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "similar to ${widget.similarHeadline}",
-                                        ),
-                                        Text(
-                                          "similarity ${widget.similarity}",
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Container(height: 0),
-                      ),
                       Container(
                         child: Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,

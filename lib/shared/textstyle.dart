@@ -50,6 +50,14 @@ class CustomTextStyle {
         .copyWith(fontSize: readingSize + 2, fontWeight: FontWeight.w500);
   }
 
+  static TextStyle italic(BuildContext context, double readingSize) {
+    return Theme.of(context).textTheme.headline1.copyWith(
+          fontStyle: FontStyle.italic,
+          fontSize: readingSize - 5,
+          fontWeight: FontWeight.w400,
+        );
+  }
+
   static TextStyle cardSummary(BuildContext context, double readingSize) {
     double _size = 0;
 
