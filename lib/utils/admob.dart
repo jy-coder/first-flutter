@@ -5,6 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class AdMobService {
   static AdWidget adWidget = AdWidget(ad: banner);
   static AdWidget publisherAd = AdWidget(ad: myBanner);
+  static List<AdWidget> adLists;
+  static BannerAd banner;
+  static PublisherBannerAd myBanner;
 
   String getAdMobAppId() {
     if (Platform.isAndroid) {
@@ -19,9 +22,6 @@ class AdMobService {
     }
     return null;
   }
-
-  static BannerAd banner;
-  static PublisherBannerAd myBanner;
 
   static void createBannerAd() {
     banner = BannerAd(
@@ -81,5 +81,14 @@ class AdMobService {
       request: request,
       listener: listener,
     )..load();
+  }
+
+  static List<AdWidget> generateAds(int maxAds) {
+    List<AdWidget> records = [];
+    for (int i = 0; i < maxAds; i++) {
+      createPublishAd();
+      records.add(AdWidget(ad: myBanner));
+    }
+    return records;
   }
 }

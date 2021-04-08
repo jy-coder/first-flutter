@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/utils/admob.dart';
@@ -18,7 +19,8 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   TabController _tabController;
   List<String> categoryNames = [];
   bool _isLoading = true;
-  AdMobService ad;
+  List<AdWidget> adWidgets;
+  int numOfArticlesBeforeAds = 2;
 
   @override
   void initState() {
@@ -45,11 +47,11 @@ class _RecommendScreen2State extends State<RecommendScreen2>
 
   @override
   Widget build(BuildContext context) {
-    AdMobService.createPublishAd();
+    
     ArticleProvider hProvider =
         Provider.of<ArticleProvider>(context, listen: true);
     articles = hProvider.items;
-
+    adWidgets = AdMobService.generateAds(2) ;
     return _isLoading
         ? CircularProgressIndicator(backgroundColor: Colors.grey)
         : !_isLoading
@@ -57,12 +59,14 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                 padding: const EdgeInsets.all(10.0),
                 itemCount: articles.length,
                 itemBuilder: (ctx, i) {
-                  if (i % 3 == 0) {
+                  if (i != 0 && i  % numOfArticlesBeforeAds == 0) {
                     return Column(
                       children: [
                         Container(
-                          child: AdMobService.publisherAd,
-                          height: 300,
+                          child: adWidgets[((i + 1 )~/ numOfArticlesBeforeAds)],
+                          padding: EdgeInsets.zero,
+                          margin:  EdgeInsets.zero,
+                          height: 50,
                           width: 300,
                         ),
                         ArticleCard(
