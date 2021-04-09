@@ -40,11 +40,6 @@ class ArticleCard extends StatefulWidget {
 class _ArticleCardState extends State<ArticleCard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<void> saveReadingHistory(int articleId) async {
-    String url = "$HISTORY_URL/?article=$articleId";
-    var result = await APIService().post(url);
-  }
-
   String truncateWithEllipsis(int cutoff, String myString) {
     return (myString.length <= cutoff)
         ? myString
@@ -69,9 +64,6 @@ class _ArticleCardState extends State<ArticleCard> {
             onTap: () {
               aProvider.setShareLink(widget.link);
               aProvider.setCurrentArticleId(widget.id);
-              if (aProvider.tab != "profile") {
-                saveReadingHistory(widget.id);
-              }
               aProvider.setPageViewArticle(widget.id);
               Navigator.of(context).pushNamed(
                 ArticlePageViewScreen.routeName,
