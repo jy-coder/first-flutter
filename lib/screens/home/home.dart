@@ -6,6 +6,7 @@ import 'package:newheadline/screens/authenticate/auth_screen.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/widgets/date_filter.dart';
+import 'package:newheadline/widgets/filter.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {

@@ -69,6 +69,10 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  String get dateFilter {
+    return _filteredDate;
+  }
+
   List<Article> get allItems {
     return [..._allItems];
   }

@@ -31,12 +31,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
     filterItems();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   filterItems();
-  //   super.didChangeDependencies();
-  // }
-
   @override
   void dispose() {
     super.dispose();

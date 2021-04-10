@@ -78,7 +78,7 @@ class _ReadListScreenState extends State<ReadListScreen>
               ),
               // Spacer(),
               Container(
-                child: aProvider.subTab == "History" ? Filter() : Text(""),
+                child: aProvider.subTab == "History" ? DateFilter() : Text(""),
               ),
             ],
           )),
