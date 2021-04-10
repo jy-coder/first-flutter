@@ -26,17 +26,15 @@ class _LoginState extends State<LoginScreen> {
 
   Future<void> _handleSubmit(BuildContext context) async {
     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-    if(result != null){
-     await _auth.currentUser.getIdToken().then((String token) async {
+    if (result != null) {
+      await _auth.currentUser.getIdToken().then((String token) async {
         LoadDialog.showLoadingDialog(context, _keyLoader);
-        await Future.delayed(const Duration(seconds: 3), () {
+        await Future.delayed(const Duration(seconds: 7), () {
           Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
           Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         });
       });
-    }
-
-   else {
+    } else {
       var dialog = ErrorDialog(
         content: "Invalid credentials. Please try again",
       );
