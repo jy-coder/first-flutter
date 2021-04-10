@@ -58,6 +58,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
               onTap: () async {
                 aProvider.setShareLink(widget.link);
                 aProvider.setPageViewArticle(widget.id);
+                aProvider.setCurrentArticleId(widget.id);
                 Navigator.pushNamed(
                   context,
                   ArticlePageViewScreen.routeName,
