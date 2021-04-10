@@ -4,6 +4,7 @@ import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
+import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/common.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,22 @@ class _ArticlesTabState extends State<ArticlesTab>
       length: categories.length,
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                ArticleProvider aProvider =
+                    Provider.of<ArticleProvider>(context, listen: false);
+                aProvider.emptySearch();
+                Navigator.of(context).pushNamed(
+                  SearchScreen.routeName,
+                );
+              },
+            )
+          ],
           centerTitle: true,
           bottom: !_isLoading
               ? TabBar(
@@ -94,7 +111,6 @@ class _ArticlesTabState extends State<ArticlesTab>
                       .toList(),
                 )
               : null,
-          title: Text('News'),
         ),
         body: !_isLoading
             ? TabBarView(

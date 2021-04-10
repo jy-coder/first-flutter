@@ -44,12 +44,6 @@ class _SearchResultCardState extends State<SearchResultCard> {
     await APIService().post(url);
   }
 
-  String truncateWithEllipsis(int cutoff, String myString) {
-    return (myString.length <= cutoff)
-        ? myString
-        : '${myString.substring(0, cutoff)}...';
-  }
-
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
@@ -63,7 +57,6 @@ class _SearchResultCardState extends State<SearchResultCard> {
             InkWell(
               onTap: () async {
                 aProvider.setShareLink(widget.link);
-                await saveReadingHistory(widget.id);
                 aProvider.setPageViewArticle(widget.id);
                 Navigator.pushNamed(
                   context,

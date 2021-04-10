@@ -27,25 +27,27 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void didChangeDependencies() {
-    _fetchSearchSuggestions();
-
+    // _fetchSearchSuggestions();
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setTab("search");
     super.didChangeDependencies();
   }
 
-  void _fetchSearchSuggestions() async {
-    List<Map<String, dynamic>> result =
-        await APIService().get("$SEARCH_SUGGESTION_URL/?q=$_search");
+  // void _fetchSearchSuggestions() async {
+  //   List<Map<String, dynamic>> result =
+  //       await APIService().get("$SEARCH_SUGGESTION_URL/?q=$_search");
 
-    List<SearchSuggestion> temp = [];
+  //   List<SearchSuggestion> temp = [];
 
-    for (Map<String, dynamic> r in result) {
-      temp.add(SearchSuggestion.fromJson(r));
-    }
+  //   for (Map<String, dynamic> r in result) {
+  //     temp.add(SearchSuggestion.fromJson(r));
+  //   }
 
-    setState(() {
-      suggestions = temp;
-    });
-  }
+  //   setState(() {
+  //     suggestions = temp;
+  //   });
+  // }
 
   void searchInput(String searchInput) {
     setState(() {
@@ -58,30 +60,37 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    List<Article> articles = aProvider.items;
+    List<Article> articles = aProvider.searchItems;
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Container(
-            child: SearchBar(searchInput: searchInput),
+    return WillPopScope(
+      onWillPop: () async {
+        aProvider.emptySearch();
+        aProvider.setTab("all_articles");
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            title: Container(
+              child: SearchBar(searchInput: searchInput),
+            ),
           ),
-        ),
-        body: ListView.builder(
-            padding: const EdgeInsets.all(10.0),
-            itemCount: articles.length,
-            itemBuilder: (ctx, i) {
-              return SearchResultCard(
-                articles[i].articleId,
-                articles[i].title,
-                articles[i].imageUrl,
-                articles[i].summary,
-                articles[i].link,
-                articles[i].description,
-                articles[i].pubDate,
-                articles[i].source,
-                articles[i].category,
-                articles[i].historyDate == "" ? "" : articles[i].historyDate,
-              );
-            }));
+          body: ListView.builder(
+              padding: const EdgeInsets.all(10.0),
+              itemCount: articles.length,
+              itemBuilder: (ctx, i) {
+                return SearchResultCard(
+                  articles[i].articleId,
+                  articles[i].title,
+                  articles[i].imageUrl,
+                  articles[i].summary,
+                  articles[i].link,
+                  articles[i].description,
+                  articles[i].pubDate,
+                  articles[i].source,
+                  articles[i].category,
+                  articles[i].historyDate == "" ? "" : articles[i].historyDate,
+                );
+              })),
+    );
   }
 }

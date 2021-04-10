@@ -4,7 +4,6 @@ import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
 import 'package:newheadline/screens/home/trend_screen.dart';
 import 'package:newheadline/screens/profile/profile_screen.dart';
-import 'package:newheadline/screens/search/search_screen.dart';
 import 'package:newheadline/screens/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -31,10 +30,6 @@ class _AuthScreenState extends State<AuthScreen> {
     {
       'page': ProfileScreen(),
       'title': 'Setting',
-    },
-    {
-      'page': SearchScreen(),
-      'title': 'Search',
     }
   ];
   @override
@@ -51,10 +46,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
     if (_selectedPageIndex == index) return;
     aProvider.setTab(_pages[index]['title']);
-
-    if (_pages[index]['title'] == "Search") {
-      aProvider.emptyItems();
-    }
 
     setState(() {
       _selectedPageIndex = index;
@@ -91,10 +82,6 @@ class _AuthScreenState extends State<AuthScreen> {
             icon: Icon(Icons.settings),
             label: "Profile",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          )
         ],
       ),
     );

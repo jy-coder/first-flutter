@@ -18,9 +18,14 @@ class ArticleProvider with ChangeNotifier {
   List<int> _likeIds = [];
   String _homeTab = "For You";
   int _currentArticleId = 0;
+  List<Article> _searchItems = [];
 
   List<Article> get items {
     return [..._items];
+  }
+
+  List<Article> get searchItems {
+    return [..._searchItems];
   }
 
   String get tab {
@@ -50,8 +55,6 @@ class ArticleProvider with ChangeNotifier {
 
   void setTab(String tabName) {
     print(tabName);
-    _items.clear();
-    _allItems.clear();
     _tab = tabName;
   }
 
@@ -109,7 +112,10 @@ class ArticleProvider with ChangeNotifier {
 
   void setPageViewArticle(int id) {
     int ind = 0;
-    ind = getPos(id, _items);
+    if (tab == "search")
+      ind = getPos(id, _searchItems);
+    else
+      ind = getPos(id, _items);
     _initialPage = ind;
   }
 
@@ -183,9 +189,13 @@ class ArticleProvider with ChangeNotifier {
     List<Map<String, dynamic>> data =
         await APIService().get("$SEARCH_RESULT_URL/?q=$searchResult");
 
-    _items = jsonToArticleList(data);
+    _searchItems = jsonToArticleList(data);
 
     notifyListeners();
+  }
+
+  void emptySearch() {
+    _searchItems.clear();
   }
 
   void emptyItems() {

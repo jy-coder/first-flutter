@@ -33,7 +33,10 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
-    articles = aProvider.items;
+    if (aProvider.tab != "search")
+      articles = aProvider.items;
+    else
+      articles = aProvider.searchItems;
 
     _controller = PageController(
       initialPage: aProvider.initialPage,
@@ -54,67 +57,72 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Container(
-            child: Row(
-              children: [
-                LikeBtn(aProvider.articleId),
-                BookmarkBtn(aProvider.articleId),
-                ShareBtn(link: aProvider.shareLink),
-                CustomizeThemeButton(),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.grey,
-              ),
-            )
-          : Column(
-              children: [
+    return _isLoading
+        ? CircularProgressIndicator(
+            backgroundColor: Colors.grey,
+          )
+        : Scaffold(
+            appBar: AppBar(
+              actions: [
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 20),
-                  child: SmoothPageIndicator(
-                    controller: _controller,
-                    count: articles.length,
-                    effect: ScrollingDotsEffect(
-                      dotWidth: 5.0,
-                      dotHeight: 5.0,
-                      activeDotScale: 2.0,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: PageView(
-                    onPageChanged: (int index) {
-                      aProvider.setShareLink(articles[index].link);
-                      aProvider.setCurrentArticleId(articles[index].articleId);
-                    },
-                    controller: _controller,
-                    children: <Widget>[
-                      ...articles
-                          .map((Article a) => ArticleScreen(
-                                id: a.articleId,
-                                title: a.title,
-                                description: a.description,
-                                imageUrl: a.imageUrl,
-                                pubDate: a.pubDate,
-                                source: a.source,
-                                category: a.category,
-                                link: a.link,
-                              ))
-                          .toList()
+                  child: Row(
+                    children: [
+                      LikeBtn(aProvider.articleId),
+                      BookmarkBtn(aProvider.articleId),
+                      ShareBtn(link: aProvider.shareLink),
+                      CustomizeThemeButton(),
                     ],
                   ),
                 ),
               ],
             ),
-    );
+            body: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 10, bottom: 20),
+                        child: SmoothPageIndicator(
+                          controller: _controller,
+                          count: articles.length,
+                          effect: ScrollingDotsEffect(
+                            dotWidth: 5.0,
+                            dotHeight: 5.0,
+                            activeDotScale: 2.0,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: PageView(
+                          onPageChanged: (int index) {
+                            aProvider.setShareLink(articles[index].link);
+                            aProvider
+                                .setCurrentArticleId(articles[index].articleId);
+                          },
+                          controller: _controller,
+                          children: <Widget>[
+                            ...articles
+                                .map((Article a) => ArticleScreen(
+                                      id: a.articleId,
+                                      title: a.title,
+                                      description: a.description,
+                                      imageUrl: a.imageUrl,
+                                      pubDate: a.pubDate,
+                                      source: a.source,
+                                      category: a.category,
+                                      link: a.link,
+                                    ))
+                                .toList()
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+          );
   }
 }
