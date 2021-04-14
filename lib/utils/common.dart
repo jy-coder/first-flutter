@@ -15,8 +15,13 @@ List<Article> jsonToArticleList(List<Map<String, dynamic>> data) {
 String formatDate(String dateToFormat) {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   DateTime dateTime = dateFormat.parse(dateToFormat);
+  final now = DateTime.now();
   String timeAgo = timeago.format(dateTime);
-
+  final today = DateTime(now.year, now.month, now.day);
+  final midnight = new DateTime(now.year, now.month, now.day, 23, 59);
+  final dateCheck = DateTime(dateTime.year, dateTime.month, dateTime.day);
+  if (dateCheck != today) timeAgo = timeago.format(dateTime, clock: midnight);
+  // print(dateTime.toString());
   return timeAgo;
 }
 

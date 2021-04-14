@@ -25,3 +25,5 @@ const TREND_URL = "${HOST}trend";
 
 const LIKE_URL = "${HOST}like";
 const LIKED_URL = "${HOST}like_article_ids";
+
+const SITE_URL = "${HOST}sites";

@@ -10,16 +10,15 @@ class DateFilter extends StatefulWidget {
 
 class _DateFilterState extends State<DateFilter> {
   String _selectedValue = "";
-
-  Map<int, String> options = {
-    1: 'One Day',
-    2: 'Two Days',
-    3: "Three Days",
-    4: "Four Days",
-    5: "Five Days",
-    6: "Six Days",
-    7: "Seven Days"
-  };
+  List<String> options = [
+    'One Day',
+    'Two Days',
+    'Three Days',
+    'Four Days',
+    'Five Days',
+    'Six Days',
+    'Seven Days'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +30,18 @@ class _DateFilterState extends State<DateFilter> {
           itemCount: options.length,
           itemBuilder: (context, index) {
             return RadioListTile(
-                title: Text(options[index + 1]),
-                value: index.toString(),
-                groupValue: _selectedValue,
+                activeColor: Colors.blue,
+                title: Text(options[index]),
+                value: options[index],
+                groupValue: aProvider.filter['date'],
                 onChanged: (String val) async {
                   setState(() {
                     _selectedValue = val;
                   });
 
-                  aProvider.setFilteredDate(
-                    options[index + 1],
+                  aProvider.setFilter(
+                    "date",
+                    options[index],
                   );
 
                   Navigator.pop(context);

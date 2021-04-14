@@ -11,7 +11,7 @@ class ArticleProvider with ChangeNotifier {
   String _categoryName = "all"; //default fliter
   String _tab = "";
   String _subtab = "";
-  String _filteredDate = "";
+  Map<String, String> _filter = {"category": "", "date": "", "newssite": ""};
   String _shareLink = "";
   int _pageViewCount = 0;
   List<int> _bookmarkIds = [];
@@ -44,6 +44,11 @@ class ArticleProvider with ChangeNotifier {
     return _currentArticleId;
   }
 
+  void resetFilter() {
+    _filter = {"category": "", "date": "", "newssite": ""};
+    notifyListeners();
+  }
+
   void setShareLink(String link) {
     _shareLink = link;
     notifyListeners();
@@ -64,13 +69,13 @@ class ArticleProvider with ChangeNotifier {
     // notifyListeners();
   }
 
-  void setFilteredDate(String dateRange) {
-    _filteredDate = dateRange;
+  void setFilter(String type, String choice) {
+    _filter[type] = choice;
     notifyListeners();
   }
 
-  String get dateFilter {
-    return _filteredDate;
+  Map<String, String> get filter {
+    return _filter;
   }
 
   List<Article> get allItems {
@@ -130,7 +135,7 @@ class ArticleProvider with ChangeNotifier {
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
     List<Map<String, dynamic>> data =
-        await APIService().get("$HISTORY_URL/?dateRange=$_filteredDate");
+        await APIService().get("$HISTORY_URL/?dateRange=${_filter['date']}");
 
     _items = jsonToArticleList(data);
 
@@ -207,9 +212,11 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<void> fetchHome() async {
+    print("${_filter['category']}");
     List<Map<String, dynamic>> data = [];
     if (_homeTab == "For You") {
-      data = await APIService().get("$RECOMMEND_URL/");
+      data = await APIService().get(
+          "$RECOMMEND_URL?date=${_filter['date']}&category=${_filter['category']}&site=${_filter['newssite']}");
     } else if (_homeTab == "Trending") {
       data = await APIService().get("$TREND_URL/");
     }

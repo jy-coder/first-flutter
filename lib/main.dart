@@ -19,7 +19,9 @@ import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:newheadline/utils/urls.dart';
+import 'package:newheadline/widgets/category_filter.dart';
 import 'package:newheadline/widgets/date_filter.dart';
+import 'package:newheadline/widgets/site_filter.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -100,6 +102,8 @@ class _MyAppState extends State<MyApp> {
             DisplayScreen.routeName: (ctx) => DisplayScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
             DateFilter.routeName: (ctx) => DateFilter(),
+            SiteFilter.routeName: (ctx) => SiteFilter(),
+            CategoryFilter.routeName: (ctx) => CategoryFilter(),
           }),
     );
   }
