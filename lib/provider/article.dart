@@ -16,7 +16,6 @@ class ArticleProvider with ChangeNotifier {
   int _pageViewCount = 0;
   List<int> _bookmarkIds = [];
   List<int> _likeIds = [];
-  String _homeTab = "For You";
   int _currentArticleId = 0;
   List<Article> _searchItems = [];
 
@@ -212,12 +211,11 @@ class ArticleProvider with ChangeNotifier {
   }
 
   Future<void> fetchHome() async {
-    print("${_filter['category']}");
     List<Map<String, dynamic>> data = [];
-    if (_homeTab == "For You") {
+    if (_tab == "daily_read") {
       data = await APIService().get(
           "$RECOMMEND_URL?date=${_filter['date']}&category=${_filter['category']}&site=${_filter['newssite']}");
-    } else if (_homeTab == "Trending") {
+    } else if (_tab == "trend") {
       data = await APIService().get("$TREND_URL/");
     }
 

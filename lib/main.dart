@@ -53,10 +53,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    final channel = IOWebSocketChannel.connect(WEBSOCKET_URL);
-    if (Auth().currentUser != null) {
-      channel.sink.add(Auth().currentUser.email);
-    }
     _getStorage();
   }
 
