@@ -57,7 +57,9 @@ Future<void> notInterestedAction(BuildContext context, int articleId) async {
 }
 
 Widget _slider(BuildContext context, int id, Widget articleCard) {
-  return (SlidableWidget(
+  ArticleProvider aProvider =
+      Provider.of<ArticleProvider>(context, listen: false);
+  return SlidableWidget(
     background: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -75,9 +77,10 @@ Widget _slider(BuildContext context, int id, Widget articleCard) {
     ),
     onSlided: () => {
       notInterestedAction(context, id),
+      aProvider.removeItemFromList(id),
     },
     child: articleCard,
-  ));
+  );
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -295,15 +298,15 @@ class _ArticleCardState extends State<ArticleCard> {
       );
     }
 
-    return aProvider.tab != "daily_read"
-        ? Container(
-            padding: EdgeInsets.all(8),
-            child: displayCards(),
-          )
-        : _slider(
-            context,
-            widget.id,
-            displayCards(),
-          );
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: aProvider.tab == "daily_read"
+          ? _slider(
+              context,
+              widget.id,
+              displayCards(),
+            )
+          : displayCards(),
+    );
   }
 }

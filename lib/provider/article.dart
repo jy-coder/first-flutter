@@ -153,8 +153,8 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItemFromList(List<Article> list, int articleId) {
-    list.removeWhere((item) => item.articleId == articleId);
+  void removeItemFromList(int articleId) {
+    _items.removeWhere((item) => item.articleId == articleId);
 
     notifyListeners();
   }
@@ -162,9 +162,9 @@ class ArticleProvider with ChangeNotifier {
   // add starred too
   void filterBookmark(int articleId) {
     if (_tab == "all_articles") {
-      removeItemFromList(_items, articleId);
+      removeItemFromList(articleId);
     } else if (_tab == "reading_list") {
-      removeItemFromList(_items, articleId);
+      removeItemFromList(articleId);
     }
     notifyListeners();
   }

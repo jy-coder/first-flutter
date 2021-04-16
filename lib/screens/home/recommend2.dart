@@ -20,17 +20,20 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   List<Article> articles = [];
   TabController _tabController;
   List<String> categoryNames = [];
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool _isUpdating = false;
+  bool _init = false;
 
   @override
   void initState() {
+    _init = true;
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _fetchRecommend();
+    if (_init) _fetchRecommend();
+    _init = false;
     super.didChangeDependencies();
   }
 
@@ -39,7 +42,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
       _isLoading = true;
     });
     ArticleProvider hProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
     await hProvider.fetchHome();
     setState(() {
       _isLoading = false;
