@@ -15,6 +15,7 @@ import 'package:newheadline/widgets/share_button.dart';
 import 'package:provider/provider.dart';
 import 'package:newheadline/widgets/like_button.dart';
 
+//
 class ArticleCard extends StatefulWidget {
   final int id;
   final String title;
