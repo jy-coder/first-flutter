@@ -1,6 +1,9 @@
 import 'package:intl/intl.dart';
+import 'package:newheadline/provider/auth.dart';
+import 'package:newheadline/utils/urls.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:newheadline/models/models.dart';
+import 'package:web_socket_channel/io.dart';
 
 List<Article> jsonToArticleList(List<Map<String, dynamic>> data) {
   List<Article> articleList = [];
@@ -27,4 +30,11 @@ String formatDate(String dateToFormat) {
 
 String capitalize(String toCapitalize) {
   return "${toCapitalize[0].toUpperCase()}${toCapitalize.substring(1)}";
+}
+
+void socketConnect() {
+  final channel = IOWebSocketChannel.connect(WEBSOCKET_URL);
+  if (Auth().currentUser != null) {
+    channel.sink.add(Auth().currentUser.email);
+  }
 }

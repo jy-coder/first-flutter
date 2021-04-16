@@ -18,9 +18,9 @@ class _TrendScreenState extends State<TrendScreen>
   bool _isLoading = true;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _fetchTrend();
-    super.initState();
+    super.didChangeDependencies();
   }
 
   void _fetchTrend() async {
@@ -53,23 +53,27 @@ class _TrendScreenState extends State<TrendScreen>
         centerTitle: true,
       ),
       body: _isLoading
-          ? CircularProgressIndicator(backgroundColor: Colors.grey)
+          ? Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.grey,
+              ),
+            )
           : !_isLoading
               ? ListView.builder(
                   padding: const EdgeInsets.all(10.0),
                   itemCount: articles.length,
                   itemBuilder: (ctx, i) {
                     return ArticleCard(
-                      articles[i].articleId,
-                      articles[i].title,
-                      articles[i].imageUrl,
-                      articles[i].summary,
-                      articles[i].link,
-                      articles[i].description,
-                      articles[i].pubDate,
-                      articles[i].source,
-                      articles[i].category,
-                    );
+                        articles[i].articleId,
+                        articles[i].title,
+                        articles[i].imageUrl,
+                        articles[i].summary,
+                        articles[i].link,
+                        articles[i].description,
+                        articles[i].pubDate,
+                        articles[i].source,
+                        articles[i].category,
+                        likeCount: articles[i].likeCount);
                   })
               : Container(),
     );

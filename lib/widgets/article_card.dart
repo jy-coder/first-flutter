@@ -29,10 +29,14 @@ class ArticleCard extends StatefulWidget {
   final String historyDate;
   final int similarity;
   final String similarHeadline;
+  final int likeCount;
 
   ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
       this.description, this.pubDate, this.source, this.category,
-      {this.similarHeadline, this.similarity, this.historyDate});
+      {this.similarHeadline,
+      this.similarity,
+      this.historyDate,
+      this.likeCount});
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -183,6 +187,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+
                                   Expanded(
                                     flex: 8,
                                     child: Text(
@@ -217,6 +222,57 @@ class _ArticleCardState extends State<ArticleCard> {
                                         widget.summary,
                                       ),
                                     ),
+
+                                  Text(widget.source),
+                                  Text(
+                                    aProvider.tab == "history" &&
+                                            widget.historyDate != null
+                                        ? "Viewed ${formatDate(widget.historyDate)}"
+                                        : formatDate(widget.pubDate),
+                                  ),
+                                ],
+                              ),
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: aProvider.tab != "History" &&
+                                              Auth().currentUser != null
+                                          ? Row(children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Container(),
+                                              ),
+                                              aProvider.tab == "trend"
+                                                  ? Expanded(
+                                                      flex: 0,
+                                                      child: Text(widget
+                                                          .likeCount
+                                                          .toString()),
+                                                    )
+                                                  : Container(),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Container(
+                                                    child: Column(
+                                                  children: [
+                                                    LikeBtn(widget.id),
+                                                  ],
+                                                )),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: BookmarkBtn(widget.id),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child:
+                                                    ShareBtn(link: widget.link),
+                                              ),
+                                            ])
+                                          : Container(),
+                                    )
+
                                   ],
                                 ),
                               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/screens/profile/checkbox.dart';
+import 'package:newheadline/utils/common.dart';
 
 import 'package:provider/provider.dart';
 
