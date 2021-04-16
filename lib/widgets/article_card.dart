@@ -29,28 +29,39 @@ class ArticleCard extends StatefulWidget {
   final String historyDate;
   final int similarity;
   final String similarHeadline;
+  final int likeCount;
 
-  ArticleCard(this.id, this.title, this.imageUrl, this.summary, this.link,
-      this.description, this.pubDate, this.source, this.category,
-      {this.similarHeadline, this.similarity, this.historyDate});
+  ArticleCard(
+    this.id,
+    this.title,
+    this.imageUrl,
+    this.summary,
+    this.link,
+    this.description,
+    this.pubDate,
+    this.source,
+    this.category, {
+    this.similarHeadline,
+    this.similarity,
+    this.historyDate,
+    this.likeCount,
+  });
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
 }
 
 Future<void> notInterestedAction(int articleId, BuildContext context) async {
-  String url = "";
-  int responseCode = 0;
-  String successMsg = "";
-  String errorMsg = "";
-  ArticleProvider aProvider =
-      Provider.of<ArticleProvider>(context, listen: false);
+  // String successMsg = "";
+  // String errorMsg = "";
+  // ArticleProvider aProvider =
+  Provider.of<ArticleProvider>(context, listen: false);
 
-  url = "$NOT_INTERESTED_URL/?article=$articleId";
+  String url = "$NOT_INTERESTED_URL/?article=$articleId";
 
-  responseCode = await APIService().post(url);
-  errorMsg = "Something went wrong";
-  successMsg = "Sucessfully Liked this article";
+  int responseCode = await APIService().post(url);
+  // errorMsg = "Something went wrong";
+  // successMsg = "Sucessfully Liked this article";
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -233,7 +244,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                           Text(
                                             aProvider.subTab == "History" &&
                                                     widget.historyDate != null
-                                                ? "viewed: ${formatDate(widget.historyDate)}"
+                                                ? "Viewed ${formatDate(widget.historyDate)}"
                                                 : formatDate(widget.pubDate),
                                           ),
                                         ],
@@ -247,9 +258,17 @@ class _ArticleCardState extends State<ArticleCard> {
                                                       Auth().currentUser != null
                                                   ? Row(children: [
                                                       Expanded(
-                                                        flex: 4,
+                                                        flex: 3,
                                                         child: Container(),
                                                       ),
+                                                      aProvider.tab == "trend"
+                                                          ? Expanded(
+                                                              flex: 0,
+                                                              child: Text(widget
+                                                                  .likeCount
+                                                                  .toString()),
+                                                            )
+                                                          : Container(),
                                                       Expanded(
                                                         flex: 1,
                                                         child:

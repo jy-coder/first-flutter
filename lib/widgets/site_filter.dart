@@ -12,12 +12,11 @@ class SiteFilter extends StatefulWidget {
 
 class _SiteFilterState extends State<SiteFilter> {
   String _selectedValue = "";
-  List<String> _sites = [];
-  Map<int, String> options = {};
+  List<String> options = [];
 
   @override
   void didChangeDependencies() {
-    _displaySites();
+    _fetchSites();
     super.didChangeDependencies();
   }
 
@@ -26,15 +25,8 @@ class _SiteFilterState extends State<SiteFilter> {
     data = await APIService().getOne("$SITE_URL");
     if (data != null)
       setState(() {
-        _sites = data["data"].cast<String>();
+        options = data["data"].cast<String>();
       });
-  }
-
-  void _displaySites() async {
-    await _fetchSites();
-    for (int i = 0; i < _sites.length; i++) {
-      options[i + 1] = _sites[i];
-    }
   }
 
   @override
@@ -47,9 +39,10 @@ class _SiteFilterState extends State<SiteFilter> {
           itemCount: options.length,
           itemBuilder: (context, index) {
             return RadioListTile(
-                title: Text(options[index + 1]),
-                value: index.toString(),
-                groupValue: _selectedValue,
+                activeColor: Colors.blue,
+                title: Text(options[index]),
+                value: options[index],
+                groupValue: aProvider.filter["newssite"],
                 onChanged: (String val) async {
                   setState(() {
                     _selectedValue = val;
@@ -57,7 +50,7 @@ class _SiteFilterState extends State<SiteFilter> {
 
                   aProvider.setFilter(
                     "newssite",
-                    options[index + 1],
+                    options[index],
                   );
 
                   Navigator.pop(context);

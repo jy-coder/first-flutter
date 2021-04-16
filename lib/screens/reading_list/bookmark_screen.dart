@@ -54,8 +54,10 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         Provider.of<ArticleProvider>(context, listen: true);
     List<Article> bookmarkItems = aProvider.items;
     return _isLoading
-        ? CircularProgressIndicator(
-            backgroundColor: Colors.grey,
+        ? Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.grey,
+            ),
           )
         : Scaffold(
             appBar: AppBar(

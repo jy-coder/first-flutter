@@ -25,6 +25,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   void didChangeDependencies() {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setTab("history");
     _isLoading = true;
     _loadMore();
     super.didChangeDependencies();

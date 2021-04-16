@@ -29,25 +29,26 @@ class Article {
   final String imageUrl;
   final String description;
   final String pubDate;
-  final String date;
   final String historyDate;
   final int similarity;
   final String similarHeadline;
+  final int likeCount;
 
-  Article(
-      {@required this.articleId,
-      @required this.title,
-      @required this.category,
-      @required this.link,
-      @required this.summary,
-      @required this.source,
-      @required this.description,
-      this.imageUrl,
-      this.pubDate,
-      this.date,
-      this.historyDate,
-      this.similarity,
-      this.similarHeadline});
+  Article({
+    @required this.articleId,
+    @required this.title,
+    @required this.category,
+    @required this.link,
+    @required this.summary,
+    @required this.source,
+    @required this.description,
+    this.imageUrl,
+    this.pubDate,
+    this.historyDate,
+    this.similarity,
+    this.similarHeadline,
+    this.likeCount,
+  });
 
   factory Article.fromJson(Map<dynamic, dynamic> json) => Article(
         articleId: json["id"] as int,
@@ -62,6 +63,7 @@ class Article {
         historyDate: json["history_date"] != null ? json["history_date"] : "",
         similarity: json["similarity"] as int,
         similarHeadline: json["similar_headline"],
+        likeCount: json["count"] as int,
       );
 }
 

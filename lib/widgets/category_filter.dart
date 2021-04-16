@@ -11,8 +11,7 @@ class CategoryFilter extends StatefulWidget {
 
 class _CategoryFilterState extends State<CategoryFilter> {
   String _selectedValue = "";
-  Map<int, String> options = {};
-  List<String> categoryNames;
+  List<String> options = [];
 
   @override
   void didChangeDependencies() {
@@ -24,10 +23,9 @@ class _CategoryFilterState extends State<CategoryFilter> {
     CategoryProvider cProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
-    categoryNames = cProvider.categoryNames;
-    for (int i = 0; i < categoryNames.length; i++) {
-      options[i + 1] = categoryNames[i];
-    }
+    setState(() {
+      options = cProvider.categoryNames;
+    });
   }
 
   @override
@@ -40,9 +38,10 @@ class _CategoryFilterState extends State<CategoryFilter> {
           itemCount: options.length,
           itemBuilder: (context, index) {
             return RadioListTile(
-                title: Text(options[index + 1]),
-                value: index.toString(),
-                groupValue: _selectedValue,
+                activeColor: Colors.blue,
+                title: Text(options[index]),
+                value: options[index],
+                groupValue: aProvider.filter["category"],
                 onChanged: (String val) async {
                   setState(() {
                     _selectedValue = val;
@@ -50,7 +49,7 @@ class _CategoryFilterState extends State<CategoryFilter> {
 
                   aProvider.setFilter(
                     "category",
-                    options[index + 1],
+                    options[index],
                   );
 
                   Navigator.pop(context);
