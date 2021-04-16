@@ -27,3 +27,5 @@ const LIKE_URL = "${HOST}like";
 const LIKED_URL = "${HOST}like_article_ids";
 
 const SITE_URL = "${HOST}sites";
+
+const NOT_INTERESTED_URL = "${HOST}not_interested";
