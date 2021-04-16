@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:provider/provider.dart';
+import 'package:newheadline/utils/common.dart';
 
 class CategoryFilter extends StatefulWidget {
   static final routeName = '/Category-filter';
@@ -10,8 +11,8 @@ class CategoryFilter extends StatefulWidget {
 }
 
 class _CategoryFilterState extends State<CategoryFilter> {
-  String _selectedValue = "";
   List<String> options = [];
+  List<String> isChecked = [];
 
   @override
   void didChangeDependencies() {
@@ -22,9 +23,14 @@ class _CategoryFilterState extends State<CategoryFilter> {
   void _assignCategoryNames() {
     CategoryProvider cProvider =
         Provider.of<CategoryProvider>(context, listen: false);
-
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    String categoryFilter = aProvider.filter['category'];
     setState(() {
       options = cProvider.categoryNames;
+      if (categoryFilter != "") {
+        isChecked = stringToList(categoryFilter);
+      }
     });
   }
 
@@ -34,27 +40,42 @@ class _CategoryFilterState extends State<CategoryFilter> {
         Provider.of<ArticleProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(),
-      body: ListView.builder(
-          itemCount: options.length,
-          itemBuilder: (context, index) {
-            return RadioListTile(
-                activeColor: Colors.blue,
-                title: Text(options[index]),
-                value: options[index],
-                groupValue: aProvider.filter["category"],
-                onChanged: (String val) async {
-                  setState(() {
-                    _selectedValue = val;
-                  });
-
-                  aProvider.setFilter(
-                    "category",
-                    options[index],
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+                itemCount: options.length,
+                itemBuilder: (context, index) {
+                  return CheckboxListTile(
+                    activeColor: Colors.blue,
+                    title: Text(options[index]),
+                    value: isChecked.contains(options[index]),
+                    onChanged: (bool value) {
+                      if (value) {
+                        setState(() {
+                          isChecked.add(options[index]);
+                        });
+                      } else {
+                        setState(() {
+                          isChecked.remove(options[index]);
+                        });
+                      }
+                    },
                   );
-
-                  Navigator.pop(context);
-                });
-          }),
+                }),
+          ),
+          RaisedButton(
+            child: Text("Filter"),
+            onPressed: () {
+              aProvider.setFilter(
+                "category",
+                listToString(isChecked),
+              );
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
     );
   }
 }

@@ -38,3 +38,12 @@ void socketConnect() {
     channel.sink.add(Auth().currentUser.email);
   }
 }
+
+String listToString(List<String> list) {
+  return list.join(",");
+}
+
+List<String> stringToList(String str) {
+  if (str == null) return [];
+  return str.split(",");
+}
