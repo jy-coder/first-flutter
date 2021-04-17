@@ -22,18 +22,15 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   List<String> categoryNames = [];
   bool _isLoading = false;
   bool _isUpdating = false;
-  bool _init = false;
 
   @override
   void initState() {
-    _init = true;
+    _fetchRecommend();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    if (_init) _fetchRecommend();
-    _init = false;
     super.didChangeDependencies();
   }
 
@@ -42,7 +39,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
       _isLoading = true;
     });
     ArticleProvider hProvider =
-        Provider.of<ArticleProvider>(context, listen: true);
+        Provider.of<ArticleProvider>(context, listen: false);
     await hProvider.fetchHome();
     setState(() {
       _isLoading = false;
@@ -64,11 +61,11 @@ class _RecommendScreen2State extends State<RecommendScreen2>
     socketConnect();
 
     Future.delayed(const Duration(milliseconds: 200), () {
+      _fetchRecommend();
       setState(() {
         _isUpdating = false;
       });
     });
-    didChangeDependencies();
   }
 
   @override
