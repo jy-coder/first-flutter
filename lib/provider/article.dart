@@ -18,6 +18,7 @@ class ArticleProvider with ChangeNotifier {
   List<int> _likeIds = [];
   int _currentArticleId = 0;
   List<Article> _searchItems = [];
+  List<Article> _relatedArticles = [];
 
   List<Article> get items {
     return [..._items];
@@ -25,6 +26,10 @@ class ArticleProvider with ChangeNotifier {
 
   List<Article> get searchItems {
     return [..._searchItems];
+  }
+
+  List<Article> get relatedArticle {
+    return _relatedArticles;
   }
 
   String get tab {
@@ -240,5 +245,11 @@ class ArticleProvider with ChangeNotifier {
   void removeLikeIds(int likeId) {
     _likeIds.remove(likeId);
     notifyListeners();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchSimilarArticles() async {
+    String url = "$RELATED_URL?id=$_currentArticleId";
+    List<Map<String, dynamic>> relatedArticles = await APIService().get(url);
+    _relatedArticles = jsonToArticleList(relatedArticles);
   }
 }

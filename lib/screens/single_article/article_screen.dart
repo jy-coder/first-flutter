@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/theme.dart';
+import 'package:newheadline/screens/single_article/related_screen.dart';
 import 'package:newheadline/screens/single_article/webview_screen.dart';
 import 'package:newheadline/shared/textstyle.dart';
 import 'package:newheadline/utils/common.dart';
@@ -19,15 +21,16 @@ class ArticleScreen extends StatefulWidget {
   final String category;
   final String link;
 
-  ArticleScreen(
-      {this.id,
-      this.title,
-      this.description,
-      this.imageUrl,
-      this.pubDate,
-      this.source,
-      this.category,
-      this.link});
+  ArticleScreen({
+    this.id,
+    this.title,
+    this.description,
+    this.imageUrl,
+    this.pubDate,
+    this.source,
+    this.category,
+    this.link,
+  });
 
   @override
   _ArticleScreenState createState() => _ArticleScreenState();
@@ -39,6 +42,18 @@ Future<void> saveReadingHistory(int articleId) async {
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
+  List<Article> relatedArticles = [];
+
+  @override
+  void didChangeDependencies() {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: true);
+    () async {
+      await aProvider.fetchSimilarArticles();
+    }();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     String timeAgo = formatDate(widget.pubDate);
@@ -46,13 +61,14 @@ class _ArticleScreenState extends State<ArticleScreen> {
         Provider.of<ThemeProvider>(context, listen: false);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+
     return NotificationListener<ScrollNotification>(
         onNotification: (scrollNotification) {
           if (scrollNotification is ScrollEndNotification &&
               scrollNotification.metrics.pixels ==
                   scrollNotification.metrics.maxScrollExtent &&
               aProvider.tab != "Setting") {
-            saveReadingHistory(widget.id);
+            saveReadingHistory(aProvider.articleId);
           }
         },
         child: SingleChildScrollView(
@@ -131,6 +147,34 @@ class _ArticleScreenState extends State<ArticleScreen> {
                           style: CustomTextStyle.normal(
                               context, tProvider.fontSize),
                         ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          ...aProvider.relatedArticle
+                              .map(
+                                (Article a) => GestureDetector(
+                                    child: Text(a.title,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        )),
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        "RelatedScreen",
+                                        arguments: ScreenArguments(
+                                          a.articleId,
+                                          a.title,
+                                          a.description,
+                                          a.imageUrl,
+                                          a.pubDate,
+                                          a.source,
+                                          a.category,
+                                          a.link,
+                                        ),
+                                      );
+                                    }),
+                              )
+                              .toList()
+                        ],
                       ),
                       Container(
                         child: OutlineButton(

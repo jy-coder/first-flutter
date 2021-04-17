@@ -17,6 +17,7 @@ import 'package:newheadline/screens/profile/subscription_setting_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
+import 'package:newheadline/screens/single_article/related_screen.dart';
 import 'package:newheadline/shared/theme.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/category_filter.dart';
@@ -73,6 +74,13 @@ class _MyAppState extends State<MyApp> {
     return StreamProvider.value(
       value: Auth().user,
       child: MaterialApp(
+          onGenerateRoute: (RouteSettings settings) {
+            var routes = <String, WidgetBuilder>{
+              "RelatedScreen": (ctx) => RelatedScreen(settings.arguments),
+            };
+            WidgetBuilder builder = routes[settings.name];
+            return MaterialPageRoute(builder: (ctx) => builder(ctx));
+          },
           title: 'NewsHeadline',
           theme: ThemeData(
             primarySwatch: white,
