@@ -71,7 +71,7 @@ class _RelatedScreenState extends State<RelatedScreen> {
             scrollNotification.metrics.pixels ==
                 scrollNotification.metrics.maxScrollExtent &&
             aProvider.tab != "Setting") {
-          saveReadingHistory(aProvider.articleId);
+          saveReadingHistory(widget.settings.id);
         }
       },
       child: Scaffold(
