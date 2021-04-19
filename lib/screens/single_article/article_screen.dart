@@ -148,33 +148,53 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               context, tProvider.fontSize),
                         ),
                       ),
-                      Column(
-                        children: <Widget>[
-                          ...aProvider.relatedArticle
-                              .map(
-                                (Article a) => GestureDetector(
-                                    child: Text(a.title,
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        )),
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                        "RelatedScreen",
-                                        arguments: ScreenArguments(
-                                          a.articleId,
-                                          a.title,
-                                          a.description,
-                                          a.imageUrl,
-                                          a.pubDate,
-                                          a.source,
-                                          a.category,
-                                          a.link,
-                                        ),
-                                      );
-                                    }),
-                              )
-                              .toList()
-                        ],
+                      Text(
+                        "More Articles:",
+                        style:
+                            CustomTextStyle.title1(context, tProvider.fontSize),
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            ...aProvider.relatedArticle
+                                .map(
+                                  (Article a) => GestureDetector(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            a.title,
+                                            textAlign: TextAlign.start,
+                                            style:
+                                                CustomTextStyle.underlinelink(
+                                                    context,
+                                                    tProvider.fontSize),
+                                          ),
+                                          SizedBox(height: 10)
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          "RelatedScreen",
+                                          arguments: ScreenArguments(
+                                            a.articleId,
+                                            a.title,
+                                            a.description,
+                                            a.imageUrl,
+                                            a.pubDate,
+                                            a.source,
+                                            a.category,
+                                            a.link,
+                                          ),
+                                        );
+                                      }),
+                                )
+                                .toList(),
+                            SizedBox(height: 20),
+                          ],
+                        ),
                       ),
                       Container(
                         child: OutlineButton(
