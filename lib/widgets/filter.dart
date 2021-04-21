@@ -35,9 +35,12 @@ class _FilterState extends State<Filter> {
 
   @override
   Widget build(BuildContext context) {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
     return IconButton(
       icon: Icon(Icons.more_vert),
       onPressed: () {
+        aProvider.setFilterOpen(true);
         showModalBottomSheet(
             context: context,
             builder: (context) {
@@ -55,7 +58,6 @@ class _FilterState extends State<Filter> {
                           TextButton(
                             onPressed: () {
                               aProvider.resetFilter();
-                              aProvider.clearHistory();
                             },
                             child: Text(
                               "Clear",
@@ -89,7 +91,9 @@ class _FilterState extends State<Filter> {
                   ),
                 );
               });
-            });
+            }).whenComplete(() {
+          aProvider.setFilterOpen(false);
+        });
       },
     );
   }

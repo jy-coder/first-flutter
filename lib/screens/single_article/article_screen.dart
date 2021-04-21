@@ -45,22 +45,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
   List<Article> relatedArticles = [];
 
   @override
-  void didChangeDependencies() {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: true);
-    () async {
-      await aProvider.fetchSimilarArticles();
-    }();
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     String timeAgo = formatDate(widget.pubDate);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
 
     return NotificationListener<ScrollNotification>(
         onNotification: (scrollNotification) {
@@ -146,11 +136,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               context, tProvider.fontSize),
                         ),
                       ),
-                      Text(
-                        "More Articles:",
-                        style:
-                            CustomTextStyle.title1(context, tProvider.fontSize),
-                      ),
+                      aProvider.relatedArticle.length > 0
+                          ? Text(
+                              "More Articles:",
+                              style: CustomTextStyle.title1(
+                                  context, tProvider.fontSize),
+                            )
+                          : Container(),
                       SizedBox(height: 20),
                       Padding(
                         padding: EdgeInsets.all(10.0),

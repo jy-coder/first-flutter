@@ -56,7 +56,7 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
   @override
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: true);
+        Provider.of<ArticleProvider>(context, listen: false);
     return _isLoading
         ? CircularProgressIndicator(
             backgroundColor: Colors.grey,
