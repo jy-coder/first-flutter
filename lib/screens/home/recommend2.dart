@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/utils/common.dart';
+import 'package:newheadline/utils/response.dart';
 import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/article_card.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:newheadline/utils/admob.dart';
 
 class RecommendScreen2 extends StatefulWidget {
   static const routeName = '/recommend2';
@@ -20,18 +22,29 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   List<Article> articles = [];
   TabController _tabController;
   List<String> categoryNames = [];
+  List<String> keywords = [];
+  List<AdWidget> adWidgets;
+  int numOfArticlesBeforeAds = 5;
   bool _isLoading = false;
   bool _isUpdating = false;
 
   @override
   void initState() {
     _fetchRecommend();
+    _fetchKeywords();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+
+  void _fetchKeywords() async {
+    List<Map<String, dynamic>> data = await APIService().get("$AD_URL");
+    setState(() {
+      keywords = jsonToStringList(data);
+    });
   }
 
   void _fetchRecommend() async {
@@ -73,7 +86,8 @@ class _RecommendScreen2State extends State<RecommendScreen2>
     ArticleProvider hProvider =
         Provider.of<ArticleProvider>(context, listen: true);
     articles = hProvider.items;
-
+    adWidgets = AdMobService.generateAds(keywords.length, keywords);
+    // print(keywords);
     return _isUpdating
         ? Text("Loading")
         : _isLoading
@@ -87,6 +101,33 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                         padding: const EdgeInsets.all(10.0),
                         itemCount: articles.length,
                         itemBuilder: (ctx, i) {
+                          if (i != 0 && i % numOfArticlesBeforeAds == 0) {
+                            return Column(
+                              children: [
+                                Container(
+                                  child: adWidgets[
+                                      ((i + 1) ~/ numOfArticlesBeforeAds)],
+                                  padding: EdgeInsets.zero,
+                                  margin: EdgeInsets.zero,
+                                  height: 50,
+                                  width: 300,
+                                ),
+                                ArticleCard(
+                                  articles[i].articleId,
+                                  articles[i].title,
+                                  articles[i].imageUrl,
+                                  articles[i].summary,
+                                  articles[i].link,
+                                  articles[i].description,
+                                  articles[i].pubDate,
+                                  articles[i].source,
+                                  articles[i].category,
+                                  similarHeadline: articles[i].similarHeadline,
+                                  similarity: articles[i].similarity,
+                                )
+                              ],
+                            );
+                          }
                           return ArticleCard(
                             articles[i].articleId,
                             articles[i].title,

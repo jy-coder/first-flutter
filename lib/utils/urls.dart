@@ -31,3 +31,4 @@ const SITE_URL = "${HOST}sites";
 const NOT_INTERESTED_URL = "${HOST}not_interested";
 
 const RELATED_URL = "${HOST}related";
+const AD_URL = "${HOST}advertisement";
