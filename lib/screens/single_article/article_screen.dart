@@ -146,11 +146,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               context, tProvider.fontSize),
                         ),
                       ),
-                      Text(
-                        "More Articles:",
-                        style:
-                            CustomTextStyle.title1(context, tProvider.fontSize),
-                      ),
+                      aProvider.relatedArticle.length > 0
+                          ? Text(
+                              "More Articles:",
+                              style: CustomTextStyle.title1(
+                                  context, tProvider.fontSize),
+                            )
+                          : Container(),
                       SizedBox(height: 20),
                       Padding(
                         padding: EdgeInsets.all(10.0),
