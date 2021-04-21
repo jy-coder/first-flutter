@@ -55,15 +55,10 @@ class _RelatedScreenState extends State<RelatedScreen> {
   List<Article> relatedArticles = [];
 
   @override
-  void didChangeDependencies() {}
-
-  @override
   Widget build(BuildContext context) {
-    print(widget.settings.id);
-    ThemeProvider tProvider =
-        Provider.of<ThemeProvider>(context, listen: false);
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
     String timeAgo = formatDate(widget.settings.pubDate);
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {
@@ -173,10 +168,13 @@ class _RelatedScreenState extends State<RelatedScreen> {
                                     context, tProvider.fontSize)),
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WebViewScreen(
-                                          this.widget.settings.link)));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebViewScreen(
+                                    this.widget.settings.link,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         )

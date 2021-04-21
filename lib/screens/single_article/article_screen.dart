@@ -114,7 +114,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.timelapse),
                                   Text(
                                     timeAgo,
                                     style: CustomTextStyle.small(
@@ -126,7 +125,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.source),
                                   Text(
                                     widget.source,
                                     style: CustomTextStyle.small(
