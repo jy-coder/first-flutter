@@ -247,9 +247,10 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Map<String, dynamic>>> fetchSimilarArticles() async {
+  Future<void> fetchSimilarArticles() async {
     String url = "$RELATED_URL?id=$_currentArticleId";
     List<Map<String, dynamic>> relatedArticles = await APIService().get(url);
     _relatedArticles = jsonToArticleList(relatedArticles);
+    notifyListeners();
   }
 }

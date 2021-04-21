@@ -58,6 +58,13 @@ class CustomTextStyle {
         );
   }
 
+  static TextStyle underlinelink(BuildContext context, double readingSize) {
+    return Theme.of(context).textTheme.headline1.copyWith(
+        fontSize: readingSize,
+        fontWeight: FontWeight.w400,
+        decoration: TextDecoration.underline);
+  }
+
   static TextStyle cardSummary(BuildContext context, double readingSize) {
     double _size = 0;
 
