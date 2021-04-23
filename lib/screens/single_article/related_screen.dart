@@ -54,6 +54,7 @@ Future<void> saveReadingHistory(int articleId) async {
 class _RelatedScreenState extends State<RelatedScreen> {
   List<Article> relatedArticles = [];
   ScrollController _scrollController;
+  bool _isVisible = false;
   @override
   void initState() {
     super.initState();
@@ -63,6 +64,11 @@ class _RelatedScreenState extends State<RelatedScreen> {
           if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent) {
             saveReadingHistory(widget.settings.id);
+          }
+          if (_scrollController.offset >= 500) {
+            _isVisible = true;
+          } else {
+            _isVisible = false;
           }
         });
       });
@@ -177,50 +183,42 @@ class _RelatedScreenState extends State<RelatedScreen> {
                         ),
                       ),
                       Container(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(width: 130),
-                          OutlineButton(
-                            padding: EdgeInsets.all(20),
-                            child: Text("Visit Website",
-                                style: CustomTextStyle.normal(
-                                    context, tProvider.fontSize)),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          WebViewScreen(widget.settings.link)));
-                              _scrollToTop();
-                            },
-                          ),
-                          SizedBox(width: 30),
-                          MaterialButton(
-                            onPressed: () {
-                              _scrollToTop();
-                            },
-                            color: tProvider.theme == "dark"
-                                ? Colors.white
-                                : Colors.black,
-                            textColor: tProvider.theme == "dark"
-                                ? Colors.black
-                                : Colors.white,
-                            child: Icon(
-                              Icons.arrow_upward,
-                              size: 24,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          )
-                        ],
-                      ))
+                        child: OutlineButton(
+                          padding: EdgeInsets.all(20),
+                          child: Text("Visit Website",
+                              style: CustomTextStyle.normal(
+                                  context, tProvider.fontSize)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        WebViewScreen(widget.settings.link)));
+                          },
+                        ),
+                      )
                     ],
                   ),
                 )
               ],
             ),
           ),
-        ));
+        ),
+        floatingActionButton: _isVisible == true
+            ? MaterialButton(
+                onPressed: () {
+                  _scrollToTop();
+                },
+                color: tProvider.theme == "dark" ? Colors.white : Colors.black,
+                textColor:
+                    tProvider.theme == "dark" ? Colors.black : Colors.white,
+                child: Icon(
+                  Icons.arrow_upward,
+                  size: 20,
+                ),
+                padding: EdgeInsets.all(16),
+                shape: CircleBorder(),
+              )
+            : null);
   }
 }

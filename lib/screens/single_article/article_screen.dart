@@ -232,7 +232,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         WebViewScreen(this.widget.link)));
-                            _scrollToTop();
                           },
                         ),
                       )
