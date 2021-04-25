@@ -26,7 +26,7 @@ class _SiteFilterState extends State<SiteFilter> {
         Provider.of<ArticleProvider>(context, listen: false);
     Map<String, dynamic> data = {};
     data = await APIService().getOne("$SITE_URL");
-    String siteFilter = aProvider.filter['site'];
+    String siteFilter = aProvider.filter['newssite'];
     if (data != null)
       setState(() {
         options = data["data"].cast<String>();

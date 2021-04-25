@@ -19,6 +19,7 @@ class ArticleProvider with ChangeNotifier {
   int _currentArticleId = 0;
   List<Article> _searchItems = [];
   List<Article> _relatedArticles = [];
+  bool _filterOpen = false;
 
   List<Article> get items {
     return [..._items];
@@ -60,6 +61,7 @@ class ArticleProvider with ChangeNotifier {
 
   void setCurrentArticleId(int articleId) {
     _currentArticleId = articleId;
+    fetchSimilarArticles();
   }
 
   void setTab(String tabName) {
@@ -92,6 +94,14 @@ class ArticleProvider with ChangeNotifier {
 
   int getPos(int id, List<Article> list) {
     return list.indexWhere((a) => a.articleId == id);
+  }
+
+  void setFilterOpen(bool val) {
+    _filterOpen = val;
+  }
+
+  bool get filterOpen {
+    return _filterOpen;
   }
 
   String get category {
@@ -134,7 +144,6 @@ class ArticleProvider with ChangeNotifier {
 
   void setInitialPage(int pageNum) {
     _initialPage = pageNum;
-    notifyListeners();
   }
 
   Future<List<Map<String, dynamic>>> fetchReadingHistory() async {
