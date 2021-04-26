@@ -64,8 +64,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
           if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent) {
             saveReadingHistory(widget.id);
-          }
-          if (_scrollController.offset >= 500) {
             _isVisible = true;
           } else {
             _isVisible = false;
@@ -242,7 +240,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
             ),
           ),
         ),
-        floatingActionButton: _isVisible == true
+        floatingActionButton: _isVisible
             ? MaterialButton(
                 onPressed: () {
                   _scrollToTop();

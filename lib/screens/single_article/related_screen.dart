@@ -64,8 +64,6 @@ class _RelatedScreenState extends State<RelatedScreen> {
           if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent) {
             saveReadingHistory(widget.settings.id);
-          }
-          if (_scrollController.offset >= 500) {
             _isVisible = true;
           } else {
             _isVisible = false;
@@ -204,7 +202,7 @@ class _RelatedScreenState extends State<RelatedScreen> {
             ),
           ),
         ),
-        floatingActionButton: _isVisible == true
+        floatingActionButton: _isVisible
             ? MaterialButton(
                 onPressed: () {
                   _scrollToTop();
