@@ -31,6 +31,11 @@ class _RecommendScreen2State extends State<RecommendScreen2>
 
   @override
   void didChangeDependencies() {
+    ArticleProvider hProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    if (hProvider.filterOpen) {
+      _fetchRecommend();
+    }
     super.didChangeDependencies();
   }
 

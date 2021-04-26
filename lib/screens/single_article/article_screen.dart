@@ -46,16 +46,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
   ScrollController _scrollController;
   bool _isVisible = false;
   @override
-  void didChangeDependencies() {
-    ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: true);
-    () async {
-      await aProvider.fetchSimilarArticles();
-    }();
-    super.didChangeDependencies();
-  }
-
-  @override
   void initState() {
     super.initState();
     _scrollController = ScrollController()
@@ -89,7 +79,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     ArticleProvider aProvider =
-        Provider.of<ArticleProvider>(context, listen: false);
+        Provider.of<ArticleProvider>(context, listen: true);
 
     return Scaffold(
         body: SingleChildScrollView(

@@ -169,23 +169,28 @@ class _ArticleCardState extends State<ArticleCard> {
                                     : Container(height: 0),
                               ),
                               SizedBox(height: 10),
-                              FittedBox(
-                                  child: Align(
-                                alignment: Alignment.center,
-                                child: CachedNetworkImage(
-                                  imageUrl: widget.imageUrl,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          SizedBox(
-                                    child: CircularProgressIndicator(
-                                        value: downloadProgress.progress),
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  errorWidget: (context, ud, error) =>
-                                      Icon(Icons.error),
-                                ),
-                              )),
+                              aProvider.tab != "history" &&
+                                      aProvider.tab != "Setting"
+                                  ? FittedBox(
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: CachedNetworkImage(
+                                          imageUrl: widget.imageUrl,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              SizedBox(
+                                            child: CircularProgressIndicator(
+                                                value:
+                                                    downloadProgress.progress),
+                                            height: 30,
+                                            width: 30,
+                                          ),
+                                          errorWidget: (context, ud, error) =>
+                                              Icon(Icons.error),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
                             ]),
                       ),
                       ListTile(
