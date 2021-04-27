@@ -55,6 +55,17 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                   },
                 ),
                 SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'Confirm Password'),
+                  obscureText: true,
+                  validator: (val) =>
+                      val != password ? 'Password do not match' : null,
+                  onChanged: (val) {
+                    setState(() => password = val);
+                  },
+                ),
+                SizedBox(height: 20.0),
                 RaisedButton(
                     child: Text(
                       'Change Password',
