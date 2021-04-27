@@ -43,6 +43,35 @@ Future<void> saveReadingHistory(int articleId) async {
 
 class _ArticleScreenState extends State<ArticleScreen> {
   List<Article> relatedArticles = [];
+  ScrollController _scrollController;
+  bool _isVisible = false;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        setState(() {
+          if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent) {
+            saveReadingHistory(widget.id);
+            _isVisible = true;
+          } else {
+            _isVisible = false;
+          }
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.linear);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +81,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
 
-    return NotificationListener<ScrollNotification>(
-        onNotification: (scrollNotification) {
-          if (scrollNotification is ScrollEndNotification &&
-              scrollNotification.metrics.pixels ==
-                  scrollNotification.metrics.maxScrollExtent &&
-              aProvider.tab != "Setting") {
-            saveReadingHistory(aProvider.articleId);
-          }
-        },
-        child: SingleChildScrollView(
+    return Scaffold(
+        body: SingleChildScrollView(
+          controller: _scrollController,
           child: Container(
             child: Wrap(
               children: [
@@ -207,6 +229,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
               ],
             ),
           ),
-        ));
+        ),
+        floatingActionButton: _isVisible
+            ? MaterialButton(
+                onPressed: () {
+                  _scrollToTop();
+                },
+                color: tProvider.theme == "dark" ? Colors.white : Colors.black,
+                textColor:
+                    tProvider.theme == "dark" ? Colors.black : Colors.white,
+                child: Icon(
+                  Icons.arrow_upward,
+                  size: 20,
+                ),
+                padding: EdgeInsets.all(16),
+                shape: CircleBorder(),
+              )
+            : null);
   }
 }
