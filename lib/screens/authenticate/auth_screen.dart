@@ -68,7 +68,7 @@ class _AuthScreenState extends State<AuthScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.house),
-            label: 'Home',
+            label: 'For You',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
@@ -76,7 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chrome_reader_mode_outlined),
-            label: "Articles",
+            label: "Headlines",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

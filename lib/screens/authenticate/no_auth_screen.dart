@@ -61,7 +61,7 @@ class _NoAuthScreenState extends State<NoAuthScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.chrome_reader_mode_outlined),
-            label: 'Articles',
+            label: 'Headlines',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.login),
