@@ -14,7 +14,7 @@ class AdMobService {
 
   String getAdMobAppId() {
     if (Platform.isAndroid) {
-      print(env['ADMOB_APP_ID']);
+      return env['ADMOB_APP_ID'];
     }
     return null;
   }

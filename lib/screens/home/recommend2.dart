@@ -24,7 +24,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   List<String> categoryNames = [];
   List<String> keywords = [];
   List<AdWidget> adWidgets;
-  int numOfArticlesBeforeAds = 5;
+  int numOfArticlesBeforeAds = 4;
   bool _isLoading = false;
   bool _isUpdating = false;
 
@@ -92,7 +92,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
         Provider.of<ArticleProvider>(context, listen: true);
     articles = hProvider.items;
     adWidgets = AdMobService.generateAds(keywords.length, keywords);
-    // print(keywords);
+
     return _isUpdating
         ? Text("Loading")
         : _isLoading
@@ -110,8 +110,8 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                             return Column(
                               children: [
                                 Container(
-                                  child: adWidgets[
-                                      ((i + 1) ~/ numOfArticlesBeforeAds)],
+                                  child:
+                                      adWidgets[(i ~/ numOfArticlesBeforeAds)],
                                   padding: EdgeInsets.zero,
                                   margin: EdgeInsets.zero,
                                   height: 50,
