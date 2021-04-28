@@ -146,7 +146,6 @@ class _RelatedScreenState extends State<RelatedScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.timelapse),
                                   Text(
                                     timeAgo,
                                     style: CustomTextStyle.small(
@@ -158,7 +157,6 @@ class _RelatedScreenState extends State<RelatedScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.source),
                                   Text(
                                     widget.settings.source,
                                     style: CustomTextStyle.small(
