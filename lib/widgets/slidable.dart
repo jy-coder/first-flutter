@@ -30,8 +30,8 @@ class _SlidableWidgetState extends State<SlidableWidget>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
