@@ -106,12 +106,13 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                         padding: const EdgeInsets.all(10.0),
                         itemCount: articles.length,
                         itemBuilder: (ctx, i) {
-                          if (i != 0 && i % numOfArticlesBeforeAds == 0) {
+                          if (i != 0 &&
+                              i % numOfArticlesBeforeAds == 0 &&
+                              i <= adWidgets.length) {
                             return Column(
                               children: [
                                 Container(
-                                  child:
-                                      adWidgets[(i ~/ numOfArticlesBeforeAds)],
+                                  child: adWidgets[i],
                                   padding: EdgeInsets.zero,
                                   margin: EdgeInsets.zero,
                                   height: 50,
