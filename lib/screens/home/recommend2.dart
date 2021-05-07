@@ -137,10 +137,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                               children: [
                                 Container(
                                   child: Advert(adverts: adverts),
-                                  padding: const EdgeInsets.all(10.0),
                                   margin: EdgeInsets.zero,
-                                  height: 350,
-                                  width: 400,
                                 ),
                               ],
                             );
@@ -149,10 +146,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                               children: [
                                 Container(
                                   child: Advert(adverts: adverts),
-                                  padding: const EdgeInsets.all(10.0),
                                   margin: EdgeInsets.zero,
-                                  height: 350,
-                                  width: 400,
                                 ),
                               ],
                             );
@@ -162,9 +156,5 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                         }),
                   )
                 : Container();
-    // :ElevatedButton(
-    //     child: Text("click here"),
-    //     onPressed: () => AdMobService.createBannerAd(),
-    //   );
   }
 }

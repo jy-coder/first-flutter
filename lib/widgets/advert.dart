@@ -14,12 +14,10 @@ class Advert extends StatefulWidget {
   _AdvertismentState createState() => _AdvertismentState();
 }
 
-class _AdvertismentState extends State<Advert>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _AdvertismentState extends State<Advert> {
   int randomNumber = 0;
-  int previousNumber;
+  int previousNumber = 0;
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +25,8 @@ class _AdvertismentState extends State<Advert>
     getPreviousNumber().then((_) {
       do {
         randomNumber = Random().nextInt(widget.adverts.length);
-        addPreviousNumber();
       } while (randomNumber == previousNumber);
+      addPreviousNumber();
     });
   }
 
@@ -39,7 +37,6 @@ class _AdvertismentState extends State<Advert>
 
   getPreviousNumber() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     bool checkValue = prefs.containsKey('previousNumber');
     setState(() {
       if (checkValue) {
@@ -58,14 +55,22 @@ class _AdvertismentState extends State<Advert>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          launch(widget.adverts[randomNumber].webLink);
-        },
-        child: FittedBox(
-          child: CachedNetworkImage(
-            imageUrl: widget.adverts[randomNumber].imgLink,
+      onTap: () {
+        launch(widget.adverts[randomNumber].webLink);
+      },
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Container(
+            decoration: BoxDecoration(
+                image: new DecorationImage(
+              fit: BoxFit.contain,
+              alignment: FractionalOffset.topCenter,
+              image: new NetworkImage(widget.adverts[randomNumber].imgLink),
+            )),
           ),
-          fit: BoxFit.fill,
-        ));
+        ),
+      ),
+    );
   }
 }
