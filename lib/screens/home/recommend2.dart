@@ -27,7 +27,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   List<String> categoryNames = [];
   List<Advertisement> adverts = [];
   List<AdWidget> adWidgets;
-  int numOfArticlesBeforeAds = 2;
+  int numOfArticlesBeforeAds = 5;
   bool _isLoading = false;
   bool _isUpdating = false;
 
