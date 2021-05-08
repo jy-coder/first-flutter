@@ -67,6 +67,25 @@ class Article {
       );
 }
 
+class Advertisement {
+  final String advCategory;
+  final int advId;
+  final String imgLink;
+  final String webLink;
+  Advertisement(
+      {@required this.advCategory,
+      @required this.advId,
+      @required this.imgLink,
+      @required this.webLink});
+
+  factory Advertisement.fromJson(Map<dynamic, dynamic> json) => Advertisement(
+        advCategory: json["adv_category"],
+        advId: json["adv_id"] as int,
+        imgLink: json["img_link"],
+        webLink: json["web_link"],
+      );
+}
+
 class Subscription {
   final int categoryId;
   final String categoryName;

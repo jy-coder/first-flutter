@@ -15,6 +15,24 @@ List<Article> jsonToArticleList(List<Map<String, dynamic>> data) {
   return articleList;
 }
 
+List<String> jsonToStringList(List<Map<String, dynamic>> data) {
+  List<String> keywordList = [];
+  for (Map<String, dynamic> d in data) {
+    keywordList.add(d["keywords"]);
+  }
+  return keywordList;
+}
+
+List<Advertisement> jsonToAdvertList(List<Map<String, dynamic>> data) {
+  List<Advertisement> advertList = [];
+  for (Map<String, dynamic> d in data) {
+    advertList.add(
+      Advertisement.fromJson(d),
+    );
+  }
+  return advertList;
+}
+
 String formatDate(String dateToFormat) {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   DateTime dateTime = dateFormat.parse(dateToFormat);
