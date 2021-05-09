@@ -60,7 +60,7 @@ class Auth with ChangeNotifier {
         EmailAuthProvider.credential(email: currentEmail, password: password);
     try {
       await _auth.currentUser.reauthenticateWithCredential(credential);
-      await _auth.sendPasswordResetEmail(email: "");
+      await _auth.sendPasswordResetEmail(email: currentEmail);
     } catch (err) {
       print(err);
       return err;
