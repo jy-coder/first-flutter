@@ -38,7 +38,7 @@ class _RegisterState extends State<Register> {
         LoadDialog.showLoadingDialog(context, _keyLoader);
         APIService().post(REGISTER_URL);
 
-        await Future.delayed(const Duration(seconds: 5), () {
+        await Future.delayed(const Duration(seconds: 3), () {
           Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
           Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         });

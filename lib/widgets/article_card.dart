@@ -178,13 +178,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                           imageUrl: widget.imageUrl,
                                           progressIndicatorBuilder: (context,
                                                   url, downloadProgress) =>
-                                              SizedBox(
-                                            child: CircularProgressIndicator(
-                                                value:
-                                                    downloadProgress.progress),
-                                            height: 30,
-                                            width: 30,
-                                          ),
+                                              Container(width: 30, height: 30),
                                           errorWidget: (context, ud, error) =>
                                               Icon(Icons.error),
                                         ),
