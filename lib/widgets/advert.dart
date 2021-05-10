@@ -65,7 +65,7 @@ class _AdvertismentState extends State<Advert> {
             decoration: BoxDecoration(
                 image: new DecorationImage(
               fit: BoxFit.contain,
-              alignment: FractionalOffset.Center,
+              alignment: FractionalOffset.center,
               image: new NetworkImage(widget.adverts[randomNumber].imgLink),
             )),
           ),
