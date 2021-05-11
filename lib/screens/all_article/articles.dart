@@ -18,8 +18,7 @@ class ArticlesTab extends StatefulWidget {
 
 class _ArticlesTabState extends State<ArticlesTab>
     with SingleTickerProviderStateMixin {
-  var _isInit = true;
-  var _isLoading = false;
+  bool _isLoading = true;
   List<Category> categories = [];
   List<Article> articles = [];
   TabController _tabController;
@@ -28,37 +27,49 @@ class _ArticlesTabState extends State<ArticlesTab>
   @override
   void initState() {
     super.initState();
-    if (categories.length != 0)
-      _tabController = TabController(vsync: this, length: categories.length);
+
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+
+    fetchCategoryAndArticles();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      aProvider.setCategory = "all";
+    });
   }
 
   @override
   void dispose() {
-    if (_tabController != null) _tabController.dispose();
     super.dispose();
+    _tabController.dispose();
   }
 
-  @override
-  void didChangeDependencies() async {
-    if (_isInit) {
+  void fetchCategoryAndArticles() async {
+    CategoryProvider cProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+
+    await cProvider.fetchCategories().then((_) {
       setState(() {
-        _isLoading = true;
+        categories = cProvider.items;
+        categoryNames = cProvider.categoryNames;
       });
+      _tabController =
+          TabController(vsync: this, length: cProvider.items.length)
+            ..addListener(() {
+              if (_tabController.indexIsChanging) {
+              } else {
+                aProvider.setCategory = categoryNames[_tabController.index];
+              }
+            });
+      aProvider.setCategories = cProvider.categoryNames;
+    });
 
-      CategoryProvider cProvider =
-          Provider.of<CategoryProvider>(context, listen: false);
-
-      cProvider.fetchCategories().then((_) {
-        setState(() {
-          _isLoading = false;
-          categories = cProvider.items;
-          categoryNames = cProvider.categoryNames;
-        });
-      });
-    }
-
-    _isInit = false;
-    super.didChangeDependencies();
+    await aProvider.fetchAll();
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -66,6 +77,7 @@ class _ArticlesTabState extends State<ArticlesTab>
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
+
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
@@ -95,9 +107,7 @@ class _ArticlesTabState extends State<ArticlesTab>
                   isScrollable: true,
                   unselectedLabelColor: Colors.blue,
                   onTap: (int index) {
-                    aProvider.setCategory(
-                      categoryNames[index],
-                    );
+                    aProvider.setCategory = categoryNames[index];
                   },
                   tabs: categories
                       .map(
@@ -114,7 +124,6 @@ class _ArticlesTabState extends State<ArticlesTab>
         ),
         body: !_isLoading
             ? TabBarView(
-                physics: NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: categories
                     .map(

@@ -26,6 +26,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
 
   @override
   void didChangeDependencies() {
+    ArticleProvider aProvider =
+        Provider.of<ArticleProvider>(context, listen: false);
+    aProvider.setTab("bookmark");
     super.didChangeDependencies();
   }
 

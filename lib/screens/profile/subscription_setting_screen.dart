@@ -49,10 +49,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     super.initState();
   }
 
-  void toggleButton() {
-    setState(() => edit = !edit);
-  }
-
   void refreshSubscription(BuildContext context) async {
     _isInit = true;
     didChangeDependencies();
@@ -61,74 +57,43 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Future<void> updateSetting(BuildContext context) async {
     SubscriptionProvider sProvider =
         Provider.of<SubscriptionProvider>(context, listen: false);
-    int responseCode = await sProvider.updateSubscription(checkboxes);
-
-    Flushbar(
-      message: responseCode == 500
-          ? "Error updating"
-          : responseCode == 200
-              ? "Successfully update"
-              : null,
-      duration: Duration(seconds: 3),
-      isDismissible: false,
-    )..show(context);
-
-    if (responseCode == 200) {
-      toggleButton();
-    }
+    sProvider.updateSubscription(checkboxes);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        await updateSetting(context);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
           title: Text(
             "",
           ),
-          actions: <Widget>[
-            !edit
-                ? IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => toggleButton(),
-                  )
-                : Row(children: [
-                    IconButton(
-                        icon: Icon(Icons.save),
-                        onPressed: () async {
-                          await updateSetting(context);
-                        }),
-                    TextButton(
-                        child: Text("Cancel"),
-                        style: TextButton.styleFrom(
-                          primary: Colors.blue,
-                        ),
-                        onPressed: () {
-                          refreshSubscription(context);
-                          toggleButton();
-                        })
-                  ])
-          ]),
-      body: Container(
-        padding: EdgeInsets.only(top: 5),
-        child: Column(
-          children: [
-            !_isLoading
-                ? Expanded(
-                    child: CheckBox(
-                      edit: edit,
-                      refreshSubscription: refreshSubscription,
-                      checkboxes: checkboxes,
-                      categories: categories,
+        ),
+        body: Container(
+          padding: EdgeInsets.only(top: 5),
+          child: Column(
+            children: [
+              !_isLoading
+                  ? Expanded(
+                      child: CheckBox(
+                        refreshSubscription: refreshSubscription,
+                        checkboxes: checkboxes,
+                        categories: categories,
+                      ),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.grey,
+                      ),
                     ),
-                  )
-                : Center(
-                    child: CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                  )),
-          ],
+            ],
+          ),
         ),
       ),
-      // drawer: args == "settings" ? AppDrawer() : null,
     );
   }
 }

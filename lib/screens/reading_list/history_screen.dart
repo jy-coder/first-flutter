@@ -46,7 +46,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       _isLoading = false;
     });
-    // });
   }
 
   @override

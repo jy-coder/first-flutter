@@ -30,7 +30,7 @@ class _FilterState extends State<Filter> {
       if (aProvider.filter['category'] != "")
         return Text(aProvider.filter['category']);
     }
-    return Text("Not Setted");
+    return Text("Set Filter");
   }
 
   @override
@@ -60,7 +60,7 @@ class _FilterState extends State<Filter> {
                               aProvider.resetFilter();
                             },
                             child: Text(
-                              "Clear",
+                              "Clear Filter",
                               style: TextStyle(
                                 color: Colors.grey,
                               ),

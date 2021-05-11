@@ -170,7 +170,7 @@ class _ArticleCardState extends State<ArticleCard> {
                               ),
                               SizedBox(height: 10),
                               aProvider.tab != "history" &&
-                                      aProvider.tab != "Setting"
+                                      aProvider.tab != "bookmark"
                                   ? FittedBox(
                                       child: Align(
                                         alignment: Alignment.center,
@@ -239,7 +239,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                   children: [
                                     Text(widget.source),
                                     Text(
-                                      aProvider.subTab == "History" &&
+                                      aProvider.tab == "history" &&
                                               widget.historyDate != null
                                           ? "Viewed ${formatDate(widget.historyDate)}"
                                           : formatDate(widget.pubDate),
@@ -250,7 +250,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                   child: Row(
                                     children: [
                                       Flexible(
-                                        child: aProvider.tab != "History" &&
+                                        child: aProvider.tab != "history" &&
                                                 Auth().currentUser != null
                                             ? Row(children: [
                                                 Expanded(

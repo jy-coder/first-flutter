@@ -20,6 +20,8 @@ class ArticleProvider with ChangeNotifier {
   List<Article> _searchItems = [];
   List<Article> _relatedArticles = [];
   bool _filterOpen = false;
+  Map<String, List<Article>> _articles = {};
+  List<String> _categories = [];
 
   List<Article> get items {
     return [..._items];
@@ -47,6 +49,10 @@ class ArticleProvider with ChangeNotifier {
 
   int get articleId {
     return _currentArticleId;
+  }
+
+  Map<String, List<Article>> get articles {
+    return _articles;
   }
 
   void resetFilter() {
@@ -108,11 +114,6 @@ class ArticleProvider with ChangeNotifier {
     return _categoryName;
   }
 
-  void setCategory(String categoryName) {
-    _categoryName = categoryName;
-    filterItemsCategory(categoryName);
-  }
-
   void filterItemsCategory(String categoryName) {
     if (categoryName != "all")
       _items =
@@ -123,14 +124,32 @@ class ArticleProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAll(String category) async {
-    List<Map<String, dynamic>> data =
-        await APIService().get("$ARTICLES_URL/?type=$_tab&category=$category");
-    if (category == "all") {
-      _allItems = jsonToArticleList(data);
-    }
+  set setCategories(List<String> categories) {
+    _categories = categories;
+    notifyListeners();
+  }
 
-    filterItemsCategory(_categoryName);
+  set setCategory(String categoryName) {
+    _categoryName = categoryName;
+    filterItemsCategory(categoryName);
+  }
+
+  Future<void> fetchAll() async {
+    List<Map<String, dynamic>> data =
+        await APIService().get("$ARTICLES_URL/?type=$_tab");
+
+    _allItems = jsonToArticleList(data);
+
+    for (int i = 0; i < _categories.length; i++) {
+      if (_categories[i] == "all") {
+        _articles[_categories[i]] = _allItems;
+        _items = _allItems;
+      } else {
+        _articles[_categories[i]] = _allItems
+            .where((Article a) => a.category == _categories[i])
+            .toList();
+      }
+    }
   }
 
   void setPageViewArticle(int id) {
@@ -177,8 +196,6 @@ class ArticleProvider with ChangeNotifier {
   void filterBookmark(int articleId) {
     if (_tab == "all_articles") {
       removeItemFromList(articleId);
-    } else if (_tab == "reading_list") {
-      removeItemFromList(articleId);
     }
     notifyListeners();
   }
@@ -198,6 +215,8 @@ class ArticleProvider with ChangeNotifier {
 
   void removeBookmarkIds(int bookmarkId) {
     _bookmarkIds.remove(bookmarkId);
+    if (_tab == "bookmark")
+      _items.removeWhere((item) => item.articleId == bookmarkId);
     notifyListeners();
   }
 
