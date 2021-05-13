@@ -60,11 +60,9 @@ class _LoginState extends State<LoginScreen> {
 
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Sign in'),
         actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Register'),
+          TextButton(
+            child: Text('Register'),
             onPressed: () => widget.toggleView(),
           ),
         ],

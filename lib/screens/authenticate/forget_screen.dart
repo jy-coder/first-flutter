@@ -21,7 +21,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
   String email = '';
 
   Future<void> _handleForgetPassword(BuildContext context) async {
-    dynamic result = await _auth.resetPasswordOutside(email);
+    dynamic result = await _auth.resetForgotPassword(email);
     if (result == null) {
       print("test");
       var success = SuccessDialog(

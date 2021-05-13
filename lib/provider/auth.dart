@@ -67,7 +67,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future resetPasswordOutside(String email) async {
+  Future resetForgotPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } catch (err) {
