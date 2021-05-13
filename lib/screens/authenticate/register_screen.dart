@@ -51,11 +51,9 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Sign in'),
         actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Sign In'),
+          TextButton(
+            child: Text('Sign In'),
             onPressed: () => widget.toggleView(),
           ),
         ],

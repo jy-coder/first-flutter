@@ -5,6 +5,7 @@ import 'package:newheadline/provider/subscription.dart';
 import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/screens/authenticate/authenticate.dart';
 import 'package:newheadline/screens/all_article/articles_screen.dart';
+import 'package:newheadline/screens/authenticate/forget_screen.dart';
 import 'package:newheadline/screens/authenticate/reset_screen.dart';
 import 'package:newheadline/screens/reading_list/bookmark_screen.dart';
 import 'package:newheadline/screens/all_article/articles.dart';
@@ -108,6 +109,7 @@ class _MyAppState extends State<MyApp> {
             DateFilter.routeName: (ctx) => DateFilter(),
             SiteFilter.routeName: (ctx) => SiteFilter(),
             CategoryFilter.routeName: (ctx) => CategoryFilter(),
+            ForgetScreen.routeName: (ctx) => ForgetScreen(),
           }),
     );
   }

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/provider/theme.dart';
+import 'package:newheadline/screens/authenticate/forget_screen.dart';
 import 'package:newheadline/screens/authenticate/home_screen.dart';
 import 'package:newheadline/shared/error_dialog.dart';
 import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/shared/constants.dart';
 import 'package:newheadline/shared/load_dialog.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/login";
   final Function toggleView;
+
   LoginScreen({this.toggleView});
 
   @override
@@ -47,17 +51,18 @@ class _LoginState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider tProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // drawer: AppDrawer(),
 
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Sign in'),
         actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Register'),
+          TextButton(
+            child: Text('Register'),
             onPressed: () => widget.toggleView(),
           ),
         ],
@@ -105,6 +110,15 @@ class _LoginState extends State<LoginScreen> {
                         _handleSubmit(context);
                       }
                     }),
+                FlatButton(
+                  textColor:
+                      tProvider.theme == "dark" ? Colors.white : Colors.black,
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ForgetScreen())),
+                  child: Text("Forget Password?"),
+                  shape:
+                      CircleBorder(side: BorderSide(color: Colors.transparent)),
+                )
               ],
             ),
           ),

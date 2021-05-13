@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/theme.dart';
-import 'package:newheadline/shared/textstyle.dart';
+import 'package:newheadline/screens/authenticate/forget_screen.dart';
+import 'package:newheadline/screens/authenticate/login_screen.dart';
 import 'package:provider/provider.dart';
 
-class ErrorDialog extends StatelessWidget {
+class SuccessDialog extends StatelessWidget {
   String _content;
 
-  ErrorDialog({String content}) {
+  SuccessDialog({String content}) {
     this._content = content;
   }
 
@@ -15,18 +16,15 @@ class ErrorDialog extends StatelessWidget {
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     return AlertDialog(
-      title: Text(''),
       content: Text(
         this._content,
       ),
       actions: <Widget>[
         new FlatButton(
           textColor: tProvider.theme == "dark" ? Colors.white : Colors.black,
-          child: new Text(
-            "Ok",
-          ),
+          child: new Text("Ok"),
           onPressed: () {
-            Navigator.pop(context, true);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
       ],
