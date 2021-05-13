@@ -67,6 +67,15 @@ class Auth with ChangeNotifier {
     }
   }
 
+  Future resetPasswordOutside(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (err) {
+      print(err);
+      return err;
+    }
+  }
+
   // sign out
   Future signOut() async {
     try {

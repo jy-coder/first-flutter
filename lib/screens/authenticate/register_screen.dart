@@ -51,7 +51,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('Sign in'),
+        title: Text('Register'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),

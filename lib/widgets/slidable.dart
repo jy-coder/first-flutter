@@ -75,6 +75,7 @@ class _SlidableWidgetState extends State<SlidableWidget>
   void onDragEnd(DragEndDetails details) {
     if (_controller.value > widget.actionThreshold) {
       widget.onSlided();
+      size = Size(0, 0);
     }
     _controller.fling(velocity: -1);
   }
