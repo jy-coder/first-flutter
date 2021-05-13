@@ -59,10 +59,13 @@ class _FilterState extends State<Filter> {
                             onPressed: () {
                               aProvider.resetFilter();
                             },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(10),
+                            ),
                             child: Text(
                               "Clear Filter",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.blue[400],
                               ),
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/single_article/article_screen.dart';
 import 'package:newheadline/widgets/bookmark_button.dart';
 import 'package:newheadline/widgets/like_button.dart';
@@ -64,16 +65,25 @@ class _ArticlePageViewScreenState extends State<ArticlePageViewScreen> {
         : Scaffold(
             appBar: AppBar(
               actions: [
-                Container(
-                  child: Row(
-                    children: [
-                      LikeBtn(aProvider.articleId),
-                      BookmarkBtn(aProvider.articleId),
-                      ShareBtn(link: aProvider.shareLink),
-                      CustomizeThemeButton(),
-                    ],
-                  ),
-                ),
+                Auth().currentUser != null
+                    ? Container(
+                        child: Row(
+                          children: [
+                            LikeBtn(aProvider.articleId),
+                            BookmarkBtn(aProvider.articleId),
+                            ShareBtn(link: aProvider.shareLink),
+                            CustomizeThemeButton(),
+                          ],
+                        ),
+                      )
+                    : Container(
+                        child: Row(
+                          children: [
+                            ShareBtn(link: aProvider.shareLink),
+                            CustomizeThemeButton(),
+                          ],
+                        ),
+                      ),
               ],
             ),
             body: _isLoading
