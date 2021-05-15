@@ -51,6 +51,7 @@ class _ArticlesTabState extends State<ArticlesTab>
         Provider.of<ArticleProvider>(context, listen: false);
 
     await cProvider.fetchCategories().then((_) {
+      if (!mounted) return;
       setState(() {
         categories = cProvider.items;
         categoryNames = cProvider.categoryNames;
@@ -67,6 +68,7 @@ class _ArticlesTabState extends State<ArticlesTab>
     });
 
     await aProvider.fetchAll();
+
     setState(() {
       _isLoading = false;
     });

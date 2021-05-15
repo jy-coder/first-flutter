@@ -33,7 +33,7 @@ List<Advertisement> jsonToAdvertList(List<Map<String, dynamic>> data) {
   return advertList;
 }
 
-String formatDate(String dateToFormat) {
+String formatTimeAgo(String dateToFormat) {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   DateTime dateTime = dateFormat.parse(dateToFormat);
   final now = DateTime.now();
@@ -42,8 +42,12 @@ String formatDate(String dateToFormat) {
   final midnight = new DateTime(now.year, now.month, now.day, 23, 59);
   final dateCheck = DateTime(dateTime.year, dateTime.month, dateTime.day);
   if (dateCheck != today) timeAgo = timeago.format(dateTime, clock: midnight);
-  // print(dateTime.toString());
   return timeAgo;
+}
+
+String formatDate(String dateToFormat) {
+  String date = DateFormat.MMMMd('en_US').format(DateTime.now());
+  return date;
 }
 
 String capitalize(String toCapitalize) {

@@ -62,7 +62,12 @@ class _LoginState extends State<LoginScreen> {
         elevation: 0.0,
         actions: <Widget>[
           TextButton(
-            child: Text('Register'),
+            child: Text(
+              'Register',
+              style: TextStyle(
+                color: Colors.blue[500],
+              ),
+            ),
             onPressed: () => widget.toggleView(),
           ),
         ],

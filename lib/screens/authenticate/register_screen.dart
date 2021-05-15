@@ -53,7 +53,12 @@ class _RegisterState extends State<Register> {
         elevation: 0.0,
         actions: <Widget>[
           TextButton(
-            child: Text('Sign In'),
+            child: Text(
+              'Sign In',
+              style: TextStyle(
+                color: Colors.blue[500],
+              ),
+            ),
             onPressed: () => widget.toggleView(),
           ),
         ],

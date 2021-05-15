@@ -143,28 +143,6 @@ class _ArticleCardState extends State<ArticleCard> {
                                     ? Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
-                                          Flexible(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Similar To ${widget.similarHeadline}",
-                                                  style: CustomTextStyle.italic(
-                                                      context,
-                                                      tProvider.fontSize),
-                                                ),
-                                                Text(
-                                                  "Similarity ${widget.similarity}",
-                                                  style: CustomTextStyle.italic(
-                                                      context,
-                                                      tProvider.fontSize),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
                                       )
                                     : Container(height: 0),
                               ),
@@ -238,12 +216,10 @@ class _ArticleCardState extends State<ArticleCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(widget.source),
-                                    Text(
-                                      aProvider.tab == "history" &&
-                                              widget.historyDate != null
-                                          ? "Viewed ${formatDate(widget.historyDate)}"
-                                          : formatDate(widget.pubDate),
-                                    ),
+                                    Text(aProvider.tab == "history" &&
+                                            widget.historyDate != null
+                                        ? "Viewed ${formatTimeAgo(widget.historyDate)}"
+                                        : "${formatTimeAgo(widget.pubDate)} | ${formatDate(widget.pubDate)}"),
                                   ],
                                 ),
                                 Flexible(
