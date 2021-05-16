@@ -34,9 +34,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   @override
   void initState() {
     _fetchRecommend();
-
     _fetchAds();
-
     super.initState();
   }
 
@@ -110,50 +108,38 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                 ? RefreshIndicator(
                     onRefresh: () => refreshHome(),
                     child: ListView.separated(
-                        padding: const EdgeInsets.all(10.0),
-                        itemCount: articles.length,
-                        itemBuilder: (ctx, i) {
-                          return ArticleCard(
-                            articles[i].articleId,
-                            articles[i].title,
-                            articles[i].imageUrl,
-                            articles[i].summary,
-                            articles[i].link,
-                            articles[i].description,
-                            articles[i].pubDate,
-                            articles[i].source,
-                            articles[i].category,
-                            similarHeadline: articles[i].similarHeadline,
-                            similarity: articles[i].similarity,
+                      padding: const EdgeInsets.all(10.0),
+                      itemCount: articles.length,
+                      itemBuilder: (ctx, i) {
+                        return ArticleCard(
+                          articles[i].articleId,
+                          articles[i].title,
+                          articles[i].imageUrl,
+                          articles[i].summary,
+                          articles[i].link,
+                          articles[i].description,
+                          articles[i].pubDate,
+                          articles[i].source,
+                          articles[i].category,
+                          similarHeadline: articles[i].similarHeadline,
+                          similarity: articles[i].similarity,
+                        );
+                      },
+                      separatorBuilder: (context, i) {
+                        if (i % numOfArticlesBeforeAds == 0 && i != 0) {
+                          return Column(
+                            children: [
+                              Container(
+                                child: Advert(adverts: adverts),
+                                margin: EdgeInsets.zero,
+                              ),
+                            ],
                           );
-                        },
-                        separatorBuilder: (context, i) {
-                          if (i % numOfArticlesBeforeAds -
-                                      (numOfArticlesBeforeAds - 1) ==
-                                  0 &&
-                              i != 0 &&
-                              numOfArticlesBeforeAds > 1) {
-                            return Column(
-                              children: [
-                                Container(
-                                  child: Advert(adverts: adverts),
-                                  margin: EdgeInsets.zero,
-                                ),
-                              ],
-                            );
-                          } else if (numOfArticlesBeforeAds == 1) {
-                            return Column(
-                              children: [
-                                Container(
-                                  child: Advert(adverts: adverts),
-                                  margin: EdgeInsets.zero,
-                                ),
-                              ],
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }),
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                   )
                 : Container();
   }

@@ -21,7 +21,6 @@ class _AdvertismentState extends State<Advert> {
   @override
   void initState() {
     super.initState();
-    // ignore: unnecessary_statements
     getPreviousNumber().then((_) {
       do {
         randomNumber = Random().nextInt(widget.adverts.length);
@@ -54,23 +53,25 @@ class _AdvertismentState extends State<Advert> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        launch(widget.adverts[randomNumber].webLink);
-      },
-      child: Center(
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Container(
-            decoration: BoxDecoration(
-                image: new DecorationImage(
-              fit: BoxFit.contain,
-              alignment: FractionalOffset.center,
-              image: new NetworkImage(widget.adverts[randomNumber].imgLink),
-            )),
-          ),
-        ),
-      ),
-    );
+    return widget.adverts.length > 0
+        ? GestureDetector(
+            onTap: () {
+              launch(widget.adverts[randomNumber].webLink);
+            },
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    fit: BoxFit.contain,
+                    alignment: FractionalOffset.center,
+                    image: NetworkImage(widget.adverts[randomNumber].imgLink),
+                  )),
+                ),
+              ),
+            ),
+          )
+        : Container();
   }
 }
