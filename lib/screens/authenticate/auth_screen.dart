@@ -20,12 +20,12 @@ class _AuthScreenState extends State<AuthScreen> {
       'title': 'daily_read',
     },
     {
-      'page': TrendScreen(),
-      'title': 'trend',
-    },
-    {
       'page': ArticlesTab(),
       'title': 'all_articles',
+    },
+    {
+      'page': TrendScreen(),
+      'title': 'trend',
     },
     {
       'page': ProfileScreen(),
@@ -71,12 +71,12 @@ class _AuthScreenState extends State<AuthScreen> {
             label: 'For You',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.trending_up),
-            label: "Trend",
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.chrome_reader_mode_outlined),
             label: "Headlines",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.trending_up),
+            label: "Trend",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

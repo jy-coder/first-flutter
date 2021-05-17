@@ -28,6 +28,7 @@ class _CategoryFilterState extends State<CategoryFilter> {
     String categoryFilter = aProvider.filter['category'];
     setState(() {
       options = cProvider.categoryNames;
+      options.removeWhere((item) => item == 'all');
       if (categoryFilter != "") {
         isChecked = stringToList(categoryFilter);
       }
@@ -48,7 +49,9 @@ class _CategoryFilterState extends State<CategoryFilter> {
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
                     activeColor: Colors.blue,
-                    title: Text(options[index]),
+                    title: Text(
+                      capitalize(options[index]),
+                    ),
                     value: isChecked.contains(options[index]),
                     onChanged: (bool value) {
                       if (value) {

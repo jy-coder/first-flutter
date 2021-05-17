@@ -84,6 +84,8 @@ class _ArticlesTabState extends State<ArticlesTab>
       length: categories.length,
       child: Scaffold(
         appBar: AppBar(
+          title: Text("Headlines"),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: Icon(
@@ -100,7 +102,6 @@ class _ArticlesTabState extends State<ArticlesTab>
               },
             )
           ],
-          centerTitle: true,
           bottom: !_isLoading
               ? TabBar(
                   indicatorColor:

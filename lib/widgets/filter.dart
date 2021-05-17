@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newheadline/provider/article.dart';
+import 'package:newheadline/provider/theme.dart';
 import 'package:newheadline/widgets/category_filter.dart';
 import 'package:newheadline/widgets/date_filter.dart';
 import 'package:newheadline/widgets/site_filter.dart';
@@ -11,7 +12,7 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  List<String> displayText = ["Date", "New Site", "Category"];
+  List<String> displayText = ["Day", "Source", "Category"];
   List<String> routeName = [
     DateFilter.routeName,
     SiteFilter.routeName,
@@ -37,6 +38,8 @@ class _FilterState extends State<Filter> {
   Widget build(BuildContext context) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
+    ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
+
     return IconButton(
       icon: Icon(Icons.more_vert),
       onPressed: () {
@@ -54,19 +57,17 @@ class _FilterState extends State<Filter> {
                     children: [
                       Expanded(
                           child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          TextButton(
+                          RaisedButton(
+                            color: tProvider.theme == "light"
+                                ? Colors.white
+                                : Colors.grey[900],
                             onPressed: () {
                               aProvider.resetFilter();
                             },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.all(10),
-                            ),
                             child: Text(
                               "Clear Filter",
-                              style: TextStyle(
-                                color: Colors.blue[400],
-                              ),
                             ),
                           ),
                           Expanded(

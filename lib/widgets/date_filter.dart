@@ -11,13 +11,13 @@ class DateFilter extends StatefulWidget {
 class _DateFilterState extends State<DateFilter> {
   String _selectedValue = "";
   List<String> options = [
-    'One Day',
-    'Two Days',
-    'Three Days',
-    'Four Days',
-    'Five Days',
-    'Six Days',
-    'Seven Days'
+    '1 Day',
+    '2 Days',
+    '3 Days',
+    '4 Days',
+    '5 Days',
+    '6 Days',
+    '7 Days'
   ];
 
   @override

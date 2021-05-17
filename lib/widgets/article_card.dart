@@ -218,8 +218,8 @@ class _ArticleCardState extends State<ArticleCard> {
                                     Text(widget.source),
                                     Text(aProvider.tab == "history" &&
                                             widget.historyDate != null
-                                        ? "Viewed ${formatTimeAgo(widget.historyDate)}"
-                                        : "${formatTimeAgo(widget.pubDate)} | ${formatDate(widget.pubDate)}"),
+                                        ? "Viewed ${formatTimeAgo(widget.historyDate)} | ${formatDate(widget.pubDate)}"
+                                        : "${formatTimeAgo(widget.pubDate)} "),
                                   ],
                                 ),
                                 Flexible(
