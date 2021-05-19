@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newheadline/models/models.dart';
 import 'package:newheadline/provider/article.dart';
 import 'package:newheadline/provider/category.dart';
 import 'package:newheadline/provider/subscription.dart';
@@ -20,20 +21,15 @@ import 'package:newheadline/provider/auth.dart';
 import 'package:newheadline/screens/home/display_screen.dart';
 import 'package:newheadline/screens/single_article/related_screen.dart';
 import 'package:newheadline/shared/theme.dart';
-import 'package:newheadline/utils/urls.dart';
 import 'package:newheadline/widgets/category_filter.dart';
 import 'package:newheadline/widgets/date_filter.dart';
 import 'package:newheadline/widgets/site_filter.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await MobileAds.instance.initialize();
-  await DotEnv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: Auth()),
@@ -56,6 +52,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _getStorage();
+    Advertisement.clearAdvIndex();
   }
 
   @override

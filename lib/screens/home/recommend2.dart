@@ -126,7 +126,9 @@ class _RecommendScreen2State extends State<RecommendScreen2>
                         );
                       },
                       separatorBuilder: (context, i) {
-                        if (i % numOfArticlesBeforeAds == 0 && i != 0) {
+                        if (adverts.length > 0 &&
+                            i % numOfArticlesBeforeAds == 0 &&
+                            i != 0) {
                           return Column(
                             children: [
                               Container(

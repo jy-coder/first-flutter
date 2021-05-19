@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newheadline/models/models.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +23,7 @@ class _AdvertismentState extends State<Advert> {
     getPreviousNumber().then((_) {
       do {
         randomNumber = Random().nextInt(widget.adverts.length);
-      } while (randomNumber == previousNumber);
+      } while (randomNumber == previousNumber && widget.adverts.length != 1);
       addPreviousNumber();
     });
   }
@@ -53,25 +52,23 @@ class _AdvertismentState extends State<Advert> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.adverts.length > 0
-        ? GestureDetector(
-            onTap: () {
-              launch(widget.adverts[randomNumber].webLink);
-            },
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    fit: BoxFit.contain,
-                    alignment: FractionalOffset.center,
-                    image: NetworkImage(widget.adverts[randomNumber].imgLink),
-                  )),
-                ),
-              ),
-            ),
-          )
-        : Container();
+    return GestureDetector(
+      onTap: () {
+        launch(widget.adverts[randomNumber].webLink);
+      },
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.contain,
+              alignment: FractionalOffset.center,
+              image: NetworkImage(widget.adverts[randomNumber].imgLink),
+            )),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Category with ChangeNotifier {
   final int categoryId;
@@ -84,6 +85,11 @@ class Advertisement {
         imgLink: json["img_link"],
         webLink: json["web_link"],
       );
+
+  static clearAdvIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('previousNumber');
+  }
 }
 
 class Subscription {
