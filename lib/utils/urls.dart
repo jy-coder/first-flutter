@@ -1,5 +1,5 @@
-const HOST = "http://10.0.2.2:8000/";
-const WEBSOCKET_URL = "ws://10.0.2.2:8000/ws";
+const HOST = "https://headline.southeastasia.cloudapp.azure.com/";
+const WEBSOCKET_URL = "ws://headline.southeastasia.cloudapp.azure.com/ws";
 
 const CATEGORIES_URL = "${HOST}category";
 const CATEGORY_URL = "";
