@@ -50,6 +50,8 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
         Provider.of<ArticleProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
+        title: Text("For You"),
+        centerTitle: true,
         actions: [
           Filter(),
         ],
