@@ -41,7 +41,7 @@ String formatDate(String dateToFormat) {
   String dateNow = DateFormat.MMMMd('en_US').format(DateTime.now());
   String oneDayAgo = DateFormat.MMMMd('en_US')
       .format(DateTime.now().subtract(const Duration(days: 1)));
-  if (date == dateNow || date == oneDayAgo)
+  if (date == dateNow)
     return timeAgo;
   else
     return date;
