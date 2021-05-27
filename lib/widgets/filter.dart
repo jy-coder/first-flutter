@@ -24,7 +24,7 @@ class _FilterState extends State<Filter> {
         Provider.of<ArticleProvider>(context, listen: false);
     if (displayText[index] == "Day") {
       if (aProvider.filter['date'] != "") return Text(aProvider.filter['date']);
-    } else if (displayText[index] == "New Site") {
+    } else if (displayText[index] == "Source") {
       if (aProvider.filter['newssite'] != "")
         return Text(aProvider.filter['newssite']);
     } else if (displayText[index] == "Category") {

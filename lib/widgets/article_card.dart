@@ -190,7 +190,7 @@ class _ArticleCardState extends State<ArticleCard> {
               children: [
                 Flexible(
                   child: Container(
-                    margin: EdgeInsets.all(15),
+                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -199,6 +199,10 @@ class _ArticleCardState extends State<ArticleCard> {
                             style: defaultStyle,
                             children: <TextSpan>[
                               TextSpan(
+                                style: CustomTextStyle.small(
+                                  context,
+                                  tProvider.fontSize,
+                                ),
                                 text: truncateWithEllipsis(
                                   100,
                                   widget.summary,
@@ -218,8 +222,8 @@ class _ArticleCardState extends State<ArticleCard> {
                                     Text(widget.source),
                                     Text(aProvider.tab == "history" &&
                                             widget.historyDate != null
-                                        ? "Viewed ${formatTimeAgo(widget.historyDate)} | ${formatDate(widget.pubDate)}"
-                                        : "${formatTimeAgo(widget.pubDate)} "),
+                                        ? "Viewed ${formatDate(widget.historyDate)}"
+                                        : "${formatDate(widget.pubDate)}"),
                                   ],
                                 ),
                                 Flexible(

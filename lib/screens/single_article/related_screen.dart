@@ -88,7 +88,7 @@ class _RelatedScreenState extends State<RelatedScreen> {
     ThemeProvider tProvider = Provider.of<ThemeProvider>(context, listen: true);
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: true);
-    String timeAgo = formatTimeAgo(widget.settings.pubDate);
+    String timeAgo = formatDate(widget.settings.pubDate);
     return Scaffold(
         appBar: AppBar(actions: [
           Container(

@@ -75,7 +75,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String timeAgo = formatTimeAgo(widget.pubDate);
+    String timeAgo = formatDate(widget.pubDate);
     ThemeProvider tProvider =
         Provider.of<ThemeProvider>(context, listen: false);
     ArticleProvider aProvider =
