@@ -34,8 +34,8 @@ class _RecommendScreen1State extends State<RecommendScreen1> {
 
     cProvider.fetchSubscriptionCategories().then((_) {
       setState(() {
-        _isLoading = false;
         categories = cProvider.categoryNames;
+        _isLoading = false;
       });
     });
 

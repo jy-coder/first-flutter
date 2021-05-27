@@ -43,7 +43,6 @@ class SubscriptionProvider with ChangeNotifier {
     }
 
     _items = items;
-
     _checkBoxes = checkBoxes;
   }
 

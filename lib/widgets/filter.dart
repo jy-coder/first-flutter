@@ -22,7 +22,7 @@ class _FilterState extends State<Filter> {
   Widget _getFilter(index) {
     ArticleProvider aProvider =
         Provider.of<ArticleProvider>(context, listen: false);
-    if (displayText[index] == "Date") {
+    if (displayText[index] == "Day") {
       if (aProvider.filter['date'] != "") return Text(aProvider.filter['date']);
     } else if (displayText[index] == "New Site") {
       if (aProvider.filter['newssite'] != "")
