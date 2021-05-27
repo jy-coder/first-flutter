@@ -57,6 +57,7 @@ class _RecommendScreen2State extends State<RecommendScreen2>
   }
 
   void _fetchRecommend() async {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
     });

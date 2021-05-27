@@ -13,7 +13,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String email = '';
   List<String> profileList = [
+    '',
     "Category Subscription",
     "Bookmark",
     "History",
@@ -21,12 +23,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "Logout"
   ];
   List<String> navigator = [
+    '',
     SubscriptionScreen.routeName,
     BookmarkScreen.routeName,
     HistoryScreen.routeName,
     ResetPasswordScreen.routeName,
     HomeScreen.routeName,
   ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      profileList[0] = Auth().currentUser.email;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +60,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       navigator[index],
                     );
                   } else {
-                    Navigator.of(context).pushNamed(
-                      navigator[index],
-                    );
+                    if (index != 0)
+                      Navigator.of(context).pushNamed(
+                        navigator[index],
+                      );
                   }
                 },
-                child: ListTile(
-                  title: Text(
-                    profileList[index],
-                  ),
-                ),
+                child: index != 0
+                    ? ListTile(
+                        title: Text(
+                          profileList[index],
+                        ),
+                      )
+                    : TextButton(
+                        child: Text(
+                          profileList[index],
+                        ),
+                        onPressed: null),
               ),
               Divider(),
             ],

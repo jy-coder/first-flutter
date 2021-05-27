@@ -24,6 +24,7 @@ class _TrendScreenState extends State<TrendScreen>
   }
 
   void _fetchTrend() async {
+    if (!mounted) return;
     ArticleProvider hProvider =
         Provider.of<ArticleProvider>(context, listen: false);
 
@@ -35,6 +36,7 @@ class _TrendScreenState extends State<TrendScreen>
 
   @override
   void dispose() {
+    if (!mounted) return;
     if (_tabController != null) {
       _tabController.dispose();
     }
