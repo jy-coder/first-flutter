@@ -24,13 +24,12 @@ class _RecommendScreen1State extends State<RecommendScreen1> {
 
   @override
   void didChangeDependencies() {
-    if (!mounted) return;
     setState(() {
       _isLoading = true;
     });
 
     CategoryProvider cProvider =
-        Provider.of<CategoryProvider>(context, listen: true);
+        Provider.of<CategoryProvider>(context, listen: false);
 
     cProvider.fetchSubscriptionCategories().then((_) {
       setState(() {

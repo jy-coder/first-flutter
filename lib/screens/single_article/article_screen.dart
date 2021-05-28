@@ -110,8 +110,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   padding: EdgeInsets.all(5),
                   child: Column(
                     children: [
-                      Text(
+                      SelectableText(
                         widget.title,
+                        toolbarOptions: ToolbarOptions(copy: true),
                         style:
                             CustomTextStyle.title1(context, tProvider.fontSize),
                         textAlign: TextAlign.center,
@@ -129,7 +130,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                   Text(
                                     timeAgo,
                                     style: CustomTextStyle.small(
-                                        context, tProvider.fontSize),
+                                      context,
+                                      tProvider.fontSize,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -140,7 +143,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                   Text(
                                     widget.source,
                                     style: CustomTextStyle.small(
-                                        context, tProvider.fontSize),
+                                      context,
+                                      tProvider.fontSize,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -152,10 +157,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
-                        child: Text(
+                        child: SelectableText(
                           widget.description,
                           style: CustomTextStyle.normal(
-                              context, tProvider.fontSize),
+                            context,
+                            tProvider.fontSize,
+                          ),
+                          toolbarOptions: ToolbarOptions(copy: true),
                         ),
                       ),
                       aProvider.relatedArticle.length > 0
@@ -181,8 +189,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                             textAlign: TextAlign.start,
                                             style:
                                                 CustomTextStyle.underlinelink(
-                                                    context,
-                                                    tProvider.fontSize),
+                                              context,
+                                              tProvider.fontSize,
+                                            ),
                                           ),
                                           SizedBox(height: 10)
                                         ],

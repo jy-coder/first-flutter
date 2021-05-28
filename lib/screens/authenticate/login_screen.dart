@@ -33,7 +33,7 @@ class _LoginState extends State<LoginScreen> {
     if (result != null) {
       await _auth.currentUser.getIdToken().then((String token) async {
         LoadDialog.showLoadingDialog(context, _keyLoader);
-        await Future.delayed(const Duration(seconds: 7), () {
+        await Future.delayed(const Duration(seconds: 3), () {
           Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
           Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         });
@@ -84,6 +84,8 @@ class _LoginState extends State<LoginScreen> {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
+                  enableInteractiveSelection: false,
+                  cursorColor: Colors.blue,
                   decoration: textInputDecoration.copyWith(
                     hintText: 'Email',
                   ),
@@ -94,6 +96,8 @@ class _LoginState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  enableInteractiveSelection: false,
+                  cursorColor: Colors.blue,
                   decoration: textInputDecoration.copyWith(
                     hintText: 'Password',
                   ),

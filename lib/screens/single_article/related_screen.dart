@@ -130,11 +130,12 @@ class _RelatedScreenState extends State<RelatedScreen> {
                   padding: EdgeInsets.all(5),
                   child: Column(
                     children: [
-                      Text(
+                      SelectableText(
                         widget.settings.title,
                         style:
                             CustomTextStyle.title1(context, tProvider.fontSize),
                         textAlign: TextAlign.center,
+                        toolbarOptions: ToolbarOptions(copy: true),
                       ),
                       SizedBox(
                         height: 10,
@@ -172,10 +173,13 @@ class _RelatedScreenState extends State<RelatedScreen> {
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
-                        child: Text(
+                        child: SelectableText(
                           widget.settings.description,
+                          toolbarOptions: ToolbarOptions(copy: true),
                           style: CustomTextStyle.normal(
-                              context, tProvider.fontSize),
+                            context,
+                            tProvider.fontSize,
+                          ),
                         ),
                       ),
                       Container(

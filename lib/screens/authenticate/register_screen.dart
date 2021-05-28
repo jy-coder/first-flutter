@@ -71,6 +71,8 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                enableInteractiveSelection: false,
+                cursorColor: Colors.blue,
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
@@ -79,6 +81,8 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                enableInteractiveSelection: false,
+                cursorColor: Colors.blue,
                 decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 obscureText: true,
                 validator: (val) => val.length < 6
@@ -90,6 +94,8 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                enableInteractiveSelection: false,
+                cursorColor: Colors.blue,
                 decoration:
                     textInputDecoration.copyWith(hintText: 'Confirm Password'),
                 obscureText: true,

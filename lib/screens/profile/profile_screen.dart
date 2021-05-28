@@ -19,7 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "Category Subscription",
     "Bookmark",
     "History",
-    "Reset Password",
     "Logout"
   ];
   List<String> navigator = [
@@ -27,16 +26,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     SubscriptionScreen.routeName,
     BookmarkScreen.routeName,
     HistoryScreen.routeName,
-    ResetPasswordScreen.routeName,
     HomeScreen.routeName,
   ];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    setState(() {
-      profileList[0] = Auth().currentUser.email;
-    });
+    if (Auth().currentUser != null) {
+      setState(() {
+        profileList[0] = Auth().currentUser.email;
+      });
+    }
   }
 
   @override

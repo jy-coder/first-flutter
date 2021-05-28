@@ -44,6 +44,8 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
+                  enableInteractiveSelection: false,
+                  cursorColor: Colors.blue,
                   decoration:
                       textInputDecoration.copyWith(hintText: 'Password'),
                   obscureText: true,
@@ -56,6 +58,8 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  enableInteractiveSelection: false,
+                  cursorColor: Colors.blue,
                   decoration: textInputDecoration.copyWith(
                       hintText: 'Confirm Password'),
                   obscureText: true,

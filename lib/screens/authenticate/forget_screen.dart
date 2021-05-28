@@ -23,7 +23,6 @@ class _ForgetScreenState extends State<ForgetScreen> {
   Future<void> _handleForgetPassword(BuildContext context) async {
     dynamic result = await _auth.resetForgotPassword(email);
     if (result == null) {
-      print("test");
       var success = SuccessDialog(
           content: "Please check your email for further instructions!");
       showDialog(
@@ -59,6 +58,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
                     child: Column(children: <Widget>[
                       SizedBox(height: 20.0),
                       TextFormField(
+                        enableInteractiveSelection: false,
                         decoration: textInputDecoration.copyWith(
                           hintText: 'Email',
                         ),

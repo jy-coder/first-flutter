@@ -81,6 +81,11 @@ class _MyAppState extends State<MyApp> {
           },
           title: 'NewsHeadline',
           theme: ThemeData(
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.blue,
+              selectionColor: Colors.blue,
+              selectionHandleColor: Colors.blue,
+            ),
             primarySwatch: white,
             brightness: Brightness.light,
           ),
